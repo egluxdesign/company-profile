@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eglux - Produk Rumah Tangga Premium</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ===== HERO SECTION ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--light) 0%, var(--accent) 100%);
+            padding-top: 70px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(201,169,110,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-content h1 span {
+            color: var(--secondary);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+        }
+
+        .floating-card {
+            position: absolute;
+            background: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .floating-card.card-1 {
+            top: 10%;
+            left: -10%;
+            animation-delay: 0s;
+        }
+
+        .floating-card.card-2 {
+            bottom: 15%;
+            right: -5%;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* ===== CATEGORIES ===== */
+        .categories {
+            background: var(--white);
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .category-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .category-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .category-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .category-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            padding: 2rem 1.5rem 1.5rem;
+        }
+
+        .category-overlay h3 {
+            color: var(--white);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* ===== BEST SELLERS ===== */
+        .best-sellers {
+            background: var(--light);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+
+        .product-image {
+            position: relative;
+            overflow: hidden;
+            height: 250px;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--secondary);
+            color: var(--white);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-info h4 {
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+            color: var(--primary);
+        }
+
+        .product-info .model {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 0.8rem;
+        }
+
+        .product-info .price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        /* ===== BRAND STORY ===== */
+        .brand-story {
+            background: var(--white);
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .story-image {
+            position: relative;
+        }
+
+        .story-image img {
+            width: 100%;
+            border-radius: 20px;
+        }
+
+        .story-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .story-content p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item h3 {
+            font-size: 2rem;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        .stat-item p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        /* ===== FEATURES ===== */
+        .features {
+            background: var(--light);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--accent);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* ===== RESPONSIVE HOME ===== */
+        @media (max-width: 1024px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                margin: 0 auto 2rem;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-image {
+                order: -1;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .category-grid,
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .story-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .category-grid,
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .floating-card {
+                display: none;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo">
+            <img src="img/Logo.png" alt="Eglux Logo" style="height: 32px; width: auto;">
+        </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html" class="active">Beranda</a></li>
+                <li><a href="products.html">Produk</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="about.html">Tentang Kami</a></li>
+                <li><a href="contact.html">Kontak</a></li>
+            </ul>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Produk Rumah Tangga Terbaik dengan Desain <span>Mewah & Elegan</span></h1>
+                <p>Selalu membangun produk yang praktis dan dapat diandalkan untuk membuat hidup Anda lebih nyaman dan terorganisir.</p>
+                <div class="hero-buttons">
+                    <a href="products.html" class="btn btn-primary">Jelajahi Produk</a>
+                    <a href="about.html" class="btn btn-outline">Tentang Eglux</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://down-tx-id.img.susercontent.com/id-11134210-7rbk4-m6npp1bog9rg6c" alt="Eglux Products">
+                <div class="floating-card card-1">
+                    <strong>500+</strong><br>Produk
+                </div>
+                <div class="floating-card card-2">
+                    <strong>50K+</strong><br>Pelanggan
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories">
+        <div class="container">
+            <div class="section-header">
+                <h2>Kategori Produk</h2>
+                <p>Temukan solusi penyimpanan dan organisasi untuk setiap ruangan</p>
+            </div>
+            <div class="category-grid">
+                <div class="category-card">
+                    <img src="https://down-id.img.susercontent.com/file/sg-11134201-7rdy8-mcj15f3yq0frd3.webp" alt="Storage">
+                    <div class="category-overlay">
+                        <h3>Perlengkapan Penyimpanan</h3>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <img src="https://down-id.img.susercontent.com/file/sg-11134201-820n5-mn9v2pvit5om4b.webp" alt="Kitchen">
+                    <div class="category-overlay">
+                        <h3>Perlengkapan Dapur</h3>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <img src="https://down-id.img.susercontent.com/file/sg-11134201-7rdvm-mdjp4ct77ggp63.webp" alt="Bathroom">
+                    <div class="category-overlay">
+                        <h3>Perlengkapan Kamar Mandi</h3>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <img src="https://down-id.img.susercontent.com/file/sg-11134201-7rdx6-mdjse24iesx0a6.webp" alt="Cleaning">
+                    <div class="category-overlay">
+                        <h3>Perlengkapan Pembersih</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Sellers -->
+    <section class="best-sellers">
+        <div class="container">
+            <div class="section-header">
+                <h2>Produk Terlaris</h2>
+                <p>Pilihan favorit pelanggan kami</p>
+            </div>
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://down-id.img.susercontent.com/file/sg-11134201-824gv-me0yfrozmpzae4.webp" alt="Product">
+                        <span class="product-badge">Best Seller</span>
+                    </div>
+                    <div class="product-info">
+                        <h4>EGLUX Tempat prasmanan Motif Bintik Emas wadah prasmanan aesthetics</h4>
+                        <p class="model">Model: Perpan besar bening</p>
+                        <p class="price">Rp 187.500</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://down-id.img.susercontent.com/file/sg-11134201-7rdx6-lz62cs0ixm2vbb.webp" alt="Product">
+                        <span class="product-badge">Best Seller</span>
+                    </div>
+                    <div class="product-info">
+                        <h4>EGLUX Tempat Prasmanan Tempat buah Wadah Saji Tempat Roti aesthetic Nampan dengan tutup</h4>
+                        <p class="model">Model: Perpan kecil transparan</p>
+                        <p class="price">Rp 127.500</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://down-id.img.susercontent.com/file/sg-11134201-820nf-mn9v2qt7p6h23a.webp" alt="Product">
+                        <span class="product-badge">Baru</span>
+                    </div>
+                    <div class="product-info">
+                        <h4>EGLUX Tempat Prasmanan aesthetics wadah saji nampan set</h4>
+                        <p class="model">Model: Bulat Putih S+Kaki</p>
+                        <p class="price">Rp 322.500</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://down-id.img.susercontent.com/file/id-11134207-7rasg-m5z7qgib73zc9d.webp" alt="Product">
+                        <span class="product-badge">Best Seller</span>
+                    </div>
+                    <div class="product-info">
+                        <h4>EGLUX Tempat prasmanan Wadah Saji tempat buah dengan tutup aesthetic</h4>
+                        <p class="model">Model: Perpan L Bening 3pcs</p>
+                        <p class="price">Rp 385.000</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Story -->
+    <section class="brand-story">
+        <div class="container">
+            <div class="story-grid">
+                <div class="story-image">
+                    <img src="https://down-tx-id.img.susercontent.com/id-11134210-7rbke-m6npp1bog9op94" alt="Eglux Office">
+                </div>
+                <div class="story-content">
+                    <h2>Brand Eglux</h2>
+                    <p>Eglux didirikan pada tahun 2015, melayani pasar perlengkapan rumah tangga menengah ke atas. Kami berkomitmen untuk merancang produk yang indah namun fungsional yang membawa kehidupan yang lebih baik bagi pelanggan kami.</p>
+                    <p>Eglux saat ini mempekerjakan lebih dari 500 staf, termasuk lebih dari 100 di bidang riset dan pengembangan serta desain. Kami mengoperasikan pabrik modern seluas lebih dari 40.000 meter persegi.</p>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <h3>500+</h3>
+                            <p>Produk</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>400+</h3>
+                            <p>Paten Nasional</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>50K+</h3>
+                            <p>Pelanggan Puas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Mengapa Memilih Eglux?</h2>
+                <p>Kualitas dan inovasi di setiap produk</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔬</div>
+                    <h3>Pusat R&D</h3>
+                    <p>Tim desainer profesional yang berdedikasi untuk menciptakan produk inovatif dengan fungsionalitas terbaik.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏭</div>
+                    <h3>Pusat Manufaktur</h3>
+                    <p>Fasilitas produksi seluas 40.000 m² dengan standar kualitas ketat dan teknik produksi modern.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Penghargaan</h3>
+                    <p>Diakui dengan berbagai penghargaan desain internasional termasuk Red Dot Design Award dan iF Design Award.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <img src="img/Logo1.png" alt="Eglux Logo" style="height: 60px; width: auto;">
+                    </a>
+                    <p>Membangun produk rumah tangga yang praktis dan dapat diandalkan. Keindahan bertemu fungsionalitas dalam setiap produk Eglux.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Navigasi</h4>
+                    <ul>
+                        <li><a href="index.html">Beranda</a></li>
+                        <li><a href="products.html">Produk</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="about.html">Tentang Kami</a></li>
+                        <li><a href="contact.html">Kontak</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Kategori</h4>
+                    <ul>
+                        <li><a href="products.html?data-filter=kitchen">Kitchen</a></li>
+                        <li><a href="products.html?data-filter=storage">Storage</a></li>
+                        <li><a href="products.html?data-filter=homedecor">Home Decor</a></li>
+                        <li><a href="products.html?data-filter=produkbaru">Produk Baru</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Layanan</h4>
+                    <ul>
+                        <li><a href="contact.html">Bantuan</a></li>
+                        <li><a href="contact.html">Pengiriman</a></li>
+                        <li><a href="contact.html">Pengembalian</a></li>
+                        <li><a href="contact.html">Garansi</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Eglux. Seluruh hak cipta dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.08)';
+            } else {
+                navbar.style.boxShadow = 'none';
+            }
+        });
+    </script>
+
+    <script>
+        // Force same-tab navigation for all internal links
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                // Only handle internal relative links (not external URLs)
+                if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto:')) {
+                    e.preventDefault();
+                    window.location.href = href;
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eglux - Blog</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .blog-hero {
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--light) 0%, var(--accent) 100%);
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .blog-hero::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(201,169,110,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .blog-hero .container { position: relative; z-index: 1; text-align: center; }
+        .blog-hero h1 { font-size: 3rem; font-weight: 800; color: var(--primary); margin-bottom: 1rem; }
+        .blog-hero p { font-size: 1.1rem; color: var(--text-light); max-width: 500px; margin: 0 auto; }
+
+        .blog-list {
+            background: var(--light);
+            padding: 4rem 0;
+            display: block;
+        }
+        .blog-list.hidden { display: none; }
+
+        .list-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .blog-preview-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            cursor: pointer;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+        .blog-preview-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+
+        .preview-image {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            background: var(--light);
+        }
+        .preview-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        .blog-preview-card:hover .preview-image img {
+            transform: scale(1.05);
+        }
+
+        .preview-content { padding: 1.5rem; }
+        .preview-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 0.6rem;
+        }
+        .preview-meta .meta-date { font-weight: 600; color: var(--secondary); }
+        .preview-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .blog-detail {
+            background: var(--white);
+            padding: 4rem 0;
+            display: none;
+        }
+        .blog-detail.active { display: block; }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent);
+            color: var(--primary);
+            padding: 0.7rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: none;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+        .back-btn:hover { background: var(--secondary); color: var(--white); }
+
+        .article-full { max-width: 900px; margin: 0 auto; }
+        .article-header { margin-bottom: 2rem; }
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            flex-wrap: wrap;
+        }
+        .article-meta .meta-date { font-weight: 600; color: var(--secondary); }
+        .article-header h2 { font-size: 2.2rem; font-weight: 800; color: var(--primary); line-height: 1.2; }
+
+        .article-cover {
+            width: 100%;
+            height: 400px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+        }
+        .article-cover img { width: 100%; height: 100%; object-fit: cover; }
+
+        .article-body { font-size: 1.05rem; line-height: 1.9; color: var(--text); }
+        .article-body p { margin-bottom: 1.2rem; }
+
+        .article-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .article-gallery img { width: 100%; height: 200px; object-fit: cover; border-radius: 12px; }
+
+        .video-player {
+            margin: 2rem 0;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+        .video-player iframe { width: 100%; height: 500px; border: none; display: block; }
+
+        /* Skeleton loading (lebih smooth dari spinner) */
+        .skeleton-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        .skeleton-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            height: 340px;
+        }
+        .skeleton-image {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        .skeleton-text {
+            padding: 1.5rem;
+        }
+        .skeleton-line {
+            height: 12px;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+        .skeleton-line.short { width: 60%; }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .loading-state {
+            text-align: center;
+            padding: 5rem 2rem;
+            color: var(--text-light);
+        }
+        .empty-state {
+            text-align: center;
+            padding: 5rem 2rem;
+            color: var(--text-light);
+        }
+        .empty-state-icon { font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.5; }
+        .empty-state h3 { color: var(--primary); font-size: 1.3rem; }
+
+        @media (max-width: 1024px) {
+            .list-grid, .skeleton-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .blog-hero h1 { font-size: 2.2rem; }
+            .list-grid, .skeleton-grid { grid-template-columns: 1fr; }
+            .article-header h2 { font-size: 1.6rem; }
+            .article-cover { height: 250px; }
+            .video-player iframe { height: 280px; }
+        }
+    </style>
+    <base target="_blank">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo"><img src="img/Logo.png" alt="Eglux Logo" style="height: 32px; width: auto;"></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="products.html">Produk</a></li>
+                <li><a href="blog.html" class="active">Blog</a></li>
+                <li><a href="about.html">Tentang Kami</a></li>
+                <li><a href="contact.html">Kontak</a></li>
+            </ul>
+            <button class="mobile-menu-btn" id="mobileMenuBtn"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <!-- Blog Hero -->
+    <section class="blog-hero">
+        <div class="container">
+            <h1>Eglux Blog</h1>
+            <p>Tips, inspirasi, dan cerita terbaru seputar gaya hidup rumah tangga.</p>
+        </div>
+    </section>
+
+    <!-- LIST VIEW -->
+    <section class="blog-list" id="listView">
+        <div class="container">
+            <!-- Skeleton loading (tampil dulu sebelum data ready) -->
+            <div id="skeletonLoader" class="skeleton-grid">
+                <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-text"><div class="skeleton-line short"></div><div class="skeleton-line"></div></div></div>
+                <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-text"><div class="skeleton-line short"></div><div class="skeleton-line"></div></div></div>
+                <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-text"><div class="skeleton-line short"></div><div class="skeleton-line"></div></div></div>
+            </div>
+
+            <div id="listContainer" class="list-grid" style="display:none;"></div>
+            
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <div class="empty-state-icon">📝</div>
+                <h3>Belum ada artikel</h3>
+                <p>Tambahkan data di Google Sheet untuk menampilkan artikel.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- DETAIL VIEW -->
+    <section class="blog-detail" id="detailView">
+        <div class="container">
+            <button class="back-btn" onclick="showList()">← Kembali ke Blog</button>
+            <div id="detailContainer"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo"><img src="img/Logo1.png" alt="Eglux Logo" style="height: 60px; width: auto;"></a>
+                    <p>Membangun produk rumah tangga yang praktis dan dapat diandalkan.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Navigasi</h4>
+                    <ul>
+                        <li><a href="index.html">Beranda</a></li>
+                        <li><a href="products.html">Produk</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="about.html">Tentang Kami</a></li>
+                        <li><a href="contact.html">Kontak</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Kategori</h4>
+                    <ul>
+                        <li><a href="products.html?data-filter=kitchen">Kitchen</a></li>
+                        <li><a href="products.html?data-filter=storage">Storage</a></li>
+                        <li><a href="products.html?data-filter=homedecor">Home Decor</a></li>
+                        <li><a href="products.html?data-filter=produkbaru">Produk Baru</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Layanan</h4>
+                    <ul>
+                        <li><a href="contact.html">Bantuan</a></li>
+                        <li><a href="contact.html">Pengiriman</a></li>
+                        <li><a href="contact.html">Pengembalian</a></li>
+                        <li><a href="contact.html">Garansi</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 Eglux. Seluruh hak cipta dilindungi.</p></div>
+        </div>
+    </footer>
+
+    <script>
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbwBlQNMHmZRoiDaLA1cznf9CClcDeHg5gzfQLWV13qP7JYrIi428nT_PDgjzSzs8SebdQ/exec";
+        const CACHE_KEY = 'eglux_blog_posts';
+        const CACHE_TIME = 5 * 60 * 1000; // 5 menit
+        let allPosts = [];
+
+        // Mobile menu
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+
+        // Same-tab navigation
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto:')) {
+                    e.preventDefault();
+                    window.location.href = href;
+                }
+            });
+        });
+
+        /* ===== LOAD POSTS (with cache) ===== */
+        async function loadPosts() {
+            const skeleton = document.getElementById('skeletonLoader');
+            const listContainer = document.getElementById('listContainer');
+            const emptyState = document.getElementById('emptyState');
+
+            // Cek cache dulu
+            const cached = getCache();
+            if (cached) {
+                allPosts = cached;
+                skeleton.style.display = 'none';
+                listContainer.style.display = 'grid';
+                renderList(allPosts);
+                checkHash();
+                // Fetch background update (silent)
+                fetchFreshData();
+                return;
+            }
+
+            // Kalau nggak ada cache, fetch dari GAS
+            try {
+                const res = await fetch(GAS_URL + "?t=" + Date.now());
+                const json = await res.json();
+
+                if (json.status !== 'success' || !json.data || json.data.length === 0) {
+                    skeleton.style.display = 'none';
+                    emptyState.style.display = 'block';
+                    return;
+                }
+
+                allPosts = json.data;
+                setCache(allPosts);
+
+                skeleton.style.display = 'none';
+                listContainer.style.display = 'grid';
+                renderList(allPosts);
+                checkHash();
+
+            } catch (err) {
+                skeleton.style.display = 'none';
+                document.getElementById('listView').innerHTML = `<div class="empty-state"><h3 style="color:#ff4444">Gagal memuat data</h3><p>${err.message}</p></div>`;
+            }
+        }
+
+        /* ===== FETCH FRESH DATA (background) ===== */
+        async function fetchFreshData() {
+            try {
+                const res = await fetch(GAS_URL + "?t=" + Date.now());
+                const json = await res.json();
+                if (json.status === 'success' && json.data && json.data.length > 0) {
+                    allPosts = json.data;
+                    setCache(allPosts);
+                    renderList(allPosts);
+                }
+            } catch (e) {
+                // Silent fail, tetap pakai cache
+            }
+        }
+
+        /* ===== CACHE HELPERS ===== */
+        function getCache() {
+            try {
+                const item = sessionStorage.getItem(CACHE_KEY);
+                if (!item) return null;
+                const parsed = JSON.parse(item);
+                if (Date.now() - parsed.timestamp > CACHE_TIME) {
+                    sessionStorage.removeItem(CACHE_KEY);
+                    return null;
+                }
+                return parsed.data;
+            } catch (e) { return null; }
+        }
+
+        function setCache(data) {
+            try {
+                sessionStorage.setItem(CACHE_KEY, JSON.stringify({
+                    timestamp: Date.now(),
+                    data: data
+                }));
+            } catch (e) {}
+        }
+
+        /* ===== RENDER LIST ===== */
+        function renderList(posts) {
+            const container = document.getElementById('listContainer');
+            container.innerHTML = posts.map(post => {
+                const coverPhoto = post.photos && post.photos.length > 0 ? post.photos[0] : '';
+
+                return `
+                    <div class="blog-preview-card" onclick="showDetail(${post.id})">
+                        <div class="preview-image">
+                            ${coverPhoto 
+                                ? `<img src="${esc(coverPhoto)}" alt="${esc(post.title)}" loading="lazy" onerror="this.style.display='none'">` 
+                                : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text-light);">🖼️</div>'
+                            }
+                        </div>
+                        <div class="preview-content">
+                            <div class="preview-meta">
+                                <span class="meta-date">${esc(post.date || '')}</span>
+                                ${post.time ? `<span>${esc(post.time)}</span>` : ''}
+                            </div>
+                            <div class="preview-title">${esc(post.title)}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        /* ===== SHOW DETAIL ===== */
+        function showDetail(postId) {
+            const post = allPosts.find(p => p.id == postId);
+            if (!post) return;
+
+            window.location.hash = `detail/${postId}`;
+            document.getElementById('listView').classList.add('hidden');
+            document.getElementById('detailView').classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            renderDetail(post);
+        }
+
+        /* ===== RENDER DETAIL ===== */
+        function renderDetail(post) {
+            const container = document.getElementById('detailContainer');
+            const coverPhoto = post.photos && post.photos.length > 0 ? post.photos[0] : '';
+            const extraPhotos = post.photos && post.photos.length > 1 ? post.photos.slice(1) : [];
+
+            let html = `<article class="article-full">`;
+            
+            html += `<div class="article-header">`;
+            html += `<div class="article-meta">`;
+            html += `<span class="meta-date">📅 ${esc(post.date || '')}</span>`;
+            if (post.time) html += `<span>🕐 ${esc(post.time)}</span>`;
+            html += `<span>👤 ${esc(post.author || 'Tim Eglux')}</span>`;
+            html += `</div>`;
+            html += `<h2>${esc(post.title)}</h2>`;
+            html += `</div>`;
+
+            if (coverPhoto) {
+                html += `<div class="article-cover"><img src="${esc(coverPhoto)}" alt="${esc(post.title)}" loading="lazy" onerror="this.parentElement.innerHTML='🖼️ Gagal memuat gambar'"></div>`;
+            }
+
+            if (post.content) {
+                html += `<div class="article-body">`;
+                post.content.toString().split('\n').filter(p => p.trim()).forEach(p => {
+                    html += `<p>${esc(p)}</p>`;
+                });
+                html += `</div>`;
+            }
+
+            if (extraPhotos.length > 0) {
+                html += `<div class="article-gallery">`;
+                extraPhotos.forEach(url => {
+                    html += `<img src="${esc(url)}" alt="Photo" loading="lazy" onerror="this.style.display='none'">`;
+                });
+                html += `</div>`;
+            }
+
+            if (post.instagram) {
+                html += getVideoEmbedHtml(post.instagram);
+            }
+
+            html += `</article>`;
+            container.innerHTML = html;
+        }
+
+        /* ===== SHOW LIST ===== */
+        function showList() {
+            window.location.hash = '';
+            document.getElementById('detailView').classList.remove('active');
+            document.getElementById('listView').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* ===== CHECK HASH ===== */
+        function checkHash() {
+            const hash = window.location.hash;
+            if (hash.startsWith('#detail/')) {
+                const postId = hash.replace('#detail/', '');
+                showDetail(postId);
+            }
+        }
+
+        window.addEventListener('hashchange', checkHash);
+
+        /* ===== VIDEO EMBED ===== */
+        function getVideoEmbedHtml(url) {
+            if (!url) return '';
+
+            const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
+            if (ytMatch) {
+                return `<div class="video-player"><iframe src="https://www.youtube.com/embed/${ytMatch[1]}?rel=0" allowfullscreen loading="lazy"></iframe></div>`;
+            }
+
+            const driveMatch = url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
+            if (driveMatch) {
+                return `<div class="video-player"><iframe src="https://drive.google.com/file/d/${driveMatch[1]}/preview" allowfullscreen loading="lazy"></iframe></div>`;
+            }
+
+            const openMatch = url.match(/drive\.google\.com\/open\?id=([a-zA-Z0-9_-]+)/);
+            if (openMatch) {
+                return `<div class="video-player"><iframe src="https://drive.google.com/file/d/${openMatch[1]}/preview" allowfullscreen loading="lazy"></iframe></div>`;
+            }
+
+            return '';
+        }
+
+        function esc(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        loadPosts();
+    </script>
+</body>
+</html>
