@@ -3,8 +3,796 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eglux - Blog</title>
+    <title>Blog - Eglux</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #554521;
+            --secondary: #cba65a;
+            --accent: #f5f0e8;
+            --light: #faf8f5;
+            --white: #ffffff;
+            --text-light: #666;
+            --sidebar-dark: #cba65a;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--primary);
+            background: var(--light);
+            overflow-x: hidden;
+        }
+
+        /* ===== HAMBURGER BUTTON ===== */
+        .hamburger-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .hamburger-btn span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        .hamburger-btn:hover span {
+            background: var(--secondary);
+        }
+
+        .hamburger-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(4px, 4px);
+        }
+
+        .hamburger-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(4px, -4px);
+        }
+
+        /* ===== SIDEBAR OVERLAY ===== */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ===== SIDEBAR PANEL ===== */
+        .sidebar-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 542px;
+            height: 100vh;
+            background: var(--white);
+            z-index: 1002;
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-panel.open {
+            transform: translateX(0);
+        }
+
+        .sidebar-panel-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sidebar-panel-header h3 {
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .sidebar-close {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1.8rem;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: var(--transition);
+            line-height: 1;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-close:hover {
+            opacity: 1;
+            color: var(--secondary);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            flex: 1;
+        }
+
+        .sidebar-menu > li {
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #f0f0f0;
+            height: 100px;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar-menu > li > a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            padding: 0 2rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: var(--transition);
+            position: relative;
+            z-index: 2;
+        }
+
+        .sidebar-menu > li > a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, rgba(201,169,110,0.15) 0%, transparent 100%);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .sidebar-menu > li > a:hover::before {
+            opacity: 1;
+        }
+
+        .sidebar-menu > li > a:hover {
+            padding-left: 2.5rem;
+            color: var(--primary);
+        }
+
+        .sidebar-menu > li .cat-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.4;
+            background-size: cover;
+            background-position: center;
+            transition: var(--transition);
+            z-index: 1;
+        }
+
+        .sidebar-menu > li:hover .cat-bg {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .sidebar-menu > li .cat-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, rgba(255,255,255,0.2) 20%, rgba(49, 41, 8, 0) 100%);
+            z-index: 1;
+            border-left-color: var(--secondary);
+        }
+
+        .sidebar-menu > li > a span {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== SUBMENU ===== */
+        .has-submenu {
+            flex-direction: column;
+            height: auto !important;
+            min-height: 100px;
+        }
+
+        .has-submenu > a {
+            justify-content: center;
+            min-height: 100px;
+            position: relative;
+        }
+
+        .has-submenu > a .arrow {
+            font-size: 1.6rem;
+            transition: var(--transition);
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 2;
+            color: var(--primary);
+            pointer-events: none;
+        }
+
+        .has-submenu.open > a .arrow {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .has-submenu > a .menu-text {
+            text-align: center;
+        }
+
+        .submenu {
+            list-style: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+            background: var(--white);
+            width: 100%;
+        }
+
+        .has-submenu.open .submenu {
+            max-height: 300px;
+        }
+
+        .submenu li {
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #eee;
+        }
+
+        .submenu li:last-child {
+            border-bottom: none;
+        }
+
+        .submenu li a {
+            display: block;
+            padding: 1rem 2rem 1rem 3rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+            position: relative;
+            z-index: 2;
+        }
+
+        .submenu li a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, rgba(201, 169, 110, 0.7) 0%, transparent 100%);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .submenu li a:hover::before {
+            opacity: 0.4;
+        }
+
+        .submenu li a:hover {
+            color: var(--primary);
+            border-left-color: var(--secondary);
+            padding-left: 6rem;
+            transition: var(--transition);
+        }
+
+        /* ===== MAIN HEADER BAR (Sticky) ===== */
+        .main-header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            z-index: 1000;
+            box-shadow: 0 1px 10px rgba(0,0,0,0.05);
+        }
+
+        .main-header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+        }
+
+        .main-header .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: 1px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .main-header .logo span {
+            color: var(--secondary);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            margin-left: auto;
+        }
+
+        .header-right .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .header-right .icon-btn:hover {
+            color: var(--secondary);
+        }
+
+        .header-right .icon-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--secondary);
+            color: white;
+            font-size: 0.55rem;
+            font-weight: 700;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== PRIMARY NAV (Below Logo) ===== */
+        .primary-nav {
+            background: var(--white);
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            will-change: transform, opacity;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease;
+        }
+
+        .primary-nav.hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .primary-nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3rem;
+            height: 48px;
+        }
+
+        .primary-nav-inner a {
+            font-size: 0.8rem;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            position: relative;
+            padding: 4px 0;
+            white-space: nowrap;
+        }
+
+        .primary-nav-inner a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: var(--secondary);
+            transition: var(--transition);
+        }
+
+        .primary-nav-inner a:hover::after,
+        .primary-nav-inner a.active::after {
+            width: 100%;
+        }
+
+        .primary-nav-inner a:hover,
+        .primary-nav-inner a.active {
+            color: var(--secondary);
+        }
+
+        .page-header {
+            padding-top: 120px;
+            padding-bottom: 3rem;
+            background: linear-gradient(135deg, var(--light) 0%, var(--accent) 100%);
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+            border: 1px solid var(--border);
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            border-color: transparent;
+        }
+
+        .product-image {
+            position: relative;
+            overflow: hidden;
+            height: 250px;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--secondary);
+            color: var(--white);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-info h4 {
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+            color: var(--primary);
+        }
+
+        .product-info .model {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 0.8rem;
+        }
+
+        .product-info .price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .product-info .desc {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+            line-height: 1.5;
+        }
+
+        /* ===== DUPLICATE NAV (Above Categories) ===== */
+        .duplicate-nav {
+            background: var(--white);
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            will-change: transform;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .duplicate-nav.stuck {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transform: translateY(0);
+        }
+
+        .duplicate-nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3rem;
+            height: 48px;
+        }
+
+        .duplicate-nav-inner a {
+            font-size: 0.8rem;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            position: relative;
+            padding: 4px 0;
+            white-space: nowrap;
+        }
+
+        .duplicate-nav-inner a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: var(--secondary);
+            transition: var(--transition);
+        }
+
+        .duplicate-nav-inner a:hover::after,
+        .duplicate-nav-inner a.active::after {
+            width: 100%;
+        }
+
+        .duplicate-nav-inner a:hover,
+        .duplicate-nav-inner a.active {
+            color: var(--secondary);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--secondary);
+            color: var(--white);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand p {
+            color: rgba(255,255,255,0.7);
+            margin-top: 1rem;
+            line-height: 1.7;
+            font-size: 0.9rem;
+        }
+
+        .footer-links h4 {
+            font-size: 1rem;
+            margin-bottom: 1.2rem;
+            color: var(--white);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 0.6rem;
+        }
+
+        .footer-links ul li a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .footer-links ul li a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.85rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero-text-content h1 {
+                font-size: 5rem;
+            }
+
+            .category-grid,
+            .product-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .story-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .sidebar-panel {
+                width: 420px;
+            }
+
+            .primary-nav-inner,
+            .duplicate-nav-inner {
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-text-content h1 {
+                font-size: 3.5rem;
+                letter-spacing: 6px;
+            }
+
+            .hero-text-content .shop-btn {
+                padding: 1rem 2.5rem;
+            }
+
+            .category-grid,
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .sidebar-panel {
+                width: 100%;
+            }
+
+            .primary-nav-inner,
+            .duplicate-nav-inner {
+                gap: 1.2rem;
+                overflow-x: auto;
+                justify-content: center;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+
+            .primary-nav-inner::-webkit-scrollbar,
+            .duplicate-nav-inner::-webkit-scrollbar {
+                display: none;
+            }
+
+            .primary-nav-inner a,
+            .duplicate-nav-inner a {
+                font-size: 0.7rem;
+                white-space: nowrap;
+            }
+
+            .main-header .logo {
+                font-size: 1.5rem;
+            }
+
+            .header-right {
+                gap: 0.8rem;
+            }
+        }
+    </style>
+    
+<base target="_blank">
+
+    <!-- Blog-specific styles -->
     <style>
         .blog-hero {
             min-height: 40vh;
@@ -227,21 +1015,114 @@
             .video-player iframe { height: 280px; }
         }
     </style>
-    <base target="_blank">
+<base target="_blank">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo"><img src="img/Logo.png" alt="Eglux Logo" style="height: 32px; width: auto;"></a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="index.html">Beranda</a></li>
-                <li><a href="products.html">Produk</a></li>
-                <li><a href="blog.html" class="active">Blog</a></li>
-                <li><a href="about.html">Tentang Kami</a></li>
-                <li><a href="contact.html">Kontak</a></li>
-            </ul>
-            <button class="mobile-menu-btn" id="mobileMenuBtn"><span></span><span></span><span></span></button>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <!-- Sidebar Panel (Categories) -->
+    <aside class="sidebar-panel" id="sidebarPanel">
+        <div class="sidebar-panel-header">
+            <h3>Categories</h3>
+            <button class="sidebar-close" onclick="toggleSidebar()">&times;</button>
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <div class="cat-bg" style="background-image: url('https://down-id.img.susercontent.com/file/sg-11134201-820nf-mn9v2qt7p6h23a.webp');"></div>
+                <div class="cat-overlay"></div>
+                <a href="products.html?filter=new"><span>New Arrival</span></a>
+            </li>
+            <li>
+                <div class="cat-bg" style="background-image: url('https://down-id.img.susercontent.com/file/sg-11134201-824gv-me0yfrozmpzae4.webp');"></div>
+                <div class="cat-overlay"></div>
+                <a href="products.html?filter=bestseller"><span>Best Seller</span></a>
+            </li>
+            <li>
+                <div class="cat-bg" style="background-image: url('https://down-tx-id.img.susercontent.com/id-11134210-7rbk4-m6npp1bog9rg6c');"></div>
+                <div class="cat-overlay"></div>
+                <a href="products.html"><span>All Products</span></a>
+            </li>
+            <li class="has-submenu" id="kitchenItem">
+                <div class="cat-bg" style="background-image: url('https://down-id.img.susercontent.com/file/sg-11134201-820n5-mn9v2pvit5om4b.webp');"></div>
+                <div class="cat-overlay"></div>
+                <a href="#" onclick="return false;" class="menu-toggle">
+                    <span class="menu-text">Kitchen</span>
+                    <span class="arrow">&#9662;</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="products.html?filter=prasmanan">Prasmanan</a></li>
+                    <li><a href="products.html?filter=bumbu">Tempat Bumbu</a></li>
+                    <li><a href="products.html?filter=toples">Toples</a></li>
+                    <li><a href="products.html?filter=nampan">Nampan</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu" id="homeDecorItem">
+                <div class="cat-bg" style="background-image: url('https://down-id.img.susercontent.com/file/id-11134207-7rasg-m5z7qgib73zc9d.webp');"></div>
+                <div class="cat-overlay"></div>
+                <a href="#" onclick="return false;" class="menu-toggle">
+                    <span class="menu-text">Home Decor</span>
+                    <span class="arrow">&#9662;</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="products.html?filter=walldecor">Wall Decor</a></li>
+                    <li><a href="products.html?filter=pajangan">Pajangan</a></li>
+                    <li><a href="products.html?filter=vas">Vas Bunga</a></li>
+                    <li><a href="products.html?filter=taplak">Taplak Meja</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="cat-bg" style="background-image: url('https://down-id.img.susercontent.com/file/sg-11134201-7rdvm-mdjp4ct77ggp63.webp');"></div>
+                <div class="cat-overlay"></div>
+                <a href="products.html?filter=bathroom"><span>Bathroom</span></a>
+            </li>
+            <li>
+                <div class="cat-bg" style="background-image: url('https://down-id.img.susercontent.com/file/sg-11134201-7rdy8-mcj15f3yq0frd3.webp');"></div>
+                <div class="cat-overlay"></div>
+                <a href="products.html?filter=storage"><span>Storage</span></a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Header Bar (Sticky: Categories + Logo + Search + Cart) -->
+    <header class="main-header" id="mainHeader">
+        <div class="main-header-inner">
+            <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleSidebar()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <a href="index.html" class="logo">
+                <img src="img/Logo1.png" alt="Eglux Logo" style="height: 48px; width: auto;">
+            </a>
+            <div class="header-right">
+                <button class="icon-btn" aria-label="Search">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+                <button class="icon-btn" aria-label="Cart" style="position:relative;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    <span class="cart-count">3</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Primary Nav (Below Logo) -->
+    <nav class="primary-nav" id="primaryNav">
+        <div class="primary-nav-inner">
+            <a href="index.html">Beranda</a>
+            <a href="products.html">Produk</a>
+            <a href="blog.html" class="active">Blog</a>
+            <a href="about.html">Tentang Kami</a>
+            <a href="contact.html">Kontak</a>
         </div>
     </nav>
 
@@ -252,6 +1133,17 @@
             <p>Tips, inspirasi, dan cerita terbaru seputar gaya hidup rumah tangga.</p>
         </div>
     </section>
+
+    <!-- HTML - Duplicate Nav (Above Categories Section) -->
+    <nav class="duplicate-nav" id="duplicateNav">
+        <div class="duplicate-nav-inner">
+            <a href="index.html">Beranda</a>
+            <a href="products.html">Produk</a>
+            <a href="blog.html">Blog</a>
+            <a href="about.html">Tentang Kami</a>
+            <a href="contact.html">Kontak</a>
+        </div>
+    </nav>    
 
     <!-- LIST VIEW -->
     <section class="blog-list" id="listView">
@@ -264,7 +1156,7 @@
             </div>
 
             <div id="listContainer" class="list-grid" style="display:none;"></div>
-            
+
             <div id="emptyState" class="empty-state" style="display: none;">
                 <div class="empty-state-icon">📝</div>
                 <h3>Belum ada artikel</h3>
@@ -281,13 +1173,15 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer (PERTAHANKAN) -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <a href="index.html" class="logo"><img src="img/Logo1.png" alt="Eglux Logo" style="height: 60px; width: auto;"></a>
-                    <p>Membangun produk rumah tangga yang praktis dan dapat diandalkan.</p>
+                    <a href="index.html" class="logo">
+                        <img src="img/Logo2.png" alt="Eglux Logo" style="height: 60px; width: auto;">
+                    </a>
+                    <p>Membangun produk rumah tangga yang praktis dan dapat diandalkan. Keindahan bertemu fungsionalitas dalam setiap produk Eglux.</p>
                 </div>
                 <div class="footer-links">
                     <h4>Navigasi</h4>
@@ -302,36 +1196,146 @@
                 <div class="footer-links">
                     <h4>Kategori</h4>
                     <ul>
+                        <li><a href="products.html?data-filter=kitchen">New Arrival</a></li>
+                        <li><a href="products.html?data-filter=kitchen">Best Seller</a></li>
+                        <li><a href="products.html?data-filter=storage">Semua Produk</a></li>
                         <li><a href="products.html?data-filter=kitchen">Kitchen</a></li>
-                        <li><a href="products.html?data-filter=storage">Storage</a></li>
-                        <li><a href="products.html?data-filter=homedecor">Home Decor</a></li>
-                        <li><a href="products.html?data-filter=produkbaru">Produk Baru</a></li>
+                        <li><a href="products.html?data-filter=storage">Homedecor</a></li>
+                        <li><a href="products.html?data-filter=homedecor">Bathroom</a></li>
+                        <li><a href="products.html?data-filter=produkbaru">Storage</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
-                    <h4>Layanan</h4>
+                    <h4>Bantuan</h4>
                     <ul>
-                        <li><a href="contact.html">Bantuan</a></li>
                         <li><a href="contact.html">Pengiriman</a></li>
                         <li><a href="contact.html">Pengembalian</a></li>
-                        <li><a href="contact.html">Garansi</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="footer-bottom"><p>&copy; 2026 Eglux. Seluruh hak cipta dilindungi.</p></div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Eglux is Under Development</p>
+            </div>
         </div>
     </footer>
+
+    <script>
+        // Sidebar Toggle
+        function toggleSidebar() {
+            const btn = document.getElementById('hamburgerBtn');
+            const overlay = document.getElementById('sidebarOverlay');
+            const panel = document.getElementById('sidebarPanel');
+
+            btn.classList.toggle('active');
+            overlay.classList.toggle('open');
+            panel.classList.toggle('open');
+
+            if (panel.classList.contains('open')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+                document.querySelectorAll('.has-submenu').forEach(item => {
+                    item.classList.remove('open');
+                });
+            }
+        }
+
+        // Submenu Toggle - attach event listeners properly
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggles = document.querySelectorAll('.menu-toggle');
+            menuToggles.forEach(function(toggle) {
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const parentLi = this.closest('.has-submenu');
+
+                    // Close other submenus
+                    document.querySelectorAll('.has-submenu').forEach(function(item) {
+                        if (item !== parentLi) {
+                            item.classList.remove('open');
+                        }
+                    });
+
+                    // Toggle current submenu
+                    parentLi.classList.toggle('open');
+                });
+            });
+        });
+
+        // ===== SMOOTH SCROLL TRANSITION (JITTER-FREE) =====
+        const primaryNav = document.getElementById('primaryNav');
+        const duplicateNav = document.getElementById('duplicateNav');
+        const mainHeader = document.getElementById('mainHeader');
+
+        let duplicateNavOffset = 0;
+        let isStuck = false;
+        let ticking = false;
+
+        function updateOffsets() {
+            duplicateNavOffset = duplicateNav.getBoundingClientRect().top + window.scrollY;
+        }
+
+        window.addEventListener('load', updateOffsets);
+        window.addEventListener('resize', updateOffsets);
+
+        function onScroll() {
+            const scrollY = window.scrollY;
+            const headerHeight = mainHeader.offsetHeight;
+            const primaryNavHeight = primaryNav.offsetHeight;
+            const triggerPoint = duplicateNavOffset - headerHeight;
+
+            // Primary nav: smooth slide-up hide when scrolled past
+            const primaryNavRect = primaryNav.getBoundingClientRect();
+            if (primaryNavRect.bottom <= 0) {
+                if (!primaryNav.classList.contains('hidden')) {
+                    primaryNav.classList.add('hidden');
+                }
+            } else {
+                if (primaryNav.classList.contains('hidden')) {
+                    primaryNav.classList.remove('hidden');
+                }
+            }
+
+            // Duplicate nav: only stick when it actually reaches the logo bar
+            if (scrollY >= triggerPoint) {
+                if (!isStuck) {
+                    isStuck = true;
+                    duplicateNav.classList.add('stuck');
+                }
+            } else {
+                if (isStuck) {
+                    isStuck = false;
+                    duplicateNav.classList.remove('stuck');
+                }
+            }
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                requestAnimationFrame(onScroll);
+                ticking = true;
+            }
+        });
+
+        // Same-tab navigation for internal links
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href && !href.startsWith('http') && href !== '#' && !href.startsWith('mailto:') && !href.startsWith('javascript:')) {
+                    e.preventDefault();
+                    window.location.href = href;
+                }
+            });
+        });
+    </script>
 
     <script>
         const GAS_URL = "https://script.google.com/macros/s/AKfycbwBlQNMHmZRoiDaLA1cznf9CClcDeHg5gzfQLWV13qP7JYrIi428nT_PDgjzSzs8SebdQ/exec";
         const CACHE_KEY = 'eglux_blog_posts';
         const CACHE_TIME = 5 * 60 * 1000; // 5 menit
         let allPosts = [];
-
-        // Mobile menu
-        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
-            document.getElementById('navLinks').classList.toggle('active');
-        });
 
         // Same-tab navigation
         document.querySelectorAll('a').forEach(link => {
@@ -471,7 +1475,7 @@
             const extraPhotos = post.photos && post.photos.length > 1 ? post.photos.slice(1) : [];
 
             let html = `<article class="article-full">`;
-            
+
             html += `<div class="article-header">`;
             html += `<div class="article-meta">`;
             html += `<span class="meta-date">📅 ${esc(post.date || '')}</span>`;
@@ -558,5 +1562,6 @@
 
         loadPosts();
     </script>
+
 </body>
 </html>
