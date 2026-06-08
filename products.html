@@ -825,17 +825,17 @@
             <li>
                 <div class="cat-bg" style="background-image: url('https://down-id.img.susercontent.com/file/sg-11134201-820nf-mn9v2qt7p6h23a.webp');"></div>
                 <div class="cat-overlay"></div>
-                <a href="products.html?filter=new"><span>New Arrival</span></a>
+                <a href="products.html?data-filter=produkbaru"><span>Produk Baru</span></a>
             </li>
             <li>
                 <div class="cat-bg" style="background-image: url('https://down-id.img.susercontent.com/file/sg-11134201-824gv-me0yfrozmpzae4.webp');"></div>
                 <div class="cat-overlay"></div>
-                <a href="products.html?filter=bestseller"><span>Best Seller</span></a>
+                <a href="products.html?data-filter=bestseller"><span>Best Seller</span></a>
             </li>
             <li>
                 <div class="cat-bg" style="background-image: url('https://down-tx-id.img.susercontent.com/id-11134210-7rbk4-m6npp1bog9rg6c');"></div>
                 <div class="cat-overlay"></div>
-                <a href="products.html"><span>All Products</span></a>
+                <a href="products.html?data-filter=all"><span>All Products</span></a>
             </li>
             <li class="has-submenu" id="kitchenItem">
                 <div class="cat-bg" style="background-image: url('https://down-id.img.susercontent.com/file/sg-11134201-820n5-mn9v2pvit5om4b.webp');"></div>
@@ -845,10 +845,10 @@
                     <span class="arrow">&#9662;</span>
                 </a>
                 <ul class="submenu">
-                    <li><a href="products.html?filter=prasmanan">Prasmanan</a></li>
-                    <li><a href="products.html?filter=bumbu">Tempat Bumbu</a></li>
-                    <li><a href="products.html?filter=toples">Toples</a></li>
-                    <li><a href="products.html?filter=nampan">Nampan</a></li>
+                    <li><a href="products.html?data-filter=prasmanan">Prasmanan</a></li>
+                    <li><a href="products.html?data-filter=bumbu">Tempat Bumbu</a></li>
+                    <li><a href="products.html?data-filter=toples">Toples</a></li>
+                    <li><a href="products.html?data-filter=nampan">Nampan</a></li>
                 </ul>
             </li>
             <li class="has-submenu" id="homeDecorItem">
@@ -859,21 +859,21 @@
                     <span class="arrow">&#9662;</span>
                 </a>
                 <ul class="submenu">
-                    <li><a href="products.html?filter=walldecor">Wall Decor</a></li>
-                    <li><a href="products.html?filter=pajangan">Pajangan</a></li>
-                    <li><a href="products.html?filter=vas">Vas Bunga</a></li>
-                    <li><a href="products.html?filter=taplak">Taplak Meja</a></li>
+                    <li><a href="products.html?data-filter=walldecor">Wall Decor</a></li>
+                    <li><a href="products.html?data-filter=pajangan">Pajangan</a></li>
+                    <li><a href="products.html?data-filter=vas">Vas Bunga</a></li>
+                    <li><a href="products.html?data-filter=taplak">Taplak Meja</a></li>
                 </ul>
             </li>
             <li>
                 <div class="cat-bg" style="background-image: url('https://down-id.img.susercontent.com/file/sg-11134201-7rdvm-mdjp4ct77ggp63.webp');"></div>
                 <div class="cat-overlay"></div>
-                <a href="products.html?filter=bathroom"><span>Bathroom</span></a>
+                <a href="products.html?data-filter=bathroom"><span>Bathroom</span></a>
             </li>
             <li>
                 <div class="cat-bg" style="background-image: url('https://down-id.img.susercontent.com/file/sg-11134201-7rdy8-mcj15f3yq0frd3.webp');"></div>
                 <div class="cat-overlay"></div>
-                <a href="products.html?filter=storage"><span>Storage</span></a>
+                <a href="products.html?data-filter=storage"><span>Storage</span></a>
             </li>
         </ul>
     </aside>
@@ -931,11 +931,13 @@
     <section class="products-section">
         <div class="container">
             <div class="filter-bar">
-                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="all">Semua</button>
                 <button class="filter-btn" data-filter="kitchen">Kitchen</button>
                 <button class="filter-btn" data-filter="storage">Storage</button>
                 <button class="filter-btn" data-filter="homedecor">Home Decor</button>
                 <button class="filter-btn" data-filter="produkbaru">Produk Baru</button>
+                <button class="filter-btn" data-filter="bestseller">Best Seller</button>
+                <button class="filter-btn" data-filter="bathroom">Bathroom</button>
             </div>
 
             <!-- HTML - Duplicate Nav (Above Categories Section) -->
@@ -1254,19 +1256,11 @@
 
             // Show/hide product cards
             productCards.forEach(card => {
-                if (filterValue === 'all') {
-                    card.style.display = '';
-                } else if (filterValue === 'produkbaru') {
-                    // Special case: filter by "Baru" badge
-                    const badge = card.querySelector('.product-badge');
-                    if (badge && badge.textContent.trim() === 'Baru') {
-                        card.style.display = '';
-                    } else {
-                        card.style.display = 'none';
-                    }
+                const category = card.getAttribute('data-category');
+                if (filterValue === 'all' || category === filterValue) {
+                    card.style.display = 'block';
                 } else {
-                    const category = card.getAttribute('data-category');
-                    card.style.display = (category === filterValue) ? '' : 'none';
+                    card.style.display = 'none';
                 }
             });
         }
@@ -1281,16 +1275,49 @@
 
         // Auto-apply filter from URL parameter on page load
         document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const filterParam = urlParams.get('data-filter');
-            
-            if (filterParam) {
-                const validFilters = Array.from(filterBtns).map(btn => btn.getAttribute('data-filter'));
-                if (validFilters.includes(filterParam)) {
-                    applyFilter(filterParam);
-                }
-            }
-        });
+    
+    // 1. Baca filter dari URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const filterValue = urlParams.get('data-filter') || 'all';
+    
+    // 2. Ambil semua product cards
+    const productCards = document.querySelectorAll('.product-card');
+    const keywordFilters = ['prasmanan', 'bumbu', 'toples', 'nampan', 'walldecor', 'pajangan', 'vas', 'taplak'];
+    
+    // Helper function to filter by keyword
+    function filterByKeyword(card, keyword) {
+        const title = card.querySelector('h4') ? card.querySelector('h4').textContent.toLowerCase() : '';
+        return title.includes(keyword.toLowerCase());
+    }
+    
+    // 3. Apply filter
+    productCards.forEach(card => {
+        if (filterValue === 'all') {
+            card.style.display = '';
+
+        } else if (filterValue === 'produkbaru') {
+            const badge = card.querySelector('.product-badge');
+            card.style.display = (badge && badge.textContent.trim() === 'Baru') ? '' : 'none';
+
+        } else if (filterValue === 'bestseller') {
+            const badge = card.querySelector('.product-badge');
+            card.style.display = (badge && badge.textContent.trim() === 'Best Seller') ? '' : 'none';
+
+        } else if (keywordFilters.includes(filterValue)) {
+            card.style.display = filterByKeyword(card, filterValue) ? '' : 'none';
+        
+        } else {
+            // DEFAULT: data-category
+            const category = card.getAttribute('data-category');
+            card.style.display = (category === filterValue) ? '' : 'none';
+        }
+    });
+    
+    // 4. (Opsional) Highlight menu aktif
+    const activeLink = document.querySelector(`.submenu a[href*="data-filter=${filterValue}"]`);
+    if (activeLink) activeLink.classList.add('active');
+    
+});
     </script>
 
 </body>
