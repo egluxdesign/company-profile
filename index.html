@@ -481,7 +481,7 @@
         .hero-section {
             position: relative;
             width: 100vw;
-            height: 100vh;
+            height: 84vh;
             min-height: 600px;
             display: flex;
             align-items: center;
@@ -507,7 +507,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(26,26,46,0.3) 0%, rgba(26,26,46,0.5) 100%);
+            background: linear-gradient(135deg, rgba(26,26,46,0.1) 0%, rgba(26,26,46,0.3) 100%);
         }
 
         .hero-text-content {
@@ -1159,7 +1159,7 @@
 
     <!-- Hero Section (Fullscreen) -->
     <section class="hero-section">
-        <div class="hero-bg-image" style="background-image: url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1920&q=80');"></div>
+        <div class="hero-bg-image" style="background-image: url('img/heroBg.png');"></div>
         <div class="hero-overlay"></div>
         <div class="hero-text-content">
             <a class="logo">
@@ -1194,29 +1194,33 @@
                 <p>Temukan solusi penyimpanan dan organisasi untuk setiap ruangan</p>
             </div>
             <div class="category-grid">
-                <div class="category-card">
-                    <img src="https://down-id.img.susercontent.com/file/sg-11134201-7rdy8-mcj15f3yq0frd3.webp" alt="Storage">
-                    <div class="category-overlay">
-                        <h3>Perlengkapan Penyimpanan</h3>
-                    </div>
+                <div class="category-card" onclick="window.location.href='products.html?data-filter=storage'">
+                        <img src="https://down-id.img.susercontent.com/file/sg-11134201-7rdy8-mcj15f3yq0frd3.webp" alt="Storage">
+                        <div class="category-overlay">
+                            <h3>Perlengkapan Penyimpanan</h3>
+                        </div>
+                    </a>
                 </div>
-                <div class="category-card">
-                    <img src="https://down-id.img.susercontent.com/file/sg-11134201-820n5-mn9v2pvit5om4b.webp" alt="Kitchen">
-                    <div class="category-overlay">
-                        <h3>Perlengkapan Dapur</h3>
-                    </div>
+                <div class="category-card" onclick="window.location.href='products.html?data-filter=kitchen'">
+                        <img src="https://down-id.img.susercontent.com/file/sg-11134201-820n5-mn9v2pvit5om4b.webp" alt="Kitchen">
+                        <div class="category-overlay">
+                            <h3>Perlengkapan Dapur</h3>
+                        </div>
+                    </a>
                 </div>
-                <div class="category-card">
-                    <img src="https://down-id.img.susercontent.com/file/sg-11134201-7rdvm-mdjp4ct77ggp63.webp" alt="Bathroom">
-                    <div class="category-overlay">
-                        <h3>Perlengkapan Kamar Mandi</h3>
-                    </div>
+                <div class="category-card" onclick="window.location.href='products.html?data-filter=bathroom'">
+                        <img src="https://down-id.img.susercontent.com/file/sg-11134201-7rdvm-mdjp4ct77ggp63.webp" alt="Bathroom">
+                        <div class="category-overlay">
+                            <h3>Perlengkapan Kamar Mandi</h3>
+                        </div>
+                    </a>
                 </div>
-                <div class="category-card">
-                    <img src="https://down-id.img.susercontent.com/file/sg-11134201-7rdx6-mdjse24iesx0a6.webp" alt="Cleaning">
-                    <div class="category-overlay">
-                        <h3>Perlengkapan Pembersih</h3>
-                    </div>
+                <div class="category-card" onclick="window.location.href='products.html?data-filter=homedecor'">
+                        <img src="https://down-id.img.susercontent.com/file/sg-11134201-7rdx6-mdjse24iesx0a6.webp" alt="Cleaning">
+                        <div class="category-overlay">
+                            <h3>Hiasan Rumah</h3>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -1376,7 +1380,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Eglux is Under Development</p>
+                <p>&copy; 2026 Eglux - Still Under Construction</p>
             </div>
         </div>
     </footer>
