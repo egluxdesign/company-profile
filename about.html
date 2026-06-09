@@ -1045,7 +1045,7 @@
                 gap: 0.8rem;
             }
         }
-    
+
 
 /* ===== ABOUT PAGE STYLES ===== */
 
@@ -1111,7 +1111,18 @@
         /* Timeline */
         .timeline-section {
             background: var(--light);
-            padding: 5rem 0;
+            margin: 4rem 0;
+            padding: 8rem 0;
+        }
+
+        .section-header h2 {
+            text-align: center;
+            margin: 0 1rem;
+        }
+
+        .section-header p {
+            font-size: 1rem;
+            margin: 0rem 4rem;
         }
 
         .timeline {
@@ -1232,101 +1243,253 @@
             font-size: 1rem;
         }
 
-        /* Team */
+        /* ===== NEW LEADERSHIP CARD - HORIZONTAL FLOW ===== */
         .team-section {
+            background: var(--light);
+            padding: 8rem 0;
+        }
+
+        .leadership-card {
+            max-width: 1100px;
+            margin: 0 auto;
             background: var(--white);
-            padding: 5rem 0;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(85, 69, 33, 0.12);
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+            transition: var(--transition);
         }
 
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
+        .leadership-card:hover {
+            box-shadow: 0 30px 80px rgba(85, 69, 33, 0.18);
+            transform: translateY(-4px);
         }
 
-        .team-card {
+        .leadership-left {
+            background: linear-gradient(180deg, var(--accent) 0%, var(--light) 100%);
+            padding: 3rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
+            border-right: 1px solid rgba(203, 166, 90, 0.15);
+            position: relative;
+            min-width: 280px;
+            flex-shrink: 0;
         }
 
-        .team-card img {
-            width: 150px;
-            height: 150px;
+        .leadership-left::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary) 0%, var(--primary) 100%);
+        }
+
+        .leadership-role {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--secondary);
+            margin-bottom: 2rem;
+        }
+
+        .leadership-photo {
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
             object-fit: cover;
-            margin-bottom: 1rem;
-            border: 4px solid var(--accent);
+            border: 5px solid var(--white);
+            box-shadow: 0 10px 30px rgba(85, 69, 33, 0.15);
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
         }
 
-        .team-card h4 {
-            font-size: 1.1rem;
+        .leadership-card:hover .leadership-photo {
+            transform: scale(1.03);
+            box-shadow: 0 15px 40px rgba(85, 69, 33, 0.22);
+        }
+
+        .leadership-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
             color: var(--primary);
             margin-bottom: 0.3rem;
         }
 
-        .team-card p {
+        .leadership-right {
+            padding: 3rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 1;
+        }
+
+        .leadership-right h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 0.6rem;
+        }
+
+        .leadership-right h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .leadership-right h3 + h3 {
+            margin-top: 2rem;
+        }
+
+        .leadership-right p {
             color: var(--text-light);
-            font-size: 0.9rem;
+            line-height: 1.8;
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .leadership-right ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .leadership-right ul li {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        .leadership-right ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.7rem;
+            width: 8px;
+            height: 8px;
+            background: var(--secondary);
+            border-radius: 50%;
+            opacity: 0.7;
+        }
+
+        .leadership-instagram {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-top: 2rem;
+            padding: 0.8rem 1.8rem;
+            background: linear-gradient(135deg, var(--secondary) 0%, #d4b06a 100%);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(203, 166, 90, 0.3);
+            align-self: flex-start;
+        }
+
+        .leadership-instagram:hover {
+            background: linear-gradient(135deg, var(--primary) 0%, #6a5830 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(85, 69, 33, 0.25);
+        }
+
+        .leadership-instagram svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
         }
 
         @media (max-width: 1024px) {
             .about-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+            align-items: center;
             }
 
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .leadership-card {
+                flex-direction: column;
+                max-width: 500px;
             }
 
-            .team-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .leadership-left {
+                border-right: none;
+                border-bottom: 1px solid rgba(203, 166, 90, 0.15);
+                padding: 2.5rem 2rem;
+                min-width: auto;
             }
 
-            .timeline::before {
-                left: 20px;
+            .leadership-right {
+                padding: 2.5rem 2rem;
             }
 
-            .timeline-item,
-            .timeline-item:nth-child(even) {
-                justify-content: flex-start;
-                padding-left: 50px;
-                padding-right: 0;
-            }
-
-            .timeline-dot {
-                left: 20px;
-                transform: translateX(-50%);
-            }
-
-            .timeline-item:nth-child(odd) .timeline-content::after,
-            .timeline-item:nth-child(even) .timeline-content::after {
-                left: -10px;
-                right: auto;
-                border-left: none;
-                border-right: 10px solid var(--white);
+            .leadership-instagram {
+                align-self: center;
             }
         }
 
         @media (max-width: 768px) {
-            .page-header h1 {
-                font-size: 2rem;
+            .about-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+            align-items: center;
             }
 
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
+            .leadership-card {
+                border-radius: 16px;
             }
 
-            .team-grid {
-                grid-template-columns: 1fr;
+            .leadership-left {
+                padding: 2rem 1.5rem;
             }
 
-            .stat-item h3 {
-                font-size: 2rem;
+            .leadership-photo {
+                width: 130px;
+                height: 130px;
+            }
+
+            .leadership-name {
+                font-size: 1.3rem;
+            }
+
+            .leadership-right {
+                padding: 2rem 1.5rem;
+            }
+
+            .leadership-right h3 {
+                font-size: 1.1rem;
+            }
+
+            .leadership-instagram {
+                width: 100%;
+                justify-content: center;
             }
         }
-    
+
 </style>
 
+<base target="_blank">
 <base target="_blank">
 </head>
 <body>
@@ -1408,22 +1571,6 @@
             <a href="index.html" class="logo">
                 <img src="img/Logo1.png" alt="Eglux Logo" style="height: 48px; width: auto;">
             </a>
-            <!-- <div class="header-right">
-                <button class="icon-btn" aria-label="Search">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                </button>
-                <button class="icon-btn" aria-label="Cart" style="position:relative;">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <path d="M16 10a4 4 0 0 1-8 0"></path>
-                    </svg>
-                    <span class="cart-count">3</span>
-                </button>
-            </div> -->
         </div>
     </header>
 
@@ -1477,111 +1624,36 @@
         </div>
     </section>
 
-    <!-- Stats -->
-    <!-- <section class="stats-section">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <h3>500+</h3>
-                    <p>Karyawan</p>
-                </div>
-                <div class="stat-item">
-                    <h3>100+</h3>
-                    <p>Desainer R&D</p>
-                </div>
-                <div class="stat-item">
-                    <h3>400+</h3>
-                    <p>Paten Nasional</p>
-                </div>
-                <div class="stat-item">
-                    <h3>40K+</h3>
-                    <p>m² Pabrik</p>
-                </div>
-            </div>
-        </div>
-    </section> -->
-
-    <!-- Timeline -->
-    <!-- <section class="timeline-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>Perjalanan Kami</h2>
-                <p>Momen penting dalam perjalanan Eglux</p>
-            </div>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-year">2015</div>
-                        <h4>Pendirian Eglux</h4>
-                        <p>Eglux didirikan dengan visi menciptakan produk rumah tangga premium.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-year">2017</div>
-                        <h4>Ekspansi Produk</h4>
-                        <p>Memperluas lini produk ke kategori dapur dan kamar mandi.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-year">2019</div>
-                        <h4>Penghargaan Desain</h4>
-                        <p>Memenangkan Red Dot Design Award untuk inovasi produk.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-year">2021</div>
-                        <h4>Pabrik Baru</h4>
-                        <p>Membuka fasilitas produksi modern seluas 40.000 m².</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-year">2024</div>
-                        <h4>50.000+ Pelanggan</h4>
-                        <p>Mencapai tonggak 50.000 pelanggan yang puas di seluruh dunia.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
-
     <!-- Team -->
     <section class="team-section">
         <div class="container">
             <div class="section-header">
-                <h2>Tim Kepemimpinan</h2>
-                <p>Orang-orang di balik kesuksesan Eglux</p>
+                <h2>Dedikasi untuk Menghadirkan Standar Hunian Modern</h2>
+                <p>Kami hadir mendefinisikan ulang standar rumah modern. Dipimpin oleh Mr.Peter, kami berdedikasi menciptakan inovasi produk berkualitas tinggi yang fungsional, elegan, dan relevan dengan gaya hidup masa kini.</p>
             </div>
-            <div class="team-grid">
-                <div class="team-card">
-                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&h=200&fit=crop&crop=face" alt="CEO">
-                    <h4>Ahmad Wijaya</h4>
-                    <p>Brand Owner</p>
-                    <a href="contact.html">Contact</a>
+            <div class="leadership-card">
+                <div class="leadership-left">
+                    <span class="leadership-role">Brand Owner</span>
+                    <img class="leadership-photo" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&h=200&fit=crop&crop=face" alt="Ahmad Wijaya">
+                    <span class="leadership-name">Mr. Peter</span>
                 </div>
-                <!-- <div class="team-card">
-                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&h=200&fit=crop&crop=face" alt="Design">
-                    <h4>Sarah Tanjung</h4>
-                    <p>Head of Design</p>
+                <div class="leadership-right">
+                    <h3>Visi</h3>
+                    <p>Menjadi brand rumah tangga terkemuka yang menginspirasi kehidupan lebih baik melalui desain fungsional dan estetis untuk setiap rumah di Indonesia.</p>
+                    <h3>Misi</h3>
+                    <ul>
+                        <li>Merancang produk yang menggabungkan fungsionalitas dan keindahan</li>
+                        <li>Menggunakan material berkualitas dengan proses produksi berkelanjutan</li>
+                        <li>Memberikan pengalaman pelanggan terbaik dari pembelian hingga purna jual</li>
+                        <li>Terus berinovasi mengikuti tren dan kebutuhan rumah modern</li>
+                    </ul>
+                    <a href="https://instagram.com/eglux" class="leadership-instagram" target="_blank">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                        </svg>
+                        @eglux
+                    </a>
                 </div>
-                <div class="team-card">
-                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face" alt="R&D">
-                    <h4>Budi Santoso</h4>
-                    <p>Head of R&D</p>
-                </div>
-                <div class="team-card">
-                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&h=200&fit=crop&crop=face" alt="Marketing">
-                    <h4>Diana Putri</h4>
-                    <p>Head of Marketing</p>
-                </div> -->
             </div>
         </div>
     </section>
