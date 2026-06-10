@@ -1484,100 +1484,27 @@
             console.log("⏳ UI loading state set");
 
             // ============================================
-            // METHOD 1: POST dengan no-cors (paling reliable)
+            // KIRIM DATA (fire and forget)
             // ============================================
-            try {
-                console.log("🌐 Attempting fetch to:", GAS_ENDPOINT);
-                
-                const response = await fetch(GAS_ENDPOINT, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData)
-                });
-                
-                console.log("📡 Fetch completed!");
-                console.log("📡 Response object:", response);
-                console.log("📡 Response.type:", response.type);
-                console.log("📡 Response.status:", response.status);
-                console.log("📡 Response.ok:", response.ok);
-                
-                // Kalo no-cors, response.type = "opaque" (gak bisa dibaca)
-                // Tapi request TETEP kekirim ke GAS!
-                
-                if (response.type === 'opaque') {
-                    console.log("✅ Opaque response = request sent successfully!");
-                    showSuccess();
-                } else {
-                    // Kalo somehow bisa baca response
-                    try {
-                        const text = await response.text();
-                        console.log("📄 Response text:", text);
-                        
-                        let result;
-                        try {
-                            result = JSON.parse(text);
-                            console.log("✅ Parsed JSON:", result);
-                            
-                            if (result.success) {
-                                showSuccess(result.ticketId);
-                            } else {
-                                showError(result.error || 'Gagal mengirim');
-                            }
-                        } catch (parseErr) {
-                            console.log("⚠️ Not JSON, but request likely succeeded");
-                            showSuccess();
-                        }
-                    } catch (textErr) {
-                        console.log("⚠️ Can't read response, but request likely succeeded");
-                        showSuccess();
-                    }
-                }
+            fetch(GAS_ENDPOINT, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            }).then(() => {
+                console.log("✅ Fetch completed");
+            }).catch((err) => {
+                console.log("⚠️ Fetch error (tetep lanjut):", err);
+            });
 
-            } catch (error) {
-                console.error("❌ Fetch error:", error);
-                console.error("❌ Error name:", error.name);
-                console.error("❌ Error message:", error.message);
-                
-                // Fallback: tetep show success kalo data mungkin udah masuk
-                showSuccess();
-            } finally {
-                console.log("🏁 Finally block executed");
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            }
+            // LANGSUNG SHOW SUCCESS (gak tunggu response)
+            console.log("🎉 Showing success immediately");
+            showSuccess();
+
+            // Restore UI
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
         });
-
-        function showSuccess(ticketId) {
-            console.log("🎉 showSuccess called, ticketId:", ticketId);
-            if (ticketId) {
-                successMsg.innerHTML = `✅ Pesan berhasil dikirim! Tiket Anda: <strong>#${ticketId}</strong>. Cek email untuk konfirmasi.`;
-            } else {
-                successMsg.innerHTML = `✅ Pesan berhasil dikirim! Tim kami akan menghubungi Anda segera.`;
-            }
-            successMsg.style.display = 'block';
-            contactForm.reset();
-            successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            
-            setTimeout(() => {
-                successMsg.style.display = 'none';
-                console.log("⏰ Success message hidden");
-            }, 8000);
-        }
-
-        function showError(msg) {
-            console.log("💥 showError called:", msg);
-            errorMsg.innerHTML = `❌ ${msg}`;
-            errorMsg.style.display = 'block';
-            setTimeout(() => {
-                errorMsg.style.display = 'none';
-            }, 5000);
-        }
-
-        console.log("✅ All scripts initialized");
     </script>
-
-</body>
-</html>
+</body> 
+</html> 
