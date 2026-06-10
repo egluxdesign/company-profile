@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eglux Ticket Dashboard</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0a0a0a; color: #e0e0e0; padding: 20px; }
+    .container { max-width: 1400px; margin: 0 auto; }
+    h1 { color: #fff; margin-bottom: 20px; font-size: 28px; }
+    
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: #1a1a1a; border: 1px solid #333; border-radius: 12px; padding: 20px; text-align: center; }
+    .stat-card h3 { font-size: 32px; color: #fff; margin-bottom: 5px; }
+    .stat-card p { color: #888; font-size: 14px; }
+    
+    .filters { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    .filters button { background: #1a1a1a; border: 1px solid #333; color: #fff; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 14px; }
+    .filters button:hover, .filters button.active { background: #333; border-color: #666; }
+    
+    table { width: 100%; border-collapse: collapse; background: #1a1a1a; border-radius: 12px; overflow: hidden; }
+    th, td { padding: 15px; text-align: left; border-bottom: 1px solid #333; }
+    th { background: #222; color: #fff; font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+    td { font-size: 14px; }
+    tr:hover { background: #252525; }
+    
+    .ticket-id { font-family: monospace; background: #333; padding: 4px 10px; border-radius: 6px; font-size: 13px; color: #fff; }
+    
+    .status {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+    .status-baru { background: #fff3cd; color: #856404; }
+    .status-diproses { background: #cce5ff; color: #004085; }
+    .status-menunggu { background: #ffe6cc; color: #7c4a00; }
+    .status-selesai { background: #d4edda; color: #155724; }
+    .status-ditolak { background: #f8d7da; color: #721c24; }
+    
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .btn-primary { background: #4285f4; color: white; }
+    .btn-primary:hover { background: #3367d6; }
+    
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal.active { display: flex; }
+    .modal-content {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 16px;
+      padding: 30px;
+      width: 90%;
+      max-width: 500px;
+    }
+    .modal-content h2 { margin-bottom: 20px; color: #fff; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; margin-bottom: 8px; color: #aaa; font-size: 14px; }
+    .form-group select, .form-group input, .form-group textarea {
+      width: 100%;
+      background: #0a0a0a;
+      border: 1px solid #333;
+      color: #fff;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    .form-group textarea { min-height: 100px; resize: vertical; }
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+    
+    .loading { text-align: center; padding: 40px; color: #666; }
+    .error { background: #f8d7da; color: #721c24; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+    .success { background: #d4edda; color: #155724; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+    
+    .truncate { max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    
+    @media (max-width: 768px) {
+      table { font-size: 12px; }
+      th, td { padding: 10px 8px; }
+      .truncate { max-width: 100px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎫 Eglux Ticket Dashboard</h1>
+    
+    <div id="message"></div>
+    
+    <div class="stats" id="stats">
+      <div class="stat-card"><h3 id="totalTickets">0</h3><p>Total Tiket</p></div>
+      <div class="stat-card"><h3 id="newTickets">0</h3><p>Baru</p></div>
+      <div class="stat-card"><h3 id="processingTickets">0</h3><p>Diproses</p></div>
+      <div class="stat-card"><h3 id="doneTickets">0</h3><p>Selesai</p></div>
+    </div>
+    
+    <div class="filters">
+      <button class="active" onclick="filterStatus('all')">Semua</button>
+      <button onclick="filterStatus('Baru')">Baru</button>
+      <button onclick="filterStatus('Diproses')">Diproses</button>
+      <button onclick="filterStatus('Menunggu')">Menunggu</button>
+      <button onclick="filterStatus('Selesai')">Selesai</button>
+      <button onclick="loadTickets()" style="margin-left: auto;">🔄 Refresh</button>
+    </div>
+    
+    <div id="loading" class="loading">Memuat tiket...</div>
+    
+    <table id="ticketTable" style="display: none;">
+      <thead>
+        <tr>
+          <th>Tiket ID</th>
+          <th>Waktu</th>
+          <th>Nama</th>
+          <th>Email</th>
+          <th>Subjek</th>
+          <th>Pesan</th>
+          <th>Status</th>
+          <th>Staff</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="ticketBody"></tbody>
+    </table>
+  </div>
+  
+  <div class="modal" id="updateModal">
+    <div class="modal-content">
+      <h2>Update Tiket <span id="modalTicketId"></span></h2>
+      <div class="form-group">
+        <label>Status</label>
+        <select id="updateStatus">
+          <option value="Baru">Baru</option>
+          <option value="Diproses">Diproses</option>
+          <option value="Menunggu">Menunggu</option>
+          <option value="Selesai">Selesai</option>
+          <option value="Ditolak">Ditolak</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Staff yang Handle</label>
+        <input type="text" id="updateStaff" placeholder="Nama staff...">
+      </div>
+      <div class="form-group">
+        <label>Catatan Internal</label>
+        <textarea id="updateNote" placeholder="Catatan untuk tim..."></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn" onclick="closeModal()" style="background: #333; color: #fff;">Batal</button>
+        <button class="btn btn-primary" onclick="submitUpdate()">Simpan Update</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbzq3JYaoG4hAwflfQVNhZrcsKflw5htI9SsNnW-9NZgDIcp3SojybpafAEOoEFw8zxc/exec";
+    
+    var allTickets = [];
+    var currentTicketId = null;
+    
+    // ========================================
+    // LOAD TIKET
+    // ========================================
+    async function loadTickets() {
+      document.getElementById('loading').style.display = 'block';
+      document.getElementById('ticketTable').style.display = 'none';
+      
+      try {
+        const url = API_URL + "?action=list&t=" + Date.now();
+        const response = await fetch(url);
+        const result = await response.json();
+        
+        if (result.success) {
+          allTickets = result.tickets.reverse();
+          renderTickets(allTickets);
+          updateStats(allTickets);
+        } else {
+          showMessage(result.error, 'error');
+        }
+      } catch (err) {
+        showMessage('Gagal memuat: ' + err.message, 'error');
+      }
+      
+      document.getElementById('loading').style.display = 'none';
+    }
+    
+    // ========================================
+    // RENDER
+    // ========================================
+    function renderTickets(tickets) {
+      const tbody = document.getElementById('ticketBody');
+      tbody.innerHTML = '';
+      
+      tickets.forEach(function(ticket) {
+        const row = document.createElement('tr');
+        const statusClass = 'status-' + (ticket.status || 'baru').toLowerCase();
+        
+        row.innerHTML = 
+          '<td><span class="ticket-id">' + (ticket.ticketId || '-') + '</span></td>' +
+          '<td>' + (ticket.timestamp || '-') + '</td>' +
+          '<td>' + (ticket.name || '-') + '</td>' +
+          '<td><a href="mailto:' + ticket.email + '" style="color: #4285f4;">' + (ticket.email || '-') + '</a></td>' +
+          '<td>' + (ticket.subject || '-') + '</td>' +
+          '<td class="truncate" title="' + (ticket.message || '') + '">' + (ticket.message || '-') + '</td>' +
+          '<td><span class="status ' + statusClass + '">' + (ticket.status || 'Baru') + '</span></td>' +
+          '<td>' + (ticket.staff || '-') + '</td>' +
+          '<td><button class="btn btn-primary" onclick="openUpdate(\'' + (ticket.ticketId || '') + '\')">Update</button></td>';
+        
+        tbody.appendChild(row);
+      });
+      
+      document.getElementById('ticketTable').style.display = 'table';
+    }
+    
+    function updateStats(tickets) {
+      document.getElementById('totalTickets').textContent = tickets.length;
+      document.getElementById('newTickets').textContent = tickets.filter(function(t) { return t.status === 'Baru'; }).length;
+      document.getElementById('processingTickets').textContent = tickets.filter(function(t) { return t.status === 'Diproses'; }).length;
+      document.getElementById('doneTickets').textContent = tickets.filter(function(t) { return t.status === 'Selesai'; }).length;
+    }
+    
+    function filterStatus(status) {
+      document.querySelectorAll('.filters button').forEach(function(btn) { btn.classList.remove('active'); });
+      event.target.classList.add('active');
+      
+      if (status === 'all') {
+        renderTickets(allTickets);
+      } else {
+        renderTickets(allTickets.filter(function(t) { return t.status === status; }));
+      }
+    }
+    
+    // ========================================
+    // MODAL
+    // ========================================
+    function openUpdate(ticketId) {
+      console.log("openUpdate called with:", ticketId);
+      currentTicketId = ticketId;
+      document.getElementById('modalTicketId').textContent = ticketId;
+      
+      const ticket = allTickets.find(function(t) { return t.ticketId === ticketId; });
+      if (ticket) {
+        document.getElementById('updateStatus').value = ticket.status || 'Baru';
+        document.getElementById('updateStaff').value = ticket.staff || '';
+        document.getElementById('updateNote').value = ticket.note || '';
+      }
+      
+      document.getElementById('updateModal').classList.add('active');
+    }
+    
+    function closeModal() {
+      document.getElementById('updateModal').classList.remove('active');
+      currentTicketId = null;
+    }
+    
+    // ========================================
+    // SUBMIT UPDATE
+    // ========================================
+    async function submitUpdate() {
+      console.log("submitUpdate called, currentTicketId:", currentTicketId);
+      
+      if (!currentTicketId) {
+        showMessage('Error: Tidak ada tiket yang dipilih', 'error');
+        return;
+      }
+      
+      const status = document.getElementById('updateStatus').value;
+      const staff = document.getElementById('updateStaff').value;
+      const note = document.getElementById('updateNote').value;
+      
+      const url = API_URL + 
+        '?action=update' +
+        '&ticketId=' + encodeURIComponent(currentTicketId) +
+        '&status=' + encodeURIComponent(status) +
+        '&staff=' + encodeURIComponent(staff) +
+        '&note=' + encodeURIComponent(note) +
+        '&t=' + Date.now();
+      
+      console.log("Update URL:", url);
+      
+      try {
+        const response = await fetch(url);
+        console.log("Response status:", response.status);
+        
+        const text = await response.text();
+        console.log("Raw response:", text);
+        
+        let result;
+        try {
+          result = JSON.parse(text);
+        } catch (e) {
+          showMessage('Response bukan JSON: ' + text.substring(0, 100), 'error');
+          return;
+        }
+        
+        if (result.success) {
+          showMessage('✅ ' + result.message, 'success');
+          closeModal();
+          setTimeout(loadTickets, 1000);
+        } else {
+          showMessage('❌ Error: ' + result.error, 'error');
+        }
+      } catch (err) {
+        console.error("Fetch error:", err);
+        showMessage('Gagal update: ' + err.message, 'error');
+      }
+    }
+    
+    function showMessage(msg, type) {
+      const el = document.getElementById('message');
+      el.innerHTML = '<div class="' + type + '">' + msg + '</div>';
+      setTimeout(function() { el.innerHTML = ''; }, 5000);
+    }
+    
+    // ========================================
+    // INIT
+    // ========================================
+    loadTickets();
+    setInterval(loadTickets, 30000);
+    
+    document.getElementById('updateModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+  </script>
+</body>
+</html>

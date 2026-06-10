@@ -1523,6 +1523,19 @@
                     body: JSON.stringify(formData)
                 });
 
+                // Di JavaScript form lo, setelah fetch:
+                    fetch(GAS_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(formData)
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                    if (data.success) {
+                        // Tampilkan tiket ID ke user   
+                        showSuccess(`Tiket #${data.ticketId} berhasil dibuat! Cek email Anda untuk konfirmasi.`);
+                    }
+                });
+
                 // Tampilkan pesan sukses
                 successMsg.style.display = 'block';
                 contactForm.reset();
