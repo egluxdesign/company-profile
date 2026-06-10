@@ -1331,7 +1331,7 @@
             }
         }
 
-        // Submenu Toggle
+        // Submenu Toggle - attach event listeners properly
         document.addEventListener('DOMContentLoaded', function() {
             const menuToggles = document.querySelectorAll('.menu-toggle');
             menuToggles.forEach(function(toggle) {
@@ -1340,18 +1340,20 @@
                     e.stopPropagation();
                     const parentLi = this.closest('.has-submenu');
 
+                    // Close other submenus
                     document.querySelectorAll('.has-submenu').forEach(function(item) {
                         if (item !== parentLi) {
                             item.classList.remove('open');
                         }
                     });
 
+                    // Toggle current submenu
                     parentLi.classList.toggle('open');
                 });
             });
         });
 
-        // Smooth Scroll Transition
+        // ===== SMOOTH SCROLL TRANSITION (JITTER-FREE) =====
         const primaryNav = document.getElementById('primaryNav');
         const duplicateNav = document.getElementById('duplicateNav');
         const mainHeader = document.getElementById('mainHeader');
@@ -1370,8 +1372,10 @@
         function onScroll() {
             const scrollY = window.scrollY;
             const headerHeight = mainHeader.offsetHeight;
+            const primaryNavHeight = primaryNav.offsetHeight;
             const triggerPoint = duplicateNavOffset - headerHeight;
 
+            // Primary nav: smooth slide-up hide when scrolled past
             const primaryNavRect = primaryNav.getBoundingClientRect();
             if (primaryNavRect.bottom <= 0) {
                 if (!primaryNav.classList.contains('hidden')) {
@@ -1383,6 +1387,7 @@
                 }
             }
 
+            // Duplicate nav: only stick when it actually reaches the logo bar
             if (scrollY >= triggerPoint) {
                 if (!isStuck) {
                     isStuck = true;
@@ -1415,11 +1420,31 @@
                 }
             });
         });
+    
+
+        // ===== CONTACT PAGE SCRIPTS =====
 
         // ============================================
-        // KONFIGURASI
+        // KONFIGURASI - GANTI DENGAN URL WEB APP LO
         // ============================================
-        const GAS_ENDPOINT = "https://script.google.com/macros/s/AKfycbzq3JYaoG4hAwflfQVNhZrcsKflw5htI9SsNnW-9NZgDIcp3SojybpafAEOoEFw8zxc/exec";
+        const GAS_ENDPOINT = "https://script.google.com/macros/s/AKfycbzq3JYaoG4hAwflfQVNhZrcsKflw5htI9SsNnW-9NZgDIcp3SojybpafAEOoEFw8zxc/exec"; 
+        // ↑↑↑ PASTE URL WEB APP GAS LO DI SINI ↑↑↑
+
+        // ============================================
+        // MOBILE MENU
+        // ============================================
+        const mobileMenuBtn = document.getElementById('hamburgerBtn');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
 
         // ============================================
         // FAQ TOGGLE
@@ -1429,8 +1454,10 @@
                 const item = question.parentElement;
                 const isActive = item.classList.contains('active');
                 
+                // Close all
                 document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
                 
+                // Open clicked if wasn't active
                 if (!isActive) {
                     item.classList.add('active');
                 }
@@ -1452,7 +1479,9 @@
             successMsg.style.display = 'none';
             errorMsg.style.display = 'none';
 
-            // Generate timestamp
+            // ============================================
+            // GENERATE TIMESTAMP (Format: DD/MM/YYYY HH:mm)
+            // ============================================
             const now = new Date();
             const pad = (n) => n.toString().padStart(2, '0');
             const timestamp = `${pad(now.getDate())}/${pad(now.getMonth() + 1)}/${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
@@ -1472,6 +1501,7 @@
                 return;
             }
 
+            // Validasi email format
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(formData.email)) {
                 alert('Format email tidak valid.');
@@ -1484,80 +1514,68 @@
             submitBtn.disabled = true;
 
             try {
-                // ============================================
-                // FETCH KE GAS - PAKAI GET (CORS-friendly)
-                // ============================================
-                const params = new URLSearchParams({
-                    name: formData.name,
-                    email: formData.email,
-                    subject: formData.subject,
-                    message: formData.message,
-                    timestamp: formData.timestamp
+                await fetch(GAS_ENDPOINT, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
                 });
 
-                const url = GAS_ENDPOINT + '?' + params.toString();
-                console.log("Fetching:", url);
-
-                const response = await fetch(url);
-                console.log("Status:", response.status);
-
-                const text = await response.text();
-                console.log("Response:", text);
-
-                let result;
-                try {
-                    result = JSON.parse(text);
-                } catch (parseErr) {
-                    console.log("Not JSON, but status is", response.status);
-                    // Kalo bukan JSON tapi status 200, tetep sukses
-                    if (response.status === 200) {
-                        showSuccess();
-                        return;
+                // Di JavaScript form lo, setelah fetch:
+                    fetch(GAS_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(formData)
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                    if (data.success) {
+                        // Tampilkan tiket ID ke user   
+                        showSuccess(`Tiket #${data.ticketId} berhasil dibuat! Cek email Anda untuk konfirmasi.`);
                     }
-                    throw new Error('Response tidak valid');
-                }
+                });
 
-                console.log("Parsed:", result);
+                // Tampilkan pesan sukses
+                successMsg.style.display = 'block';
+                contactForm.reset();
 
-                if (result.success) {
-                    showSuccess(result.ticketId);
-                } else {
-                    showError(result.error || 'Terjadi kesalahan');
-                }
+                // Scroll ke pesan sukses
+                successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                // Sembunyikan pesan setelah 5 detik
+                setTimeout(() => {
+                    successMsg.style.display = 'none';
+                }, 5000);
 
             } catch (error) {
                 console.error('Error:', error);
-                // Fallback: anggap sukses kalo data udah masuk spreadsheet
-                showSuccess();
+                errorMsg.style.display = 'block';
+                
+                setTimeout(() => {
+                    errorMsg.style.display = 'none';
+                }, 5000);
             } finally {
+                // Restore UI
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
             }
         });
 
-        function showSuccess(ticketId) {
-            if (ticketId) {
-                successMsg.innerHTML = `✅ Pesan berhasil dikirim! Tiket Anda: <strong>#${ticketId}</strong>. Cek email untuk konfirmasi.`;
-            } else {
-                successMsg.innerHTML = `✅ Pesan berhasil dikirim! Tim kami akan menghubungi Anda segera.`;
-            }
-            successMsg.style.display = 'block';
-            contactForm.reset();
-            successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            
-            setTimeout(() => {
-                successMsg.style.display = 'none';
-            }, 8000);
-        }
-
-        function showError(msg) {
-            errorMsg.innerHTML = `❌ ${msg}`;
-            errorMsg.style.display = 'block';
-            setTimeout(() => {
-                errorMsg.style.display = 'none';
-            }, 5000);
-        }
-    </script>
+        // ============================================
+        // FORCE SAME-TAB NAVIGATION
+        // ============================================
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto:')) {
+                    e.preventDefault();
+                    window.location.href = href;
+                }
+            });
+        });
+    
+</script>
 
 </body>
 </html>
