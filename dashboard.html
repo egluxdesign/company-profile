@@ -170,7 +170,7 @@
     </div>
   </div>
 
-  <script>
+<script>
     const API_URL = "https://script.google.com/macros/s/AKfycbzq3JYaoG4hAwflfQVNhZrcsKflw5htI9SsNnW-9NZgDIcp3SojybpafAEOoEFw8zxc/exec";
     
     var allTickets = [];
@@ -203,6 +203,29 @@
     }
     
     // ========================================
+    // HELPER: Format Timestamp
+    // ========================================
+    function formatTimestamp(ts) {
+      if (!ts || ts === '-') return '-';
+      
+      // Kalo sudah format Indonesia DD/MM/YYYY, return as-is
+      if (/^\d{2}\/\d{2}\/\d{4}/.test(ts)) {
+        return ts;
+      }
+      
+      // Kalo format ISO (2026-10-06T09:42:00.000Z) atau Date object
+      try {
+        var d = new Date(ts);
+        if (isNaN(d.getTime())) return ts; // invalid date
+        
+        var pad = function(n) { return n < 10 ? '0' + n : n; };
+        return pad(d.getDate()) + '/' + pad(d.getMonth() + 1) + '/' + d.getFullYear() + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+      } catch (e) {
+        return ts;
+      }
+    }
+    
+    // ========================================
     // RENDER
     // ========================================
     function renderTickets(tickets) {
@@ -215,7 +238,7 @@
         
         row.innerHTML = 
           '<td><span class="ticket-id">' + (ticket.ticketId || '-') + '</span></td>' +
-          '<td>' + (ticket.timestamp || '-') + '</td>' +
+          '<td>' + formatTimestamp(ticket.timestamp) + '</td>' +
           '<td>' + (ticket.name || '-') + '</td>' +
           '<td><a href="mailto:' + ticket.email + '" style="color: #4285f4;">' + (ticket.email || '-') + '</a></td>' +
           '<td>' + (ticket.subject || '-') + '</td>' +
