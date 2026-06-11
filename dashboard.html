@@ -203,25 +203,32 @@
     }
     
     // ========================================
-    // HELPER: Format Timestamp
+    // HELPER: Format Timestamp (2 baris)
     // ========================================
     function formatTimestamp(ts) {
-      if (!ts || ts === '-') return '-';
+      if (!ts || ts === '-') return '<div>-</div>';
       
-      // Kalo sudah format Indonesia DD/MM/YYYY, return as-is
+      // Kalo sudah format Indonesia DD/MM/YYYY HH:mm
       if (/^\d{2}\/\d{2}\/\d{4}/.test(ts)) {
-        return ts;
+        var parts = ts.split(' ');
+        if (parts.length >= 2) {
+          return '<div>' + parts[0] + '</div><div style="color:#888;font-size:12px;">' + parts[1] + '</div>';
+        }
+        return '<div>' + ts + '</div>';
       }
       
-      // Kalo format ISO (2026-10-06T09:42:00.000Z) atau Date object
+      // Kalo format ISO (2026-10-06T09:42:00.000Z)
       try {
         var d = new Date(ts);
-        if (isNaN(d.getTime())) return ts; // invalid date
+        if (isNaN(d.getTime())) return '<div>' + ts + '</div>';
         
         var pad = function(n) { return n < 10 ? '0' + n : n; };
-        return pad(d.getDate()) + '/' + pad(d.getMonth() + 1) + '/' + d.getFullYear() + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+        var dateStr = pad(d.getDate()) + '/' + pad(d.getMonth() + 1) + '/' + d.getFullYear();
+        var timeStr = pad(d.getHours()) + ':' + pad(d.getMinutes());
+        
+        return '<div>' + dateStr + '</div><div style="color:#888;font-size:12px;">' + timeStr + '</div>';
       } catch (e) {
-        return ts;
+        return '<div>' + ts + '</div>';
       }
     }
     
