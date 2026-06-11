@@ -5,27 +5,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Eglux Ticket Dashboard</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0a0a0a; color: #e0e0e0; padding: 20px; }
-    .container { max-width: 1400px; margin: 0 auto; }
-    h1 { color: #fff; margin-bottom: 20px; font-size: 28px; }
+    :root {
+        --primary: #554521;
+        --secondary: #cba65a;
+        --accent: #f5f0e8;
+        --light: #faf8f5;
+        --white: #ffffff;
+        --text-light: #666;
+        --sidebar-dark: #cba65a;
+        --transition: all 0.3s ease;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box;
+    }
+
+    body { 
+      font-family: 'Inter', sans-serif; 
+      background: var(--white); 
+      color: var(--secondary); 
+      padding: 20px; 
+    }
+    .container { 
+      max-width: 1400px; 
+      margin: 0 auto; 
+    }
+
+    h1 { 
+      color: var(--primary); 
+      margin-bottom: 20px; 
+      font-size: 28px; 
+    }
     
     .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 30px; }
-    .stat-card { background: #1a1a1a; border: 1px solid #333; border-radius: 12px; padding: 20px; text-align: center; }
-    .stat-card h3 { font-size: 32px; color: #fff; margin-bottom: 5px; }
-    .stat-card p { color: #888; font-size: 14px; }
+    .stat-card { background: var(--light); border: 1px solid var(--secondary); border-radius: 12px; padding: 20px; text-align: center; }
+    .stat-card h3 { font-size: 32px; color: var(--primary); margin-bottom: 5px; }
+    .stat-card p { color: var(--text-light); font-size: 14px; }
     
     .filters { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-    .filters button { background: #1a1a1a; border: 1px solid #333; color: #fff; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 14px; }
-    .filters button:hover, .filters button.active { background: #333; border-color: #666; }
+    .filters button { background: var(--light); border: 1px solid var(--secondary); color: var(--primary); padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 14px; }
+    .filters button:hover, .filters button.active { background: var(--secondary); border-color: var(--primary); }
     
-    table { width: 100%; border-collapse: collapse; background: #1a1a1a; border-radius: 12px; overflow: hidden; }
-    th, td { padding: 15px; text-align: left; border-bottom: 1px solid #333; }
-    th { background: #222; color: #fff; font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+    table { width: 100%; border-collapse: collapse; background: var(--light); border-radius: 12px; overflow: hidden; }
+    th, td { padding: 15px; text-align: left; border-bottom: 1px solid var(--secondary); }
+    th { background: var(--secondary); color: var(--white); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
     td { font-size: 14px; }
-    tr:hover { background: #252525; }
+    tr:hover { background: var(--accent); }
     
-    .ticket-id { font-family: monospace; background: #333; padding: 4px 10px; border-radius: 6px; font-size: 13px; color: #fff; }
+    .ticket-id { font-family: monospace; background: var(--secondary); padding: 4px 10px; border-radius: 6px; font-size: 13px; color: var(--white); }
     
     .status {
       padding: 6px 14px;
@@ -53,6 +86,7 @@
     .btn-primary { background: #4285f4; color: white; }
     .btn-primary:hover { background: #3367d6; }
     
+    /* ===== UPDATE MODAL ===== */
     .modal {
       display: none;
       position: fixed;
@@ -87,6 +121,176 @@
     .form-group textarea { min-height: 100px; resize: vertical; }
     .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
     
+    /* ===== DETAIL MODAL ===== */
+    .detail-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .detail-modal.active { display: flex; }
+    
+    .detail-card {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      animation: slideUp 0.3s ease;
+    }
+    
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .detail-header {
+      padding: 24px 28px;
+      border-bottom: 1px solid #333;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    
+    .detail-header-left h2 {
+      color: #fff;
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+    
+    .detail-meta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    
+    .detail-meta span {
+      font-size: 12px;
+      color: #888;
+      background: #252525;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+    
+    .detail-close {
+      background: none;
+      border: none;
+      color: #888;
+      font-size: 28px;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.2s;
+    }
+    
+    .detail-close:hover {
+      background: #333;
+      color: #fff;
+    }
+    
+    .detail-body {
+      padding: 24px 28px;
+    }
+    
+    .detail-section {
+      margin-bottom: 24px;
+    }
+    
+    .detail-section:last-child {
+      margin-bottom: 0;
+    }
+    
+    .detail-section h4 {
+      color: #888;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    
+    .detail-section p {
+      color: #e0e0e0;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+    
+    .detail-section .message-box {
+      background: #0a0a0a;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 20px;
+      color: #e0e0e0;
+      line-height: 1.8;
+      font-size: 14px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    
+    .detail-section .info-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .detail-section .info-item {
+      flex: 1;
+      min-width: 200px;
+    }
+    
+    .detail-section .info-item label {
+      display: block;
+      color: #666;
+      font-size: 12px;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .detail-section .info-item .info-value {
+      display: block;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .detail-footer {
+      padding: 20px 28px;
+      border-top: 1px solid #333;
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+    
+    .detail-footer .btn {
+      padding: 10px 20px;
+    }
+    
+    /* Clickable message */
+    .msg-preview {
+      cursor: pointer;
+      transition: color 0.2s;
+      color: #aaa;
+    }
+    
+    .msg-preview:hover {
+      color: #4285f4;
+    }
+    
     .loading { text-align: center; padding: 40px; color: #666; }
     .error { background: #f8d7da; color: #721c24; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
     .success { background: #d4edda; color: #155724; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
@@ -97,6 +301,8 @@
       table { font-size: 12px; }
       th, td { padding: 10px 8px; }
       .truncate { max-width: 100px; }
+      .detail-card { max-width: 100%; }
+      .detail-section .info-row { flex-direction: column; }
     }
   </style>
 </head>
@@ -142,6 +348,7 @@
     </table>
   </div>
   
+  <!-- Update Modal -->
   <div class="modal" id="updateModal">
     <div class="modal-content">
       <h2>Update Tiket <span id="modalTicketId"></span></h2>
@@ -170,7 +377,69 @@
     </div>
   </div>
 
-<script>
+  <!-- Detail Modal -->
+  <div class="detail-modal" id="detailModal">
+    <div class="detail-card">
+      <div class="detail-header">
+        <div class="detail-header-left">
+          <h2>🎫 <span id="detailTicketId"></span></h2>
+          <div class="detail-meta">
+            <span id="detailStatus"></span>
+            <span id="detailDate"></span>
+            <span id="detailTime"></span>
+          </div>
+        </div>
+        <button class="detail-close" onclick="closeDetail()">&times;</button>
+      </div>
+      
+      <div class="detail-body">
+        <div class="detail-section">
+          <h4>Pesan dari Customer</h4>
+          <div class="message-box" id="detailMessage"></div>
+        </div>
+        
+        <div class="detail-section">
+          <h4>Informasi Pengirim</h4>
+          <div class="info-row">
+            <div class="info-item">
+              <label>Nama</label>
+              <div class="info-value" id="detailName"></div>
+            </div>
+            <div class="info-item">
+              <label>Email</label>
+              <div class="info-value" id="detailEmail"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="detail-section">
+          <h4>Detail Tiket</h4>
+          <div class="info-row">
+            <div class="info-item">
+              <label>Subjek</label>
+              <div class="info-value" id="detailSubject"></div>
+            </div>
+            <div class="info-item">
+              <label>Staff Handle</label>
+              <div class="info-value" id="detailStaff"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="detail-section" id="detailNoteSection" style="display:none;">
+          <h4>Catatan Internal</h4>
+          <div class="message-box" id="detailNote" style="font-size:13px; color:#aaa;"></div>
+        </div>
+      </div>
+      
+      <div class="detail-footer">
+        <button class="btn" onclick="closeDetail()" style="background:#333; color:#fff;">Tutup</button>
+        <button class="btn btn-primary" onclick="openUpdateFromDetail()">Update</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbzq3JYaoG4hAwflfQVNhZrcsKflw5htI9SsNnW-9NZgDIcp3SojybpafAEOoEFw8zxc/exec";
     
     var allTickets = [];
@@ -208,7 +477,6 @@
     function formatTimestamp(ts) {
       if (!ts || ts === '-') return '<div>-</div>';
       
-      // Kalo sudah format Indonesia DD/MM/YYYY HH:mm
       if (/^\d{2}\/\d{2}\/\d{4}/.test(ts)) {
         var parts = ts.split(' ');
         if (parts.length >= 2) {
@@ -217,7 +485,6 @@
         return '<div>' + ts + '</div>';
       }
       
-      // Kalo format ISO (2026-10-06T09:42:00.000Z)
       try {
         var d = new Date(ts);
         if (isNaN(d.getTime())) return '<div>' + ts + '</div>';
@@ -243,16 +510,18 @@
         const row = document.createElement('tr');
         const statusClass = 'status-' + (ticket.status || 'baru').toLowerCase();
         
+        var safeTicketId = (ticket.ticketId || '').replace(/'/g, "\\'");
+        
         row.innerHTML = 
           '<td><span class="ticket-id">' + (ticket.ticketId || '-') + '</span></td>' +
           '<td>' + formatTimestamp(ticket.timestamp) + '</td>' +
           '<td>' + (ticket.name || '-') + '</td>' +
           '<td><a href="mailto:' + ticket.email + '" style="color: #4285f4;">' + (ticket.email || '-') + '</a></td>' +
           '<td>' + (ticket.subject || '-') + '</td>' +
-          '<td class="truncate" title="' + (ticket.message || '') + '">' + (ticket.message || '-') + '</td>' +
+          '<td class="truncate msg-preview" onclick="openDetail(\'' + safeTicketId + '\')" title="Klik untuk lihat detail">' + (ticket.message || '-') + '</td>' +
           '<td><span class="status ' + statusClass + '">' + (ticket.status || 'Baru') + '</span></td>' +
           '<td>' + (ticket.staff || '-') + '</td>' +
-          '<td><button class="btn btn-primary" onclick="openUpdate(\'' + (ticket.ticketId || '') + '\')">Update</button></td>';
+          '<td><button class="btn btn-primary" onclick="openUpdate(\'' + safeTicketId + '\')">Update</button></td>';
         
         tbody.appendChild(row);
       });
@@ -279,7 +548,7 @@
     }
     
     // ========================================
-    // MODAL
+    // UPDATE MODAL
     // ========================================
     function openUpdate(ticketId) {
       console.log("openUpdate called with:", ticketId);
@@ -294,11 +563,100 @@
       }
       
       document.getElementById('updateModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
     }
     
     function closeModal() {
       document.getElementById('updateModal').classList.remove('active');
       currentTicketId = null;
+      document.body.style.overflow = '';
+    }
+    
+    // ========================================
+    // DETAIL MODAL
+    // ========================================
+    function openDetail(ticketId) {
+      console.log("openDetail:", ticketId);
+      
+      var ticket = allTickets.find(function(t) { return t.ticketId === ticketId; });
+      if (!ticket) return;
+      
+      document.getElementById('detailTicketId').textContent = ticket.ticketId || '-';
+      document.getElementById('detailMessage').textContent = ticket.message || '-';
+      document.getElementById('detailName').textContent = ticket.name || '-';
+      document.getElementById('detailEmail').innerHTML = '<a href="mailto:' + ticket.email + '" style="color:#4285f4;">' + (ticket.email || '-') + '</a>';
+      document.getElementById('detailSubject').textContent = ticket.subject || '-';
+      document.getElementById('detailStaff').textContent = ticket.staff || '(Belum diassign)';
+      
+      var statusEl = document.getElementById('detailStatus');
+      statusEl.textContent = (ticket.status || 'Baru');
+      var statusColors = {
+        'Baru': '#fff3cd',
+        'Diproses': '#cce5ff',
+        'Menunggu': '#ffe6cc',
+        'Selesai': '#d4edda',
+        'Ditolak': '#f8d7da'
+      };
+      var statusTextColors = {
+        'Baru': '#856404',
+        'Diproses': '#004085',
+        'Menunggu': '#7c4a00',
+        'Selesai': '#155724',
+        'Ditolak': '#721c24'
+      };
+      statusEl.style.background = statusColors[ticket.status] || '#333';
+      statusEl.style.color = statusTextColors[ticket.status] || '#fff';
+      statusEl.style.padding = '4px 12px';
+      statusEl.style.borderRadius = '20px';
+      statusEl.style.fontSize = '12px';
+      statusEl.style.fontWeight = '600';
+      statusEl.style.textTransform = 'uppercase';
+      
+      var dateStr = '-', timeStr = '-';
+      if (ticket.timestamp) {
+        if (ticket.timestamp.includes('T')) {
+          var d = new Date(ticket.timestamp);
+          var pad = function(n) { return n < 10 ? '0' + n : n; };
+          dateStr = pad(d.getDate()) + '/' + pad(d.getMonth() + 1) + '/' + d.getFullYear();
+          timeStr = pad(d.getHours()) + ':' + pad(d.getMinutes());
+        } else {
+          var parts = ticket.timestamp.split(' ');
+          if (parts.length >= 2) {
+            dateStr = parts[0];
+            timeStr = parts[1];
+          } else {
+            dateStr = ticket.timestamp;
+          }
+        }
+      }
+      document.getElementById('detailDate').textContent = '📅 ' + dateStr;
+      document.getElementById('detailTime').textContent = '🕐 ' + timeStr;
+      
+      var noteSection = document.getElementById('detailNoteSection');
+      if (ticket.note) {
+        document.getElementById('detailNote').textContent = ticket.note;
+        noteSection.style.display = 'block';
+      } else {
+        noteSection.style.display = 'none';
+      }
+      
+      document.getElementById('detailModal').dataset.ticketId = ticketId;
+      
+      document.getElementById('detailModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeDetail() {
+      document.getElementById('detailModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    
+    function openUpdateFromDetail() {
+      var ticketId = document.getElementById('detailModal').dataset.ticketId;
+      closeDetail();
+      setTimeout(function() {
+        openUpdate(ticketId);
+      }, 300);
     }
     
     // ========================================
@@ -368,6 +726,10 @@
     
     document.getElementById('updateModal').addEventListener('click', function(e) {
       if (e.target === this) closeModal();
+    });
+    
+    document.getElementById('detailModal').addEventListener('click', function(e) {
+      if (e.target === this) closeDetail();
     });
   </script>
 </body>
