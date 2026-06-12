@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/img/favLogo.png?v=2">
-    <title>Blog - Eglux</title>
+    <title>Program Affiliate - Eglux</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -401,22 +401,6 @@
             height: 32px;
         }
 
-        /* .cart-count {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: var(--secondary);
-            color: white;
-            font-size: 0.55rem;
-            font-weight: 700;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        } */
-
         /* ===== PRIMARY NAV (Below Logo) ===== */
         .primary-nav {
             background: var(--white);
@@ -426,13 +410,13 @@
             will-change: transform, opacity;
             transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease;
         }
-
+        
         .primary-nav.hidden {
             transform: translateY(-100%);
             opacity: 0;
             pointer-events: none;
         }
-
+        
         .primary-nav-inner {
             max-width: 1400px;
             margin: 0 auto;
@@ -443,7 +427,7 @@
             gap: 3rem;
             height: 48px;
         }
-
+        
         .primary-nav-inner a {
             font-size: 0.8rem;
             color: #333;
@@ -456,7 +440,7 @@
             padding: 4px 0;
             white-space: nowrap;
         }
-
+        
         .primary-nav-inner a::after {
             content: '';
             position: absolute;
@@ -467,116 +451,59 @@
             background: var(--secondary);
             transition: var(--transition);
         }
-
+        
         .primary-nav-inner a:hover::after,
         .primary-nav-inner a.active::after {
             width: 100%;
         }
-
+        
         .primary-nav-inner a:hover,
         .primary-nav-inner a.active {
             color: var(--secondary);
         }
-
-        .page-header {
-            padding-top: 120px;
-            padding-bottom: 3rem;
-            background: linear-gradient(135deg, var(--light) 0%, var(--accent) 100%);
-            text-align: center;
-        }
-
-        .page-header h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .page-header p {
-            color: var(--text-light);
-            font-size: 1.1rem;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-        }
-
-        .product-card {
-            background: var(--white);
-            border-radius: 20px;
-            overflow: hidden;
+        
+        .shop-btn {
+            display: inline-block;
+            padding: 1.1rem 4rem;
+            background: var(--secondary);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 30px;
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 4px;
             transition: var(--transition);
             cursor: pointer;
-            border: 1px solid var(--border);
         }
 
-        .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-            border-color: transparent;
-        }
-
-        .product-image {
-            position: relative;
-            overflow: hidden;
-            height: 250px;
-        }
-
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-
-        .product-card:hover .product-image img {
-            transform: scale(1.05);
-        }
-
-        .product-badge {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            background: var(--secondary);
-            color: var(--white);
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .product-info {
-            padding: 1.5rem;
-        }
-
-        .product-info h4 {
-            font-size: 1rem;
-            margin-bottom: 0.3rem;
+        .shop-btn:hover {
+            background: var(--white);
             color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
         }
 
-        .product-info .model {
-            font-size: 0.85rem;
-            color: var(--text-light);
-            margin-bottom: 0.8rem;
+        /* ===== COUNTRIES FOOTER ===== */
+        .countries-footer {
+            background: var(--sidebar-dark);
+            padding: 1rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
 
-        .product-info .price {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--secondary);
-        }
+        .countries-footer p {
+            color: var(--white);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            word-spacing: 8px;
+        } 
 
-        .product-info .desc {
-            font-size: 0.9rem;
-            color: var(--text-light);
-            margin-top: 0.5rem;
-            line-height: 1.5;
-        }
 
-        /* ===== DUPLICATE NAV (Above Categories) ===== */
+        /* ===== DUPLICATE NAV (Above Content) ===== */
         .duplicate-nav {
             background: var(--white);
             border-top: 1px solid #eee;
@@ -641,6 +568,34 @@
             color: var(--secondary);
         }
 
+        /* ===== SECTIONS COMMON ===== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        section {
+            padding: 5rem 0;
+        }
+
         /* ===== FOOTER ===== */
         .footer {
             background: var(--secondary);
@@ -695,24 +650,390 @@
             font-size: 0.85rem;
         }
 
+        /* ===== AFFILIATE PAGE STYLES ===== */
+        .page-header {
+            padding-top: 120px;
+            padding-bottom: 3rem;
+            background: linear-gradient(135deg, var(--light) 0%, var(--accent) 100%);
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        /* Hero Affiliate */
+        .affiliate-hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #3d3218 100%);
+            padding: 6rem 0;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .affiliate-hero h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .affiliate-hero p {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.85);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+
+        .affiliate-hero .hero-badge {
+            display: inline-block;
+            background: var(--secondary);
+            color: var(--white);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            background: var(--white);
+            padding: 5rem 0;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step-card {
+            background: var(--light);
+            padding: 2.5rem 1.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .step-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--secondary);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0 auto 1.5rem;
+        }
+
+        .step-card h3 {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+        }
+
+        .step-card p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        /* Benefits */
+        .benefits-section {
+            background: var(--light);
+            padding: 5rem 0;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .benefit-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+        }
+
+        .benefit-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--accent);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .benefit-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Commission */
+        .commission-section {
+            background: var(--white);
+            padding: 5rem 0;
+        }
+
+        .commission-card {
+            max-width: 800px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, var(--primary) 0%, #3d3218 100%);
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .commission-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: var(--secondary);
+            border-radius: 50%;
+            opacity: 0.1;
+        }
+
+        .commission-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .commission-card .commission-rate {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--secondary);
+            line-height: 1;
+            margin: 1rem 0;
+        }
+
+        .commission-card p {
+            color: rgba(255,255,255,0.8);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* Join CTA */
+        .join-section {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--light) 100%);
+            padding: 5rem 0;
+        }
+
+        .join-card {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(85, 69, 33, 0.1);
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .join-left {
+            flex: 1;
+        }
+
+        .join-left h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .join-left p {
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .join-left ul {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .join-left ul li {
+            color: var(--text-light);
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 0.6rem;
+            font-size: 0.95rem;
+        }
+
+        .join-left ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        .join-right {
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .qr-placeholder {
+            width: 220px;
+            height: 220px;
+            background: var(--light);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed var(--secondary);
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .qr-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .qr-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+
+        .join-btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--secondary);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .join-btn:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(85, 69, 33, 0.2);
+        }
+
+        /* FAQ */
+        .faq-section {
+            background: var(--white);
+            padding: 5rem 0;
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+            padding: 1.5rem 0;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.05rem;
+        }
+
+        .faq-icon {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            transition: var(--transition);
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding-top: 1rem;
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 1024px) {
-            .hero-text-content h1 {
-                font-size: 5rem;
-            }
-
-            .category-grid,
-            .product-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-
-            .story-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .feature-grid {
+            .steps-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+
+            .benefits-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .join-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .join-left ul li {
+                text-align: left;
             }
 
             .footer-grid {
@@ -729,32 +1050,38 @@
             }
 
             .header-right {
-            gap: 0rem;
+                gap: 0rem;
             }
         }
 
         @media (max-width: 768px) {
-            .hero-text-content h1 {
-                font-size: 3.5rem;
-                letter-spacing: 6px;
+            .page-header h1 {
+                font-size: 2rem;
             }
 
-            .hero-text-content .shop-btn {
-                padding: 1rem 2.5rem;
+            .affiliate-hero h2 {
+                font-size: 2rem;
             }
 
-            .category-grid,
-            .product-grid {
+            .steps-grid {
                 grid-template-columns: 1fr;
             }
 
-            .feature-grid {
+            .benefits-grid {
                 grid-template-columns: 1fr;
             }
 
-            .stats-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
+            .commission-card .commission-rate {
+                font-size: 3rem;
+            }
+
+            .join-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .qr-placeholder {
+                width: 180px;
+                height: 180px;
             }
 
             .footer-grid {
@@ -792,232 +1119,6 @@
             .header-right {
                 gap: -0.4rem;
             }
-        }
-    </style>
-    
-<base target="_blank">
-
-    <!-- Blog-specific styles -->
-    <style>
-        .blog-hero {
-            min-height: 40vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--light) 0%, var(--accent) 100%);
-            padding-top: 80px;
-            position: relative;
-            overflow: hidden;
-        }
-        .blog-hero::before {
-            content: '';
-            position: absolute;
-            top: -30%;
-            right: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(201,169,110,0.08) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-        .blog-hero .container { position: relative; z-index: 1; text-align: center; }
-        .blog-hero h1 { font-size: 3rem; font-weight: 800; color: var(--primary); margin-bottom: 1rem; }
-        .blog-hero p { font-size: 1.1rem; color: var(--text-light); max-width: 500px; margin: 0 auto; }
-
-        .blog-list {
-            background: var(--light);
-            padding: 4rem 0;
-            display: block;
-        }
-        .blog-list.hidden { display: none; }
-
-        .list-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .blog-preview-card {
-            background: var(--white);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            transition: var(--transition);
-            cursor: pointer;
-            border: 1px solid rgba(0,0,0,0.03);
-        }
-        .blog-preview-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-        }
-
-        .preview-image {
-            width: 100%;
-            height: 220px;
-            overflow: hidden;
-            background: var(--light);
-        }
-        .preview-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-        .blog-preview-card:hover .preview-image img {
-            transform: scale(1.05);
-        }
-
-        .preview-content { padding: 1.5rem; }
-        .preview-meta {
-            display: flex;
-            gap: 1rem;
-            font-size: 0.8rem;
-            color: var(--text-light);
-            margin-bottom: 0.6rem;
-        }
-        .preview-meta .meta-date { font-weight: 600; color: var(--secondary); }
-        .preview-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--primary);
-            line-height: 1.4;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .blog-detail {
-            background: var(--white);
-            padding: 4rem 0;
-            display: none;
-        }
-        .blog-detail.active { display: block; }
-
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--accent);
-            color: var(--primary);
-            padding: 0.7rem 1.2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            border: none;
-            margin-bottom: 2rem;
-            transition: var(--transition);
-        }
-        .back-btn:hover { background: var(--secondary); color: var(--white); }
-
-        .article-full { max-width: 900px; margin: 0 auto; }
-        .article-header { margin-bottom: 2rem; }
-        .article-meta {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-            color: var(--text-light);
-            flex-wrap: wrap;
-        }
-        .article-meta .meta-date { font-weight: 600; color: var(--secondary); }
-        .article-header h2 { font-size: 2.2rem; font-weight: 800; color: var(--primary); line-height: 1.2; }
-
-        .article-cover {
-            width: 100%;
-            height: 400px;
-            border-radius: 20px;
-            overflow: hidden;
-            margin-bottom: 2rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-            background: var(--light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-light);
-        }
-        .article-cover img { width: 100%; height: 100%; object-fit: cover; }
-
-        .article-body { font-size: 1.05rem; line-height: 1.9; color: var(--text); }
-        .article-body p { margin-bottom: 1.2rem; }
-
-        .article-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-        .article-gallery img { width: 100%; height: 200px; object-fit: cover; border-radius: 12px; }
-
-        .video-player {
-            margin: 2rem 0;
-            border-radius: 16px;
-            overflow: hidden;
-            background: #000;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-        }
-        .video-player iframe { width: 100%; height: 500px; border: none; display: block; }
-
-        /* Skeleton loading (lebih smooth dari spinner) */
-        .skeleton-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-        .skeleton-card {
-            background: var(--white);
-            border-radius: 20px;
-            overflow: hidden;
-            height: 340px;
-        }
-        .skeleton-image {
-            width: 100%;
-            height: 220px;
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-        }
-        .skeleton-text {
-            padding: 1.5rem;
-        }
-        .skeleton-line {
-            height: 12px;
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 6px;
-            margin-bottom: 8px;
-        }
-        .skeleton-line.short { width: 60%; }
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        .loading-state {
-            text-align: center;
-            padding: 5rem 2rem;
-            color: var(--text-light);
-        }
-        .empty-state {
-            text-align: center;
-            padding: 5rem 2rem;
-            color: var(--text-light);
-        }
-        .empty-state-icon { font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.5; }
-        .empty-state h3 { color: var(--primary); font-size: 1.3rem; }
-
-        @media (max-width: 1024px) {
-            .list-grid, .skeleton-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 768px) {
-            .blog-hero h1 { font-size: 2.2rem; }
-            .list-grid, .skeleton-grid { grid-template-columns: 1fr; }
-            .article-header h2 { font-size: 1.6rem; }
-            .article-cover { height: 250px; }
-            .video-player iframe { height: 280px; }
         }
     </style>
 <base target="_blank">
@@ -1122,7 +1223,6 @@
                         <path fill="currentColor" d="M22.24,10.93c0,.62-.51,1.13-1.13,1.13s-1.13-.51-1.13-1.13.51-1.13,1.13-1.13,1.13.51,1.13,1.13Z"/>
                         <path fill="currentColor" d="M16.08,11.25c-2.62,0-4.75,2.14-4.75,4.76s2.13,4.75,4.75,4.75,4.75-2.13,4.75-4.75-2.13-4.76-4.75-4.76ZM16.08,19.04c-1.68,0-3.04-1.36-3.04-3.04s1.36-3.05,3.04-3.05,3.04,1.37,3.04,3.05-1.36,3.04-3.04,3.04Z"/>
                     </svg>
-                    <!-- <span class="cart-count"></span> -->
                 </button>
             </div>
         </div>
@@ -1133,62 +1233,208 @@
         <div class="primary-nav-inner">
             <a href="index.html">Beranda</a>
             <a href="products.html">Produk</a>
-            <a href="blog.html" class="active">Blog</a>
+            <a href="blog.html">Blog</a>
             <a href="about.html">Tentang Kami</a>
             <a href="contact.html">Kontak</a>
-            <a href="affiliate.html">Affiliate</a>
+            <a href="affiliate.html" class="active">Affiliate</a>
         </div>
     </nav>
 
-    <!-- Blog Hero -->
-    <section class="blog-hero">
+    <!-- Affiliate Hero -->
+    <section class="affiliate-hero">
         <div class="container">
-            <h1>Eglux Blog</h1>
-            <p>Tips, inspirasi, dan cerita terbaru seputar gaya hidup rumah tangga.</p>
+            <h2>Program Affiliate Eglux</h2>
+            <p>Bergabunglah dengan ribuan affiliate Eglux yang telah menghasilkan penghasilan tambahan setiap bulan. Promosikan produk berkualitas dan dapatkan komisi menarik dari setiap penjualan yang berhasil.</p>
+            <a href="products.html" class="shop-btn">Join Grup Affiliate</a>
         </div>
     </section>
 
-    <!-- HTML - Duplicate Nav (Above Categories Section) -->
+    <!-- Countries Footer -->
+    <div class="countries-footer">
+        <p>Jadikan Jaringan Anda Sumber Penghasilan Bersama Eglux</p>
+    </div>
+    
+    <!-- Duplicate Nav (Above Content) -->
     <nav class="duplicate-nav" id="duplicateNav">
         <div class="duplicate-nav-inner">
             <a href="index.html">Beranda</a>
             <a href="products.html">Produk</a>
-            <a href="blog.html" class="active">Blog</a>
+            <a href="blog.html">Blog</a>
             <a href="about.html">Tentang Kami</a>
             <a href="contact.html">Kontak</a>
-            <a href="affiliate.html">Affiliate</a>
+            <a href="affiliate.html" class="active">Affiliate</a>
         </div>
-    </nav>    
+    </nav>
 
-    <!-- LIST VIEW -->
-    <section class="blog-list" id="listView">
+    <!-- How It Works -->
+    <section class="how-it-works">
         <div class="container">
-            <!-- Skeleton loading (tampil dulu sebelum data ready) -->
-            <div id="skeletonLoader" class="skeleton-grid">
-                <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-text"><div class="skeleton-line short"></div><div class="skeleton-line"></div></div></div>
-                <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-text"><div class="skeleton-line short"></div><div class="skeleton-line"></div></div></div>
-                <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-text"><div class="skeleton-line short"></div><div class="skeleton-line"></div></div></div>
+            <div class="section-header">
+                <h2>Cara Kerja Program Affiliate</h2>
+                <p>Empat langkah mudah untuk mulai menghasilkan</p>
             </div>
-
-            <div id="listContainer" class="list-grid" style="display:none;"></div>
-
-            <div id="emptyState" class="empty-state" style="display: none;">
-                <div class="empty-state-icon">📝</div>
-                <h3>Belum ada artikel</h3>
-                <p>Tambahkan data di Google Sheet untuk menampilkan artikel.</p>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Daftar Gratis</h3>
+                    <p>Bergabung dengan grup WhatsApp komunitas affiliate Eglux. Tidak ada biaya pendaftaran sama sekali.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Dapatkan Link</h3>
+                    <p>Admin akan memberikan link affiliate khusus Anda untuk setiap produk Eglux yang ingin dipromosikan.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Promosikan</h3>
+                    <p>Bagikan link affiliate ke media sosial, grup, atau komunitas Anda. Semakin banyak share, semakin besar peluang.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Dapatkan Komisi</h3>
+                    <p>Setiap pembelian melalui link Anda akan menghasilkan komisi yang langsung ditransfer ke rekening Anda.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- DETAIL VIEW -->
-    <section class="blog-detail" id="detailView">
+    <!-- Benefits -->
+    <section class="benefits-section">
         <div class="container">
-            <button class="back-btn" onclick="showList()">← Kembali ke Blog</button>
-            <div id="detailContainer"></div>
+            <div class="section-header">
+                <h2>Keuntungan Menjadi Affiliate</h2>
+                <p>Berbagai benefit eksklusif yang menanti Anda</p>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">💰</div>
+                    <h3>Komisi Menarik</h3>
+                    <p>Dapatkan komisi hingga 15% dari setiap penjualan yang berhasil melalui link affiliate Anda.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🚚</div>
+                    <h3>Tanpa Stok Barang</h3>
+                    <p>Anda tidak perlu menyetok barang atau mengurus pengiriman. Eglux yang menangani semuanya.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">📱</div>
+                    <h3>Promosi Mudah</h3>
+                    <p>Gunakan konten dan aset promosi yang sudah disediakan Eglux untuk memudahkan promosi Anda.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">📊</div>
+                    <h3>Tracking Real-Time</h3>
+                    <p>Pantau performa link Anda secara real-time melalui dashboard affiliate yang transparan.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🎁</div>
+                    <h3>Bonus & Reward</h3>
+                    <p>Dapatkan bonus tambahan untuk affiliate dengan performa terbaik setiap bulannya.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🤝</div>
+                    <h3>Komunitas Support</h3>
+                    <p>Bergabung dengan komunitas affiliate Eglux yang saling support dan berbagi tips & trik.</p>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Footer (PERTAHANKAN) -->
+    <!-- Commission -->
+    <section class="commission-section">
+        <div class="container">
+            <div class="commission-card">
+                <h3>Komisi Affiliate</h3>
+                <div class="commission-rate">15%</div>
+                <p>Dari setiap penjualan yang berhasil melalui link affiliate Anda. Semakin banyak produk yang terjual, semakin besar penghasilan Anda. Komisi dibayarkan setiap minggu langsung ke rekening bank atau e-wallet pilihan Anda.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join CTA -->
+    <section class="join-section" id="join">
+        <div class="container">
+            <div class="join-card">
+                <div class="join-left">
+                    <h3>Gabung Sekarang, Gratis!</h3>
+                    <p>Scan barcode di samping atau klik tombol di bawah untuk bergabung dengan grup WhatsApp komunitas affiliate Eglux. Tim admin kami akan membantu Anda memulai perjalanan affiliate Anda.</p>
+                    <ul>
+                        <li>Pendaftaran 100% gratis tanpa biaya</li>
+                        <li>Mendapatkan brief produk & aset promosi</li>
+                        <li>Support admin setiap hari kerja</li>
+                        <li>Komunitas affiliate yang aktif & supportif</li>
+                    </ul>
+                    <a href="https://chat.whatsapp.com/" class="join-btn" target="_blank">Gabung Grup WhatsApp</a>
+                </div>
+                <div class="join-right">
+                    <div class="qr-placeholder">
+                        <!-- Ganti src di bawah ini dengan path ke barcode WhatsApp Anda -->
+                        <img src="img/whatsapp-barcode.png" alt="Barcode Grup WhatsApp Affiliate Eglux" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=font-size:3rem>📱</div><div style=margin-top:0.5rem;font-size:0.85rem;color:var(--text-light)>Barcode WhatsApp</div>';">
+                    </div>
+                    <p class="qr-label">Scan untuk bergabung</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>FAQ</h2>
+                <p>Temukan jawaban untuk pertanyaan umum seputar program affiliate</p>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Apakah ada biaya untuk bergabung?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Tidak, pendaftaran program affiliate Eglux 100% gratis. Tidak ada biaya tersembunyi atau kewajiban pembelian produk.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Berapa lama komisi akan dibayarkan?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Komisi akan diproses dan ditransfer setiap minggunya setelah periode komisi ditutup. Minimal payout adalah Rp 50.000.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Apakah saya harus memiliki followers banyak?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Tidak harus! Program affiliate Eglux terbuka untuk siapa saja. Anda bisa mempromosikan melalui grup WhatsApp, Facebook, TikTok, atau platform lainnya.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Bagaimana cara saya memantau penjualan?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Setelah bergabung, Anda akan mendapatkan akses ke dashboard affiliate untuk memantau klik, konversi, dan komisi Anda secara real-time.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Produk apa saja yang bisa dipromosikan?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Anda bisa mempromosikan seluruh produk Eglux termasuk kategori Kitchen, Home Decor, Bathroom, dan Storage. Semua produk memiliki komisi yang sama.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
@@ -1335,6 +1581,18 @@
             }
         });
 
+        // ============================================
+        // FAQ TOGGLE
+        // ============================================
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                const isActive = item.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                if (!isActive) item.classList.add('active');
+            });
+        });
+
         // Same-tab navigation for internal links
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function(e) {
@@ -1345,238 +1603,6 @@
                 }
             });
         });
-    </script>
-
-    <script>
-        const GAS_URL = "https://script.google.com/macros/s/AKfycbwBlQNMHmZRoiDaLA1cznf9CClcDeHg5gzfQLWV13qP7JYrIi428nT_PDgjzSzs8SebdQ/exec";
-        const CACHE_KEY = 'eglux_blog_posts';
-        const CACHE_TIME = 5 * 60 * 1000; // 5 menit
-        let allPosts = [];
-
-        // Same-tab navigation
-        document.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto:')) {
-                    e.preventDefault();
-                    window.location.href = href;
-                }
-            });
-        });
-
-        /* ===== LOAD POSTS (with cache) ===== */
-        async function loadPosts() {
-            const skeleton = document.getElementById('skeletonLoader');
-            const listContainer = document.getElementById('listContainer');
-            const emptyState = document.getElementById('emptyState');
-
-            // Cek cache dulu
-            const cached = getCache();
-            if (cached) {
-                allPosts = cached;
-                skeleton.style.display = 'none';
-                listContainer.style.display = 'grid';
-                renderList(allPosts);
-                checkHash();
-                // Fetch background update (silent)
-                fetchFreshData();
-                return;
-            }
-
-            // Kalau nggak ada cache, fetch dari GAS
-            try {
-                const res = await fetch(GAS_URL + "?t=" + Date.now());
-                const json = await res.json();
-
-                if (json.status !== 'success' || !json.data || json.data.length === 0) {
-                    skeleton.style.display = 'none';
-                    emptyState.style.display = 'block';
-                    return;
-                }
-
-                allPosts = json.data;
-                setCache(allPosts);
-
-                skeleton.style.display = 'none';
-                listContainer.style.display = 'grid';
-                renderList(allPosts);
-                checkHash();
-
-            } catch (err) {
-                skeleton.style.display = 'none';
-                document.getElementById('listView').innerHTML = `<div class="empty-state"><h3 style="color:#ff4444">Gagal memuat data</h3><p>${err.message}</p></div>`;
-            }
-        }
-
-        /* ===== FETCH FRESH DATA (background) ===== */
-        async function fetchFreshData() {
-            try {
-                const res = await fetch(GAS_URL + "?t=" + Date.now());
-                const json = await res.json();
-                if (json.status === 'success' && json.data && json.data.length > 0) {
-                    allPosts = json.data;
-                    setCache(allPosts);
-                    renderList(allPosts);
-                }
-            } catch (e) {
-                // Silent fail, tetap pakai cache
-            }
-        }
-
-        /* ===== CACHE HELPERS ===== */
-        function getCache() {
-            try {
-                const item = sessionStorage.getItem(CACHE_KEY);
-                if (!item) return null;
-                const parsed = JSON.parse(item);
-                if (Date.now() - parsed.timestamp > CACHE_TIME) {
-                    sessionStorage.removeItem(CACHE_KEY);
-                    return null;
-                }
-                return parsed.data;
-            } catch (e) { return null; }
-        }
-
-        function setCache(data) {
-            try {
-                sessionStorage.setItem(CACHE_KEY, JSON.stringify({
-                    timestamp: Date.now(),
-                    data: data
-                }));
-            } catch (e) {}
-        }
-
-        /* ===== RENDER LIST ===== */
-        function renderList(posts) {
-            const container = document.getElementById('listContainer');
-            container.innerHTML = posts.map(post => {
-                const coverPhoto = post.photos && post.photos.length > 0 ? post.photos[0] : '';
-
-                return `
-                    <div class="blog-preview-card" onclick="showDetail(${post.id})">
-                        <div class="preview-image">
-                            ${coverPhoto 
-                                ? `<img src="${esc(coverPhoto)}" alt="${esc(post.title)}" loading="lazy" onerror="this.style.display='none'">` 
-                                : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text-light);">🖼️</div>'
-                            }
-                        </div>
-                        <div class="preview-content">
-                            <div class="preview-meta">
-                                <span class="meta-date">${esc(post.date || '')}</span>
-                                ${post.time ? `<span>${esc(post.time)}</span>` : ''}
-                            </div>
-                            <div class="preview-title">${esc(post.title)}</div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        /* ===== SHOW DETAIL ===== */
-        function showDetail(postId) {
-            const post = allPosts.find(p => p.id == postId);
-            if (!post) return;
-
-            window.location.hash = `detail/${postId}`;
-            document.getElementById('listView').classList.add('hidden');
-            document.getElementById('detailView').classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            renderDetail(post);
-        }
-
-        /* ===== RENDER DETAIL ===== */
-        function renderDetail(post) {
-            const container = document.getElementById('detailContainer');
-            const coverPhoto = post.photos && post.photos.length > 0 ? post.photos[0] : '';
-            const extraPhotos = post.photos && post.photos.length > 1 ? post.photos.slice(1) : [];
-
-            let html = `<article class="article-full">`;
-
-            html += `<div class="article-header">`;
-            html += `<div class="article-meta">`;
-            html += `<span class="meta-date">📅 ${esc(post.date || '')}</span>`;
-            if (post.time) html += `<span>🕐 ${esc(post.time)}</span>`;
-            html += `<span>👤 ${esc(post.author || 'Tim Eglux')}</span>`;
-            html += `</div>`;
-            html += `<h2>${esc(post.title)}</h2>`;
-            html += `</div>`;
-
-            if (coverPhoto) {
-                html += `<div class="article-cover"><img src="${esc(coverPhoto)}" alt="${esc(post.title)}" loading="lazy" onerror="this.parentElement.innerHTML='🖼️ Gagal memuat gambar'"></div>`;
-            }
-
-            if (post.content) {
-                html += `<div class="article-body">`;
-                post.content.toString().split('\n').filter(p => p.trim()).forEach(p => {
-                    html += `<p>${esc(p)}</p>`;
-                });
-                html += `</div>`;
-            }
-
-            if (extraPhotos.length > 0) {
-                html += `<div class="article-gallery">`;
-                extraPhotos.forEach(url => {
-                    html += `<img src="${esc(url)}" alt="Photo" loading="lazy" onerror="this.style.display='none'">`;
-                });
-                html += `</div>`;
-            }
-
-            if (post.instagram) {
-                html += getVideoEmbedHtml(post.instagram);
-            }
-
-            html += `</article>`;
-            container.innerHTML = html;
-        }
-
-        /* ===== SHOW LIST ===== */
-        function showList() {
-            window.location.hash = '';
-            document.getElementById('detailView').classList.remove('active');
-            document.getElementById('listView').classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        /* ===== CHECK HASH ===== */
-        function checkHash() {
-            const hash = window.location.hash;
-            if (hash.startsWith('#detail/')) {
-                const postId = hash.replace('#detail/', '');
-                showDetail(postId);
-            }
-        }
-
-        window.addEventListener('hashchange', checkHash);
-
-        /* ===== VIDEO EMBED ===== */
-        function getVideoEmbedHtml(url) {
-            if (!url) return '';
-
-            const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
-            if (ytMatch) {
-                return `<div class="video-player"><iframe src="https://www.youtube.com/embed/${ytMatch[1]}?rel=0" allowfullscreen loading="lazy"></iframe></div>`;
-            }
-
-            const driveMatch = url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
-            if (driveMatch) {
-                return `<div class="video-player"><iframe src="https://drive.google.com/file/d/${driveMatch[1]}/preview" allowfullscreen loading="lazy"></iframe></div>`;
-            }
-
-            const openMatch = url.match(/drive\.google\.com\/open\?id=([a-zA-Z0-9_-]+)/);
-            if (openMatch) {
-                return `<div class="video-player"><iframe src="https://drive.google.com/file/d/${openMatch[1]}/preview" allowfullscreen loading="lazy"></iframe></div>`;
-            }
-
-            return '';
-        }
-
-        function esc(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        loadPosts();
     </script>
 
 </body>
