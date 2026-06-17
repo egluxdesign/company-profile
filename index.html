@@ -1049,8 +1049,174 @@
                 gap: -0.4rem;
             }
         }
-    </style>
+    
+        /* ===== PROMO BANNERS ===== */
+        .promo-banners {
+            background: var(--light);
+            padding: 2rem 0;
+        }
 
+        .promo-banners-alt {
+            background: var(--white);
+        }
+
+        .banner-single {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .banner-single:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .banner-single-alt {
+            height: 240px;
+        }
+
+        .banner-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.6s ease;
+        }
+
+        .banner-single:hover .banner-img {
+            transform: scale(1.08);
+        }
+
+        .banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(85,69,33,0.85) 0%, rgba(85,69,33,0.5) 50%, rgba(203,166,90,0.3) 100%);
+            z-index: 1;
+        }
+
+        .banner-overlay-alt {
+            background: linear-gradient(135deg, rgba(26,26,46,0.85) 0%, rgba(26,26,46,0.5) 50%, rgba(203,166,90,0.3) 100%);
+        }
+
+        .banner-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2.5rem;
+            z-index: 2;
+            color: var(--white);
+        }
+
+        .banner-tag {
+            display: inline-block;
+            background: var(--secondary);
+            color: var(--white);
+            padding: 0.35rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 1rem;
+        }
+
+        .banner-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .banner-content p {
+            font-size: 1.05rem;
+            opacity: 0.9;
+            margin-bottom: 1.2rem;
+        }
+
+        .banner-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--secondary);
+            transition: var(--transition);
+        }
+
+        .banner-single:hover .banner-cta {
+            gap: 0.8rem;
+            color: var(--white);
+        }
+
+        /* ===== RESPONSIVE BANNERS ===== */
+        @media (max-width: 1024px) {
+            .banner-single {
+                height: 260px;
+            }
+            .banner-single-alt {
+                height: 220px;
+            }
+            .banner-content h3 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .banner-single {
+                height: 220px;
+            }
+            .banner-single-alt {
+                height: 200px;
+            }
+            .banner-content {
+                padding: 1.8rem;
+            }
+            .banner-content h3 {
+                font-size: 1.6rem;
+            }
+            .banner-content p {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .banner-single {
+                height: 180px;
+            }
+            .banner-single-alt {
+                height: 170px;
+            }
+            .banner-content {
+                padding: 1.5rem;
+            }
+            .banner-content h3 {
+                font-size: 1.3rem;
+            }
+            .banner-content p {
+                font-size: 0.85rem;
+                margin-bottom: 0.8rem;
+            }
+            .banner-cta {
+                font-size: 0.8rem;
+            }
+        }
+</style>
+
+<base target="_blank">
 <base target="_blank">
 </head>
 <body>
@@ -1188,6 +1354,38 @@
     <div class="countries-footer">
         <p>Gunakan Eglux, Biar Tetangga Iri</p>
     </div>
+    <!-- Promo Banner Section -->
+    <section class="promo-banners">
+        <div class="container">
+            <div class="banner-single" onclick="window.location.href='products.html?filter=flashsale'">
+                <div class="banner-img" style="background-image: url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=80');"></div>
+                <div class="banner-overlay"></div>
+                <div class="banner-content">
+                    <span class="banner-tag">🔥 Flash Sale</span>
+                    <h3>Diskon Hingga 50%</h3>
+                    <p>Perlengkapan Dapur Premium — Hanya Hari Ini!</p>
+                    <span class="banner-cta">Beli Sekarang →</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promo Banner 2 -->
+    <section class="promo-banners promo-banners-alt">
+        <div class="container">
+            <div class="banner-single banner-single-alt" onclick="window.location.href='products.html?filter=new'">
+                <div class="banner-img" style="background-image: url('https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=1200&q=80');"></div>
+                <div class="banner-overlay banner-overlay-alt"></div>
+                <div class="banner-content">
+                    <span class="banner-tag">✨ New Arrival</span>
+                    <h3>Koleksi Terbaru 2026</h3>
+                    <p>Temukan produk home decor & kitchen terbaru dari Eglux</p>
+                    <span class="banner-cta">Lihat Koleksi →</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <!-- Duplicate Nav (Above Categories Section) -->
     <nav class="duplicate-nav" id="duplicateNav">
