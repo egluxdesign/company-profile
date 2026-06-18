@@ -935,478 +935,6 @@
                 font-size: 0.9rem;
             }
         }
-
-        /* ===== PRODUCT MODAL ===== */
-        .product-modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.55);
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-        }
-        .product-modal-overlay.open {
-            opacity: 1;
-            visibility: visible;
-        }
-        .product-modal {
-            background: var(--white);
-            border-radius: 20px;
-            max-width: 520px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            transform: translateY(30px) scale(0.97);
-            transition: transform 0.3s ease;
-            position: relative;
-        }
-        .product-modal-overlay.open .product-modal {
-            transform: translateY(0) scale(1);
-        }
-        .modal-close-btn {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: rgba(0,0,0,0.07);
-            border: none;
-            border-radius: 50%;
-            width: 34px;
-            height: 34px;
-            font-size: 1.3rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            transition: var(--transition);
-            z-index: 2;
-        }
-        .modal-close-btn:hover { background: rgba(0,0,0,0.13); }
-        .modal-product-img {
-            width: 100%;
-            height: 260px;
-            object-fit: cover;
-            border-radius: 20px 20px 0 0;
-        }
-        .modal-body {
-            padding: 1.5rem;
-        }
-        .modal-badge {
-            display: inline-block;
-            background: var(--secondary);
-            color: var(--white);
-            padding: 0.25rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.72rem;
-            font-weight: 600;
-            margin-bottom: 0.6rem;
-        }
-        .modal-title {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.3rem;
-            line-height: 1.4;
-        }
-        .modal-category {
-            font-size: 0.82rem;
-            color: var(--text-light);
-            margin-bottom: 0.5rem;
-        }
-        .modal-desc {
-            font-size: 0.88rem;
-            color: var(--text-light);
-            line-height: 1.6;
-            margin-bottom: 1.2rem;
-        }
-        .modal-section-label {
-            font-size: 0.78rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-        .variant-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1.2rem;
-        }
-        .variant-btn {
-            padding: 0.4rem 1rem;
-            border: 1.5px solid #ddd;
-            border-radius: 8px;
-            background: var(--white);
-            font-size: 0.82rem;
-            cursor: pointer;
-            transition: var(--transition);
-            color: var(--primary);
-            font-weight: 500;
-        }
-        .variant-btn:hover, .variant-btn.selected {
-            border-color: var(--secondary);
-            background: var(--accent);
-            color: var(--primary);
-        }
-        .qty-row {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            margin-bottom: 1.4rem;
-        }
-        .qty-btn {
-            width: 36px;
-            height: 36px;
-            border: 1.5px solid #ddd;
-            background: var(--white);
-            border-radius: 8px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            transition: var(--transition);
-            font-weight: 600;
-        }
-        .qty-btn:hover { border-color: var(--secondary); background: var(--accent); }
-        .qty-num {
-            font-size: 1.1rem;
-            font-weight: 700;
-            min-width: 28px;
-            text-align: center;
-            color: var(--primary);
-        }
-        .modal-actions {
-            display: flex;
-            gap: 0.8rem;
-        }
-        .btn-add-cart {
-            flex: 1;
-            padding: 0.85rem;
-            border: 2px solid var(--secondary);
-            background: var(--white);
-            color: var(--secondary);
-            border-radius: 12px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .btn-add-cart:hover { background: var(--accent); }
-        .btn-checkout-now {
-            flex: 1;
-            padding: 0.85rem;
-            border: none;
-            background: var(--secondary);
-            color: var(--white);
-            border-radius: 12px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .btn-checkout-now:hover { background: var(--primary); }
-
-        /* ===== CART PANEL ===== */
-        .cart-panel-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.45);
-            z-index: 2100;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-        .cart-panel-overlay.open { opacity: 1; visibility: visible; }
-        .cart-panel {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 400px;
-            height: 100vh;
-            background: var(--white);
-            z-index: 2101;
-            transform: translateX(100%);
-            transition: transform 0.35s ease;
-            display: flex;
-            flex-direction: column;
-        }
-        .cart-panel.open { transform: translateX(0); }
-        .cart-panel-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .cart-panel-header h3 {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        .cart-items-list {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1rem 1.5rem;
-        }
-        .cart-item {
-            display: flex;
-            gap: 1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid #f0f0f0;
-            align-items: flex-start;
-        }
-        .cart-item img {
-            width: 64px;
-            height: 64px;
-            object-fit: cover;
-            border-radius: 10px;
-            flex-shrink: 0;
-        }
-        .cart-item-info { flex: 1; }
-        .cart-item-name {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 0.2rem;
-            line-height: 1.3;
-        }
-        .cart-item-variant {
-            font-size: 0.78rem;
-            color: var(--text-light);
-            margin-bottom: 0.3rem;
-        }
-        .cart-item-qty-row {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .cart-qty-btn {
-            width: 26px;
-            height: 26px;
-            border: 1px solid #ddd;
-            background: var(--white);
-            border-radius: 6px;
-            font-size: 1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-weight: 600;
-        }
-        .cart-qty-num { font-size: 0.88rem; font-weight: 700; min-width: 20px; text-align: center; }
-        .cart-item-del {
-            background: none;
-            border: none;
-            color: #ccc;
-            cursor: pointer;
-            font-size: 1.1rem;
-            padding: 2px;
-            transition: var(--transition);
-        }
-        .cart-item-del:hover { color: #e55; }
-        .cart-empty {
-            text-align: center;
-            padding: 3rem 1rem;
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-        .cart-footer {
-            padding: 1.5rem;
-            border-top: 1px solid #eee;
-        }
-        .cart-total-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        .cart-total-label { font-size: 0.85rem; color: var(--text-light); }
-        .cart-total-count { font-size: 1rem; font-weight: 700; color: var(--primary); }
-        .btn-cart-checkout {
-            width: 100%;
-            padding: 1rem;
-            background: var(--secondary);
-            color: var(--white);
-            border: none;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .btn-cart-checkout:hover { background: var(--primary); }
-
-        /* Cart count badge */
-        .cart-count-badge {
-            position: absolute;
-            top: -4px;
-            right: -4px;
-            background: var(--secondary);
-            color: white;
-            font-size: 0.6rem;
-            font-weight: 700;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transform: scale(0);
-            transition: all 0.2s ease;
-        }
-        .cart-count-badge.visible { opacity: 1; transform: scale(1); }
-
-        /* ===== CHECKOUT FORM MODAL ===== */
-        .checkout-modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.6);
-            z-index: 2200;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-        }
-        .checkout-modal-overlay.open { opacity: 1; visibility: visible; }
-        .checkout-modal {
-            background: var(--white);
-            border-radius: 20px;
-            max-width: 480px;
-            width: 100%;
-            max-height: 92vh;
-            overflow-y: auto;
-            transform: translateY(24px);
-            transition: transform 0.3s ease;
-        }
-        .checkout-modal-overlay.open .checkout-modal { transform: translateY(0); }
-        .checkout-modal-header {
-            padding: 1.5rem 1.5rem 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .checkout-modal-header h3 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-        .checkout-body { padding: 1.2rem 1.5rem 1.5rem; }
-        .checkout-order-summary {
-            background: var(--accent);
-            border-radius: 12px;
-            padding: 1rem;
-            margin-bottom: 1.2rem;
-            font-size: 0.85rem;
-        }
-        .checkout-order-summary h4 {
-            font-size: 0.78rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-light);
-            margin-bottom: 0.6rem;
-        }
-        .checkout-order-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.3rem;
-            color: var(--primary);
-            font-weight: 500;
-        }
-        .checkout-order-item span:last-child { color: var(--text-light); }
-        .form-group {
-            margin-bottom: 1rem;
-        }
-        .form-group label {
-            display: block;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 0.35rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.7rem 0.9rem;
-            border: 1.5px solid #ddd;
-            border-radius: 10px;
-            font-size: 0.88rem;
-            color: var(--primary);
-            background: var(--white);
-            transition: var(--transition);
-            font-family: 'Inter', sans-serif;
-            outline: none;
-        }
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            border-color: var(--secondary);
-        }
-        .form-group textarea { resize: vertical; min-height: 70px; }
-        .form-row { display: flex; gap: 0.8rem; }
-        .form-row .form-group { flex: 1; }
-        .btn-submit-order {
-            width: 100%;
-            padding: 1rem;
-            background: #25D366;
-            color: var(--white);
-            border: none;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-        .btn-submit-order:hover { background: #128C7E; }
-
-        /* Toast notification */
-        .toast-notif {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            background: var(--primary);
-            color: var(--white);
-            padding: 0.75rem 1.5rem;
-            border-radius: 50px;
-            font-size: 0.88rem;
-            font-weight: 500;
-            z-index: 9999;
-            opacity: 0;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-        }
-        .toast-notif.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        @media (max-width: 768px) {
-            .cart-panel { width: 100%; }
-            .modal-product-img { height: 200px; }
-        }
 </style>
     
 <base target="_blank">
@@ -1506,12 +1034,6 @@
                         <path fill="currentColor" d="M19.02,19.59v-6.69c1.33.96,2.93,1.47,4.57,1.46v-2.55c-.97-.2-1.84-.72-2.5-1.46-1.05-.68-1.78-1.76-2.01-2.99h-2.41v13.18c-.06,1.53-1.35,2.71-2.87,2.65-.85-.03-1.63-.45-2.13-1.14-1.35-.71-1.87-2.38-1.16-3.73.48-.9,1.41-1.47,2.43-1.48.28,0,.55.05.82.13v-2.59c-3.33.06-5.99,2.84-5.93,6.18.03,1.51.62,2.95,1.65,4.05,1.02.69,2.24,1.05,3.47,1.03,3.34,0,6.05-2.7,6.06-6.04Z"/>
                     </svg>
                 </button>
-                <button class="icon-btn" aria-label="Cart" onclick="toggleCartPanel()" style="position:relative;">
-                    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill="currentColor" d="M6 8h2.5l2.1 9.4a2 2 0 0 0 1.9 1.6h8a2 2 0 0 0 1.9-1.5l1.6-6.5H9.5M13 24a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0M20 24a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0"/>
-                    </svg>
-                    <span class="cart-count-badge" id="cartCountBadge">0</span>
-                </button>
                 <button class="icon-btn" aria-label="Instagram" onclick="window.location.href='https://www.instagram.com/eglux_id'">
                     <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill="currentColor" d="M19.85,6.36h-7.7c-3.19,0-5.79,2.6-5.79,5.79v7.7c0,3.19,2.6,5.79,5.79,5.79h7.7c3.19,0,5.79-2.6,5.79-5.79v-7.7c0-3.19-2.6-5.79-5.79-5.79ZM23.83,19.85c0,2.2-1.78,3.98-3.98,3.98h-7.7c-2.2,0-3.98-1.78-3.98-3.98v-7.7c0-2.2,1.78-3.98,3.98-3.98h7.7c2.2,0,3.98,1.78,3.98,3.98v7.7Z"/>
@@ -1568,7 +1090,7 @@
             </nav>
 
             <div class="products-grid">
-                <div class="product-card" data-category="kitchen" onclick="openProductModal(this)">
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/EGLUX-Tempat-prasmanan-Motif-Bintik-Emas-wadah-prasmanan-aesthetics-i.1082449101.43165997982?extraParams=%7B%22display_model_id%22%3A296318290044%2C%22model_selection_logic%22%3A3%7D&sp_atk=3587b726-16ab-40f8-a3dd-14d6d87e2454&xptdk=3587b726-16ab-40f8-a3dd-14d6d87e2454'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/b5/ff/tGzl7ApN_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -1586,7 +1108,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="kitchen" onclick="openProductModal(this)">
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/EGLUX-Tempat-Prasmanan-Tempat-buah-Wadah-Saji-Tempat-Roti-aesthetic-Nampan-dengan-tutup-i.1082449101.24385020393?extraParams=%7B%22display_model_id%22%3A236985269304%2C%22model_selection_logic%22%3A2%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/cd/de/NLXbS2v9_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -1604,7 +1126,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="homedecor" onclick="openProductModal(this)">
+                <div class="product-card" data-category="homedecor" onclick="window.location.href='https://shopee.co.id/Vas-bunga-hiasan-dekorasi-ruang-tamu-mewah-pajangan-lemari-kaca-luxurious-wedding-vase-decoration-dengan-tetesan-kristal-i.1082449101.24702454116?extraParams=%7B%22display_model_id%22%3A222745514915%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/a0/77/tMELsUSH_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -1623,7 +1145,7 @@
                 </div>
 
                 
-                <div class="product-card" data-category="kitchen" onclick="openProductModal(this)">
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/EGLUX-Rak-bumbu-putar-360°-nampan-estetik-warna-amber-praktis-utk-Aqua-gelas-toples-dapur-meja-makan-i.1082449101.40330255108?extraParams=%7B%22display_model_id%22%3A420816694594%2C%22model_selection_logic%22%3A3%7D&sp_atk=15629295-40a6-4f72-b4aa-908512815d5f&xptdk=15629295-40a6-4f72-b4aa-908512815d5f'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/bc/de/oFJkkB4t_t.png" alt="Product">
                         <span class="product-badge">Baru</span>
@@ -1641,7 +1163,7 @@
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="homedecor" onclick="openProductModal(this)">
+                <div class="product-card" data-category="homedecor" onclick="window.location.href='https://shopee.co.id/EGLUX-Taplak-atau-alas-meja-Cantik-pajangan-meja-38*38cm-i.1082449101.27607131416?extraParams=%7B%22display_model_id%22%3A207702533778%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/27/65/V4h2Jx0x_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -1659,7 +1181,7 @@
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="kitchen" onclick="openProductModal(this)">
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/EGLUX-Tempat-prasmanan-wadah-prasmanan-aesthetics-i.1082449101.41709962122?extraParams=%7B%22display_model_id%22%3A168999331502%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/20/ef/T2apVdCw_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -1677,7 +1199,7 @@
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="kitchen" onclick="openProductModal(this)">
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/EGLUX-Tempat-Buah-Kue-dengan-Tutup-Arab-aesthetics-Tudung-Saji-dengan-Tutup-i.1082449101.40230255470?extraParams=%7B%22display_model_id%22%3A355816917434%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/c2/f8/xgSNg6u4_t.png" alt="Product">
                         <span class="product-badge">Baru</span>
@@ -1695,7 +1217,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/EGLUX-Toples-3pcs-set-Kedap-Udara-Motif-Bulan-Jar-Penyimpanan-Makanan-i.1082449101.46007071983?extraParams=%7B%22display_model_id%22%3A310630093389%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/ae/32/vPmw5sZp_t.png" alt="Product">
                         <span class="product-badge">Baru</span>
@@ -1713,7 +1235,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/EGLUX-Toples-Kedap-Udara-Toples-Lebaran-mewah-i.1082449101.51650773151?extraParams=%7B%22display_model_id%22%3A440070522162%2C%22model_selection_logic%22%3A2%7D'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/44/93/PN8T5e1i_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -1731,7 +1253,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="kitchen" onclick="openProductModal(this)">
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/EGLUX-Tempat-Prasmanan-aesthetics-wadah-saji-nampan-set-i.1082449101.55409152909?extraParams=%7B%22display_model_id%22%3A415811500407%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/aa/9f/AuXrcnEe_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -1749,7 +1271,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/EGLUX-Botol-Saos-Pencet-Botol-saus-kecap-atau-saus-tomat-cocok-untuk-tempat-cairan-Botol-bisa-di-pencet-i.1082449101.24552454242?extraParams=%7B%22display_model_id%22%3A232328994712%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/d1/5b/KedxcIHW_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -1768,7 +1290,7 @@
                 </div>
 
                 
-                <div class="product-card" data-category="kitchen" onclick="openProductModal(this)">
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/EGLUX-Tempat-prasmanan-Wadah-Saji-tempat-buah-dengan-tutup-aesthetic-i.1082449101.28572331206?extraParams=%7B%22display_model_id%22%3A252597895918%2C%22model_selection_logic%22%3A2%7D'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/b6/05/O4ITMF64_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -1786,7 +1308,7 @@
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/Dispenser-air-mewah-3.5L-5L-i.1082449101.44413731667?extraParams=%7B%22display_model_id%22%3A306134994262%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/7a/87/weaTlBSk_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -1804,7 +1326,7 @@
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="homedecor" onclick="openProductModal(this)">
+                <div class="product-card" data-category="homedecor" onclick="window.location.href='https://shopee.co.id/Hiasan-dinding-mewah-Wall-decor-besi-esetic-berbentuk-bingkai-daun-bahan-tebal-dekorasi-ruangan-30*85cm-i.1082449101.22587483936?extraParams=%7B%22display_model_id%22%3A197947509824%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/2d/d2/Op4PZWA3_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -1822,7 +1344,7 @@
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="bathroom" onclick="openProductModal(this)">
+                <div class="product-card" data-category="bathroom" onclick="window.location.href='https://shopee.co.id/Gayung-Plastik-Tebal-Anti-Panas-Centong-Air-Dapur-Aesthetic-i.1082449101.44315223511?extraParams=%7B%22display_model_id%22%3A276258845000%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/42/83/hhkCZH39_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -1840,7 +1362,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="bathroom" onclick="openProductModal(this)">
+                <div class="product-card" data-category="bathroom" onclick="window.location.href='https://shopee.co.id/EGLUX-Ember-plastik-lentur-tempat-air-Untuk-Kamar-mandi-Minimalist-Bathroom-i.1082449101.44063731975?extraParams=%7B%22display_model_id%22%3A276135037632%2C%22model_selection_logic%22%3A2%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/d8/f2/zmsnCfQ0_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -1859,7 +1381,7 @@
                 </div>
 
                 <!-- ADD NEW PRODUCT -->
-                <div class="product-card" data-category="kitchen" onclick="openProductModal(this)">
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/Tempat-kue-aesthetic-wadah-roti-mewah-i.1082449101.28562712970?extraParams=%7B%22display_model_id%22%3A195427742788%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/25/ab/AlDmvV6o_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -1877,7 +1399,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/Toples-Snack-Plastic-Mewah-Toples-Leberan-Aesthetic-Emas-i.1082449101.28019805011?extraParams=%7B%22display_model_id%22%3A139237794466%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/ec/83/Ppm7Sixz_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -1895,7 +1417,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="homedecor" onclick="openProductModal(this)">
+                <div class="product-card" data-category="homedecor" onclick="window.location.href='https://shopee.co.id/Taplak-meja-Cantik-pajangan-meja-meja-ruang-tamu-i.1082449101.26207135265?extraParams=%7B%22display_model_id%22%3A197702509592%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/45/8a/8gWEydW9_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -1914,7 +1436,7 @@
                 </div>
 
                 
-                <div class="product-card" data-category="kitchen" onclick="openProductModal(this)">
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/Tempat-roti-kue-kotak-roti-aesthetic-tempat-saji-dengan-Tutup-i.1082449101.25324637142?extraParams=%7B%22display_model_id%22%3A138913127645%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/07/82/VTvDuDsw_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -1932,7 +1454,7 @@
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/EGLUX-Rak-susun-Besi-aesthetics-Tempat-buah-Rak-buah-Rak-aqua-Keranjang-2-Tingkat-i.1082449101.28557131279?extraParams=%7B%22display_model_id%22%3A223071787710%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/27/13/Yb0lyXKW_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -1950,7 +1472,7 @@
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="homedecor" onclick="openProductModal(this)">
+                <div class="product-card" data-category="homedecor" onclick="window.location.href='https://shopee.co.id/Hiasan-dinding-wall-decor-40*60cm-hiasan-dinding-bunga-daun-dan-hiasan-estetik-inding-besi-sofa-ruang-tamu-kreatif-modern-latar-belakang-dekorasi-ruangan-i.1082449101.25052456521?extraParams=%7B%22display_model_id%22%3A147129644261%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/75/82/x96t6Hf1_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -1968,7 +1490,7 @@
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="homedecor" onclick="openProductModal(this)">
+                <div class="product-card" data-category="homedecor" onclick="window.location.href='https://shopee.co.id/EGLUX-Tempat-Tisu-Gulung-Dapur-Rak-tisu-Dapur-Kitchen-Roll-Paper-Towel-Holder-i.1082449101.41513561516?extraParams=%7B%22display_model_id%22%3A169051408535%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/a3/65/JGrgpBzj_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -1986,7 +1508,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="kitchen" onclick="openProductModal(this)">
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/EGLUX-Nampan-Set-3pcs-set-Aesthetic-untuk-hiasan-meja-i.1082449101.26270990016?extraParams=%7B%22display_model_id%22%3A188073113354%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/d8/f1/dUFwjVpi_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2004,7 +1526,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/Toples-Pita-Kaki-Tinggi-Mewah-Elegan-i.1082449101.26135368101?extraParams=%7B%22display_model_id%22%3A265910397760%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/48/41/oewtufgN_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2022,7 +1544,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/Toples-mewah-aesthetic-Toples-Snack-emas-i.1082449101.28810808707?extraParams=%7B%22display_model_id%22%3A246565334007%2C%22model_selection_logic%22%3A2%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/0d/98/k3q7KtO0_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2040,7 +1562,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/EGLUX-Set-Toples-Plastik-penyimpanan-oval-minimalis-3PCS-SET-dengan-tutup-bambu-i.1082449101.56255930612?extraParams=%7B%22display_model_id%22%3A249163229033%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/b3/73/0lRJr7II_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2059,7 +1581,7 @@
                 </div>
 
                 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/Toples-set-3pcs-set-mewah-i.1082449101.28823266060?extraParams=%7B%22display_model_id%22%3A227263780136%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/ad/86/U2CFwemo_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2077,7 +1599,7 @@
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/EGLUX-Tempat-butter-plastik-Kotak-butter-estetik-i.1082449101.52759150728?extraParams=%7B%22display_model_id%22%3A320810619215%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/12/39/oXjbhLAG_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2095,7 +1617,7 @@
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/EGLUX-Toples-Bintik-emas-set-3pcs-set-mewah-i.1082449101.26928595110?extraParams=%7B%22display_model_id%22%3A242805674576%2C%22model_selection_logic%22%3A3%7D'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/42/b4/Bd8lfJdM_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2113,7 +1635,7 @@
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="kitchen" onclick="openProductModal(this)">
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/EGLUX-Teko-Air-Minum-2.2L-Teko-Air-Kulkas-Besar-Plastik-Transparan-Aesthetic-i.1082449101.56505385995?extraParams=%7B%22display_model_id%22%3A340490751403%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/15/e9/KQUK1gf1_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2131,7 +1653,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="kitchen" onclick="openProductModal(this)">
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/Tempat-kue-Kayu-Bamboo-Tudung-Saji-Kue-tempat-roti-i.1082449101.40651494526?extraParams=%7B%22display_model_id%22%3A270122555911%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/81/c1/pnnmZc0D_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2150,7 +1672,7 @@
                 </div>
 
                 <!-- ADD NEW PRODUCT 2 -->
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/EGLUX-Kotak-Kue-Akrilik-Tempat-Kue-Etalase-roti-rak-i.1082449101.48752127511?extraParams=%7B%22display_model_id%22%3A330205544025%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/0a/cd/NMu8Bdq7_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2168,7 +1690,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/EGLUX-Wadah-Buah-Sultan-Nampan-Mewah-Aesthetics-i.1082449101.46551452903?extraParams=%7B%22display_model_id%22%3A350131917589%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/18/51/CZTRhScY_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2186,7 +1708,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="kitchen" onclick="openProductModal(this)">
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/EGLUX-Nampan-Arab-aesthetic-mewah-Nampan-kaca-besi-cantik-i.1082449101.29879611379?extraParams=%7B%22display_model_id%22%3A233941399195%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/8a/05/xIXDYmel_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2205,7 +1727,7 @@
                 </div>
 
                 
-                <div class="product-card" data-category="kitchen" onclick="openProductModal(this)">
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/EGLUX-Tempat-Kue-Nampan-Saji-Bambu-Kayu-Estetik-i.1082449101.44068194183?extraParams=%7B%22display_model_id%22%3A276496023596%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/75/1a/YWvas4er_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2223,7 +1745,7 @@
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/EGLUX-Teko-air-kulkas-2.2L-1-teko-4-gleas-teko-air-minum-aesthetic-i.1082449101.50755377767?extraParams=%7B%22display_model_id%22%3A149339228413%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/c4/5f/Fz0Hc92G_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2241,7 +1763,7 @@
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/EGLUX-Rak-aqua-gelas-besi-Rak-minum-Tempat-aqua-gelas-i.1082449101.57759150513?extraParams=%7B%22display_model_id%22%3A254214327154%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/aa/fd/qlMM4uH3_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2259,7 +1781,7 @@
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="homedecor" onclick="openProductModal(this)">
+                <div class="product-card" data-category="homedecor" onclick="window.location.href='https://shopee.co.id/Tempat-buah-permen-Sultan-Nampan-Tingkat-Mewah-i.1082449101.51851437245?extraParams=%7B%22display_model_id%22%3A307158945456%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/1b/9b/eDzVhtCY_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2277,7 +1799,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="kitchen" onclick="openProductModal(this)">
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/EGLUX-Piring-Saji-Set-5-Pcs-22cm-27cm-Elegan-untuk-Hidangan-Dessert-i.1082449101.46805968500?extraParams=%7B%22display_model_id%22%3A238245991372%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/9a/f5/GbWiBKjY_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2295,7 +1817,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/Set-Teko-Plastik-1.8L-4-Gelas-Estetik-Fungsional-banget!-i.1082449101.43901800802?extraParams=%7B%22display_model_id%22%3A179024750306%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/23/99/Gy8fYfR9_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2313,7 +1835,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="homedecor" onclick="openProductModal(this)">
+                <div class="product-card" data-category="homedecor" onclick="window.location.href='https://shopee.co.id/Bunga-Hiasa-Artificial-Gold-Flower-hiasan-meja-rumah-atau-foto-produk-Plasti-Palsu-Dekorasi-i.1082449101.25452454174?extraParams=%7B%22display_model_id%22%3A167972507192%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/9e/44/wTSp77tN_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2331,7 +1853,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="bathroom" onclick="openProductModal(this)">
+                <div class="product-card" data-category="bathroom" onclick="window.location.href='https://shopee.co.id/EGLUX-Dispenser-Sabun-Pompa-Tempat-Sabun-Cair-Botol-Sabun-Refill-350ml-500ml-i.1082449101.24346456452?extraParams=%7B%22display_model_id%22%3A271135499279%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/87/d9/PsvxRTF4_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2349,7 +1871,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="kitchen" onclick="openProductModal(this)">
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/EGLUX-Tempat-prasmanan-ada-gagang-motif-retak-seribu-Emas-wadah-prasmanan-aesthetics-i.1082449101.43766006853?extraParams=%7B%22display_model_id%22%3A188672962351%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/42/81/DPjbY6v8_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2367,7 +1889,7 @@
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/Food-Container-Kotak-Bumbu-Makanan-–-Cocok-untuk-Kulkas-Bahan-Tebal-Bikin-Kulkas-Lebih-Rapi!-i.1082449101.42554622458?extraParams=%7B%22display_model_id%22%3A285392829172%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/8a/96/ZccZVHga_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2385,7 +1907,7 @@
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/EGLUX-Botol-Pompa-Sabun-Detergen-1000ml-Dispenser-Sabun-Pump-Botol-Cairan-Refill-Dispenser-Cairan-i.1082449101.40913738414?extraParams=%7B%22display_model_id%22%3A271135768879%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/70/ff/oZ1OQB1P_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2403,7 +1925,7 @@
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/Toples-kaca-rusa-mewah-Toples-snack-i.1082449101.29054668619?extraParams=%7B%22display_model_id%22%3A222973600337%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/e8/dd/NRansuVf_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2421,7 +1943,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/EGLUX-Toples-Kotak-dengan-2-Motif-Bintik-Retak-Toples-kedap-Udara-i.1082449101.51655886508?extraParams=%7B%22display_model_id%22%3A228245196952%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/4e/25/ktQMhFgh_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2439,7 +1961,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/Toples-Plastik-Kaki-Emas-Mewah-Motif-Segitiga-Modern-i.1082449101.44118196574?extraParams=%7B%22display_model_id%22%3A286496042971%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/b9/98/Pgfdcj82_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2457,7 +1979,7 @@
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="homedecor" onclick="openProductModal(this)">
+                <div class="product-card" data-category="homedecor" onclick="window.location.href='https://shopee.co.id/vas-bunga-besar-mewah-tempat-bunga-dan-hiasan-meja-hiasan-ruang-tamu-hiasan-meja-tamu-i.1082449101.22987522933?extraParams=%7B%22display_model_id%22%3A147622951547%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/a4/0a/0CWgpV7F_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2475,7 +1997,7 @@
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/EGLUX-Set-Toples-bulat-bening-kedap-udara-3pcs-polos-dengan-tutup-bola-warna-emas-i.1082449101.45355939292?extraParams=%7B%22display_model_id%22%3A287393779977%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/10/5e/bS2CYJVy_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2493,7 +2015,7 @@
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="kitchen" onclick="openProductModal(this)">
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/Oil-pot-Tempat-minyak-stainless-steeel-tebal-1.4L-1.7L-besar-kapasitasnya-untuk-minyak-goremg-tempat-saringan-minyak-i.1082449101.23362026284?extraParams=%7B%22display_model_id%22%3A251354425401%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/cd/86/akLooc1B_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2511,7 +2033,7 @@
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/Kotak-tisu-transparan-tempat-wadah-tisu-minimalis-dan-tutup-bahan-kayu-i.1082449101.22762024710?extraParams=%7B%22display_model_id%22%3A69377572198%2C%22model_selection_logic%22%3A2%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/93/71/9tvArtbq_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2529,7 +2051,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/EGLUX-Toples-3Pcs-1-Set-Plastik-Sultan-Motif-Arab-Warna-Bening-Emas-Tampilan-Mewah-i.1082449101.41078375400?extraParams=%7B%22display_model_id%22%3A330490738443%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/ac/d8/dk5xZIfw_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2547,7 +2069,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/Toples-Motif-Pita-Toples-mewah-3pcs-set-i.1082449101.27235240901?extraParams=%7B%22display_model_id%22%3A258320501796%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/0e/e5/RIpYuq7K_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2566,7 +2088,7 @@
                 </div>
                 
                 <!-- ONGOING -->
-                <div class="product-card" data-category="kitchen" onclick="openProductModal(this)">
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/EGLUX-Tempat-prasmanan-ada-gagang-motif-retak-seribu-Emas-wadah-prasmanan-aesthetics-i.1082449101.43766006853?extraParams=%7B%22display_model_id%22%3A188672962351%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/42/81/DPjbY6v8_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2584,7 +2106,7 @@
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/Food-Container-Kotak-Bumbu-Makanan-–-Cocok-untuk-Kulkas-Bahan-Tebal-Bikin-Kulkas-Lebih-Rapi!-i.1082449101.42554622458?extraParams=%7B%22display_model_id%22%3A285392829172%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/8a/96/ZccZVHga_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2602,7 +2124,7 @@
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/EGLUX-Botol-Pompa-Sabun-Detergen-1000ml-Dispenser-Sabun-Pump-Botol-Cairan-Refill-Dispenser-Cairan-i.1082449101.40913738414?extraParams=%7B%22display_model_id%22%3A271135768879%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/70/ff/oZ1OQB1P_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2620,7 +2142,7 @@
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/Toples-kaca-rusa-mewah-Toples-snack-i.1082449101.29054668619?extraParams=%7B%22display_model_id%22%3A222973600337%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/e8/dd/NRansuVf_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2638,7 +2160,7 @@
                     </div>
                 </div>
 
-                <div class="product-card" data-category="storage" onclick="openProductModal(this)">
+                <div class="product-card" data-category="storage" onclick="window.location.href='https://shopee.co.id/EGLUX-Toples-Kotak-dengan-2-Motif-Bintik-Retak-Toples-kedap-Udara-i.1082449101.51655886508?extraParams=%7B%22display_model_id%22%3A228245196952%2C%22model_selection_logic%22%3A3%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
                     <div class="product-image">
                         <img src="https://thumbs2.imgbox.com/4e/25/ktQMhFgh_t.png" alt="Product">
                         <span class="product-badge">Best Seller</span>
@@ -2867,371 +2389,6 @@
                 }
             });
         });
-    </script>
-
-    <!-- ===== PRODUCT MODAL ===== -->
-    <div class="product-modal-overlay" id="productModalOverlay" onclick="handleModalOverlayClick(event)">
-        <div class="product-modal" id="productModal">
-            <button class="modal-close-btn" onclick="closeProductModal()">&#x2715;</button>
-            <img class="modal-product-img" id="modalProductImg" src="" alt="">
-            <div class="modal-body">
-                <span class="modal-badge" id="modalBadge"></span>
-                <h2 class="modal-title" id="modalTitle"></h2>
-                <p class="modal-category" id="modalCategory"></p>
-                <p class="modal-desc" id="modalDesc"></p>
-
-                <div id="variantSection">
-                    <p class="modal-section-label">Pilih Varian</p>
-                    <div class="variant-options" id="variantOptions"></div>
-                </div>
-
-                <p class="modal-section-label">Jumlah</p>
-                <div class="qty-row">
-                    <button class="qty-btn" onclick="changeQty(-1)">&#8722;</button>
-                    <span class="qty-num" id="modalQty">1</span>
-                    <button class="qty-btn" onclick="changeQty(1)">&#43;</button>
-                </div>
-
-                <div class="modal-actions">
-                    <button class="btn-add-cart" onclick="addToCart()">&#43; Keranjang</button>
-                    <button class="btn-checkout-now" onclick="checkoutNow()">Beli Sekarang</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ===== CART PANEL ===== -->
-    <div class="cart-panel-overlay" id="cartPanelOverlay" onclick="toggleCartPanel()"></div>
-    <div class="cart-panel" id="cartPanel">
-        <div class="cart-panel-header">
-            <h3>Keranjang</h3>
-            <button class="sidebar-close" onclick="toggleCartPanel()">&#x2715;</button>
-        </div>
-        <div class="cart-items-list" id="cartItemsList">
-            <div class="cart-empty">Keranjang masih kosong</div>
-        </div>
-        <div class="cart-footer">
-            <div class="cart-total-row">
-                <span class="cart-total-label">Total Item</span>
-                <span class="cart-total-count" id="cartTotalCount">0 item</span>
-            </div>
-            <button class="btn-cart-checkout" onclick="openCheckoutModal()">Lanjut Checkout</button>
-        </div>
-    </div>
-
-    <!-- ===== CHECKOUT FORM MODAL ===== -->
-    <div class="checkout-modal-overlay" id="checkoutModalOverlay" onclick="handleCheckoutOverlayClick(event)">
-        <div class="checkout-modal">
-            <div class="checkout-modal-header">
-                <h3>Form Order</h3>
-                <button class="modal-close-btn" style="position:static;margin:0;" onclick="closeCheckoutModal()">&#x2715;</button>
-            </div>
-            <div class="checkout-body">
-                <div class="checkout-order-summary">
-                    <h4>Ringkasan Pesanan</h4>
-                    <div id="checkoutOrderSummary"></div>
-                </div>
-
-                <div class="form-group">
-                    <label>Nama Lengkap *</label>
-                    <input type="text" id="formName" placeholder="Masukkan nama lengkap">
-                </div>
-                <div class="form-group">
-                    <label>Nomor WhatsApp *</label>
-                    <input type="tel" id="formPhone" placeholder="08xxxxxxxxxx">
-                </div>
-                <div class="form-group">
-                    <label>Alamat Lengkap *</label>
-                    <textarea id="formAddress" placeholder="Jalan, nomor rumah, kelurahan, kecamatan..."></textarea>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Kota / Kabupaten *</label>
-                        <input type="text" id="formCity" placeholder="Kota">
-                    </div>
-                    <div class="form-group">
-                        <label>Kode Pos</label>
-                        <input type="text" id="formPostal" placeholder="12345">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Metode Pengiriman</label>
-                    <select id="formShipping">
-                        <option value="JNE Regular">JNE Regular</option>
-                        <option value="JNE YES">JNE YES</option>
-                        <option value="J&T Express">J&T Express</option>
-                        <option value="SiCepat">SiCepat</option>
-                        <option value="AnterAja">AnterAja</option>
-                        <option value="Grab/GoSend">Grab/GoSend (Same Day)</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Catatan (opsional)</label>
-                    <textarea id="formNotes" placeholder="Warna, ukuran, atau permintaan khusus..."></textarea>
-                </div>
-
-                <button class="btn-submit-order" onclick="submitOrderToWhatsApp()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                    Submit Order via WhatsApp
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Toast Notification -->
-    <div class="toast-notif" id="toastNotif"></div>
-
-    <script>
-    // ===== PRODUCT MODAL & CART SYSTEM =====
-
-    // Variant data per product (by name keyword)
-    const VARIANT_MAP = {
-        'prasmanan': ['Motif Polos', 'Motif Bintik Emas', 'Motif Marmer', 'Motif Rotan'],
-        'tempat buah': ['Ukuran S', 'Ukuran M', 'Ukuran L'],
-        'tudung saji': ['Motif Polos', 'Motif Arab', 'Motif Emas'],
-        'toples': ['Ukuran S', 'Ukuran M', 'Ukuran L', 'Set 3pcs'],
-        'dispenser': ['3.5 Liter', '5 Liter'],
-        'wall decor': ['30x85cm', '40x100cm'],
-        'vas bunga': ['Warna Bening', 'Warna Gold', 'Warna Hitam'],
-        'taplak': ['38x38cm', '40x40cm', 'Set 2pcs'],
-        'gayung': ['Warna Putih', 'Warna Cream', 'Warna Coklat'],
-        'ember': ['Ukuran S (5L)', 'Ukuran M (10L)', 'Ukuran L (15L)'],
-        'rak': ['1 Tingkat', '2 Tingkat'],
-        'botol': ['250ml', '500ml'],
-        'default': ['Warna Putih', 'Warna Cream', 'Warna Gold']
-    };
-
-    let currentProduct = null;
-    let currentQty = 1;
-    let selectedVariant = '';
-    let cart = [];
-
-    function getVariants(name) {
-        const lower = name.toLowerCase();
-        for (const [key, variants] of Object.entries(VARIANT_MAP)) {
-            if (lower.includes(key)) return variants;
-        }
-        return VARIANT_MAP['default'];
-    }
-
-    function openProductModal(cardEl) {
-        const img = cardEl.querySelector('.product-image img')?.src || '';
-        const badge = cardEl.querySelector('.product-badge')?.textContent || '';
-        const name = cardEl.querySelector('h4')?.textContent || '';
-        const category = cardEl.querySelector('.model')?.textContent || '';
-        const desc = cardEl.querySelector('.desc')?.textContent || '';
-
-        currentProduct = { img, badge, name, category, desc };
-        currentQty = 1;
-        selectedVariant = '';
-
-        document.getElementById('modalProductImg').src = img;
-        document.getElementById('modalBadge').textContent = badge;
-        document.getElementById('modalTitle').textContent = name;
-        document.getElementById('modalCategory').textContent = category;
-        document.getElementById('modalDesc').textContent = desc;
-        document.getElementById('modalQty').textContent = 1;
-
-        // Render variants
-        const variants = getVariants(name);
-        const variantContainer = document.getElementById('variantOptions');
-        variantContainer.innerHTML = '';
-        variants.forEach((v, i) => {
-            const btn = document.createElement('button');
-            btn.className = 'variant-btn' + (i === 0 ? ' selected' : '');
-            btn.textContent = v;
-            btn.onclick = () => selectVariant(btn, v);
-            variantContainer.appendChild(btn);
-        });
-        selectedVariant = variants[0];
-
-        document.getElementById('productModalOverlay').classList.add('open');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function selectVariant(btn, variant) {
-        document.querySelectorAll('#variantOptions .variant-btn').forEach(b => b.classList.remove('selected'));
-        btn.classList.add('selected');
-        selectedVariant = variant;
-    }
-
-    function closeProductModal() {
-        document.getElementById('productModalOverlay').classList.remove('open');
-        document.body.style.overflow = '';
-    }
-
-    function handleModalOverlayClick(e) {
-        if (e.target === document.getElementById('productModalOverlay')) closeProductModal();
-    }
-
-    function changeQty(delta) {
-        currentQty = Math.max(1, currentQty + delta);
-        document.getElementById('modalQty').textContent = currentQty;
-    }
-
-    function addToCart() {
-        if (!currentProduct) return;
-        const existing = cart.find(i => i.name === currentProduct.name && i.variant === selectedVariant);
-        if (existing) {
-            existing.qty += currentQty;
-        } else {
-            cart.push({
-                id: Date.now(),
-                img: currentProduct.img,
-                name: currentProduct.name,
-                variant: selectedVariant,
-                qty: currentQty
-            });
-        }
-        updateCartBadge();
-        closeProductModal();
-        showToast('Produk ditambahkan ke keranjang &#x2713;');
-    }
-
-    function checkoutNow() {
-        if (!currentProduct) return;
-        cart = [{
-            id: Date.now(),
-            img: currentProduct.img,
-            name: currentProduct.name,
-            variant: selectedVariant,
-            qty: currentQty
-        }];
-        updateCartBadge();
-        closeProductModal();
-        openCheckoutModal();
-    }
-
-    function updateCartBadge() {
-        const total = cart.reduce((s, i) => s + i.qty, 0);
-        const badge = document.getElementById('cartCountBadge');
-        badge.textContent = total;
-        badge.classList.toggle('visible', total > 0);
-        renderCartPanel();
-    }
-
-    function renderCartPanel() {
-        const list = document.getElementById('cartItemsList');
-        const totalCount = document.getElementById('cartTotalCount');
-        if (cart.length === 0) {
-            list.innerHTML = '<div class="cart-empty">Keranjang masih kosong</div>';
-            totalCount.textContent = '0 item';
-            return;
-        }
-        const total = cart.reduce((s, i) => s + i.qty, 0);
-        totalCount.textContent = total + ' item';
-        list.innerHTML = cart.map(item => `
-            <div class="cart-item" data-id="${item.id}">
-                <img src="${item.img}" alt="">
-                <div class="cart-item-info">
-                    <div class="cart-item-name">${item.name}</div>
-                    <div class="cart-item-variant">${item.variant}</div>
-                    <div class="cart-item-qty-row">
-                        <button class="cart-qty-btn" onclick="updateCartQty(${item.id}, -1)">&#8722;</button>
-                        <span class="cart-qty-num">${item.qty}</span>
-                        <button class="cart-qty-btn" onclick="updateCartQty(${item.id}, 1)">&#43;</button>
-                    </div>
-                </div>
-                <button class="cart-item-del" onclick="removeCartItem(${item.id})">&#x2715;</button>
-            </div>
-        `).join('');
-    }
-
-    function updateCartQty(id, delta) {
-        const item = cart.find(i => i.id === id);
-        if (!item) return;
-        item.qty = Math.max(1, item.qty + delta);
-        updateCartBadge();
-    }
-
-    function removeCartItem(id) {
-        cart = cart.filter(i => i.id !== id);
-        updateCartBadge();
-    }
-
-    function toggleCartPanel() {
-        const panel = document.getElementById('cartPanel');
-        const overlay = document.getElementById('cartPanelOverlay');
-        const isOpen = panel.classList.contains('open');
-        panel.classList.toggle('open', !isOpen);
-        overlay.classList.toggle('open', !isOpen);
-        document.body.style.overflow = !isOpen ? 'hidden' : '';
-    }
-
-    function openCheckoutModal() {
-        if (cart.length === 0) { showToast('Keranjang masih kosong'); return; }
-        // Close cart panel first
-        document.getElementById('cartPanel').classList.remove('open');
-        document.getElementById('cartPanelOverlay').classList.remove('open');
-
-        // Render order summary
-        const summaryEl = document.getElementById('checkoutOrderSummary');
-        summaryEl.innerHTML = cart.map(item =>
-            `<div class="checkout-order-item"><span>${item.name.slice(0,40)}${item.name.length > 40 ? '…' : ''}</span><span>${item.variant} &times; ${item.qty}</span></div>`
-        ).join('');
-
-        document.getElementById('checkoutModalOverlay').classList.add('open');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeCheckoutModal() {
-        document.getElementById('checkoutModalOverlay').classList.remove('open');
-        document.body.style.overflow = '';
-    }
-
-    function handleCheckoutOverlayClick(e) {
-        if (e.target === document.getElementById('checkoutModalOverlay')) closeCheckoutModal();
-    }
-
-    function submitOrderToWhatsApp() {
-        const name = document.getElementById('formName').value.trim();
-        const phone = document.getElementById('formPhone').value.trim();
-        const address = document.getElementById('formAddress').value.trim();
-        const city = document.getElementById('formCity').value.trim();
-        const postal = document.getElementById('formPostal').value.trim();
-        const shipping = document.getElementById('formShipping').value;
-        const notes = document.getElementById('formNotes').value.trim();
-
-        if (!name || !phone || !address || !city) {
-            showToast('Mohon lengkapi data wajib (*)');
-            return;
-        }
-
-        // Build order text
-        let msg = `*ORDER BARU - EGLUX*\n\n`;
-        msg += `*Data Pembeli:*\n`;
-        msg += `Nama: ${name}\n`;
-        msg += `No. WA: ${phone}\n`;
-        msg += `Alamat: ${address}\n`;
-        msg += `Kota: ${city}${postal ? ' ' + postal : ''}\n`;
-        msg += `Pengiriman: ${shipping}\n\n`;
-        msg += `*Pesanan:*\n`;
-        cart.forEach((item, i) => {
-            msg += `${i+1}. ${item.name}\n   Varian: ${item.variant} | Qty: ${item.qty}\n`;
-        });
-        if (notes) msg += `\nCatatan: ${notes}`;
-        msg += `\n\n_Mohon konfirmasi ketersediaan & total harga. Terima kasih!_`;
-
-        const waNumber = '6281234567890'; // Ganti dengan nomor WA toko
-        const encoded = encodeURIComponent(msg);
-        window.open(`https://wa.me/${waNumber}?text=${encoded}`, '_blank');
-
-        // Reset
-        cart = [];
-        updateCartBadge();
-        closeCheckoutModal();
-        ['formName','formPhone','formAddress','formCity','formPostal','formNotes'].forEach(id => {
-            document.getElementById(id).value = '';
-        });
-        showToast('Order berhasil dikirim ke WhatsApp!');
-    }
-
-    function showToast(msg) {
-        const toast = document.getElementById('toastNotif');
-        toast.innerHTML = msg;
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2800);
-    }
     </script>
 
     <script>
