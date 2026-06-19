@@ -1,0 +1,1799 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/img/favLogo.png?v=2">
+    <title>Eglux - Produk Rumah Tangga Premium</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #554521;
+            --secondary: #cba65a;
+            --accent: #f5f0e8;
+            --light: #faf8f5;
+            --white: #ffffff;
+            --text-light: #666;
+            --sidebar-dark: #cba65a;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--primary);
+            background: var(--light);
+            overflow-x: hidden;
+        }
+
+        /* ===== HAMBURGER BUTTON ===== */
+        .hamburger-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .hamburger-btn span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        .hamburger-btn:hover span {
+            background: var(--secondary);
+        }
+
+        .hamburger-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(4px, 4px);
+        }
+
+        .hamburger-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(4px, -4px);
+        }
+
+        /* ===== SIDEBAR OVERLAY ===== */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ===== SIDEBAR PANEL ===== */
+        .sidebar-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 542px;
+            height: 100vh;
+            background: var(--white);
+            z-index: 1002;
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-panel.open {
+            transform: translateX(0);
+        }
+
+        .sidebar-panel-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sidebar-panel-header h3 {
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .sidebar-close {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1.8rem;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: var(--transition);
+            line-height: 1;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-close:hover {
+            opacity: 1;
+            color: var(--secondary);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            flex: 1;
+        }
+
+        .sidebar-menu > li {
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #f0f0f0;
+            height: 100px;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar-menu > li > a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            padding: 0 2rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: var(--transition);
+            position: relative;
+            z-index: 2;
+        }
+
+        .sidebar-menu > li > a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, rgba(201,169,110,0.15) 0%, transparent 100%);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .sidebar-menu > li > a:hover::before {
+            opacity: 1;
+        }
+
+        .sidebar-menu > li > a:hover {
+            padding-left: 2.5rem;
+            color: var(--primary);
+        }
+
+        .sidebar-menu > li .cat-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.4;
+            background-size: cover;
+            background-position: center;
+            transition: var(--transition);
+            z-index: 1;
+        }
+
+        .sidebar-menu > li:hover .cat-bg {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .sidebar-menu > li .cat-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, rgba(255,255,255,0.2) 20%, rgba(49, 41, 8, 0) 100%);
+            z-index: 1;
+            border-left-color: var(--secondary);
+        }
+
+        .sidebar-menu > li > a span {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== SUBMENU ===== */
+        .has-submenu {
+            flex-direction: column;
+            height: auto !important;
+            min-height: 100px;
+        }
+
+        .has-submenu > a {
+            justify-content: center;
+            min-height: 100px;
+            position: relative;
+        }
+
+        .has-submenu > a .arrow {
+            font-size: 1.6rem;
+            transition: var(--transition);
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 2;
+            color: var(--primary);
+            pointer-events: none;
+        }
+
+        .has-submenu.open > a .arrow {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .has-submenu > a .menu-text {
+            text-align: center;
+        }
+
+        .submenu {
+            list-style: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+            background: var(--white);
+            width: 100%;
+        }
+
+        .has-submenu.open .submenu {
+            max-height: 300px;
+        }
+
+        .submenu li {
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #eee;
+        }
+
+        .submenu li:last-child {
+            border-bottom: none;
+        }
+
+        .submenu li a {
+            display: block;
+            padding: 1rem 2rem 1rem 3rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+            position: relative;
+            z-index: 2;
+        }
+
+        .submenu li a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, rgba(201, 169, 110, 0.7) 0%, transparent 100%);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .submenu li a:hover::before {
+            opacity: 0.4;
+        }
+
+        .submenu li a:hover {
+            color: var(--primary);
+            border-left-color: var(--secondary);
+            padding-left: 6rem;
+            transition: var(--transition);
+        }
+
+        /* ===== MAIN HEADER BAR (Sticky) ===== */
+        .main-header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            z-index: 1000;
+            box-shadow: 0 1px 10px rgba(0,0,0,0.05);
+        }
+
+        .main-header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+        }
+
+        .main-header .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: 1px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .main-header .logo span {
+            color: var(--secondary);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-left: auto;
+        }
+
+        .header-right .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .header-right .icon-btn:hover {
+            color: var(--secondary);
+        }
+
+        .header-right .icon-btn svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        /* .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--secondary);
+            color: white;
+            font-size: 0.55rem;
+            font-weight: 700;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        } */
+
+        /* ===== PRIMARY NAV (Below Logo) ===== */
+        .primary-nav {
+            background: var(--white);
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            will-change: transform, opacity;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease;
+        }
+
+        .primary-nav.hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .primary-nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3rem;
+            height: 48px;
+        }
+
+        .primary-nav-inner a {
+            font-size: 0.8rem;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            position: relative;
+            padding: 4px 0;
+            white-space: nowrap;
+        }
+
+        .primary-nav-inner a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: var(--secondary);
+            transition: var(--transition);
+        }
+
+        .primary-nav-inner a:hover::after,
+        .primary-nav-inner a.active::after {
+            width: 100%;
+        }
+
+        .primary-nav-inner a:hover,
+        .primary-nav-inner a.active {
+            color: var(--secondary);
+        }
+
+        /* ===== HERO SECTION FULLSCREEN ===== */
+        .hero-section {
+            position: relative;
+            width: 100vw;
+            height: 84vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #1a1a2e;
+        }
+
+        .hero-bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.7;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(26,26,46,0.1) 0%, rgba(26,26,46,0.3) 100%);
+        }
+
+        .hero-text-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .hero-text-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 8rem;
+            font-weight: 400;
+            color: var(--white);
+            letter-spacing: 12px;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 4px 40px rgba(0,0,0,0.4);
+            line-height: 1;
+        }
+
+        .hero-text-content .hero-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255,255,255,0.85);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 3rem;
+            margin-top: 1rem;
+            font-weight: 200;
+        }
+
+        .hero-text-content .shop-btn {
+            display: inline-block;
+            padding: 1.1rem 4rem;
+            background: var(--secondary);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 30px;
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .hero-text-content .shop-btn:hover {
+            background: var(--white);
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+        }
+
+        /* ===== COUNTRIES FOOTER ===== */
+        .countries-footer {
+            background: var(--sidebar-dark);
+            padding: 1rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .countries-footer p {
+            color: var(--white);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            word-spacing: 8px;
+        }
+
+        /* ===== DUPLICATE NAV (Above Categories) ===== */
+        .duplicate-nav {
+            background: var(--white);
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            will-change: transform;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .duplicate-nav.stuck {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transform: translateY(0);
+        }
+
+        .duplicate-nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3rem;
+            height: 48px;
+        }
+
+        .duplicate-nav-inner a {
+            font-size: 0.8rem;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            position: relative;
+            padding: 4px 0;
+            white-space: nowrap;
+        }
+
+        .duplicate-nav-inner a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: var(--secondary);
+            transition: var(--transition);
+        }
+
+        .duplicate-nav-inner a:hover::after,
+        .duplicate-nav-inner a.active::after {
+            width: 100%;
+        }
+
+        .duplicate-nav-inner a:hover,
+        .duplicate-nav-inner a.active {
+            color: var(--secondary);
+        }
+
+        /* ===== SECTIONS COMMON ===== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        section {
+            padding: 5rem 0;
+        }
+
+        /* ===== CATEGORIES ===== */
+        .categories {
+            background: var(--white);
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .category-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .category-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .category-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .category-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            padding: 2rem 1.5rem 1.5rem;
+        }
+
+        .category-overlay h3 {
+            color: var(--white);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* ===== BEST SELLERS ===== */
+        .best-sellers {
+            background: var(--light);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+
+        .product-image {
+            position: relative;
+            overflow: hidden;
+            height: 250px;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--secondary);
+            color: var(--white);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-info h4 {
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+            color: var(--primary);
+        }
+
+        .product-info .model {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 0.8rem;
+        }
+
+        .product-info .price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        /* ===== BRAND STORY ===== */
+        .brand-story {
+            background: var(--white);
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .story-image {
+            position: relative;
+        }
+
+        .story-image img {
+            width: 100%;
+            border-radius: 20px;
+        }
+
+        .story-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .story-content p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item h3 {
+            font-size: 2rem;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        .stat-item p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        /* ===== FEATURES ===== */
+        .features {
+            background: var(--light);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--accent);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--secondary);
+            color: var(--white);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand p {
+            color: rgba(255,255,255,0.7);
+            margin-top: 1rem;
+            line-height: 1.7;
+            font-size: 0.9rem;
+        }
+
+        .footer-links h4 {
+            font-size: 1rem;
+            margin-bottom: 1.2rem;
+            color: var(--white);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 0.6rem;
+        }
+
+        .footer-links ul li a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .footer-links ul li a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.85rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero-text-content h1 {
+                font-size: 5rem;
+            }
+
+            .category-grid,
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .story-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .sidebar-panel {
+                width: 420px;
+            }
+
+            .primary-nav-inner,
+            .duplicate-nav-inner {
+                gap: 2rem;
+            }
+
+            .header-right {
+            gap: 0rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-text-content h1 {
+                font-size: 3.5rem;
+                letter-spacing: 6px;
+            }
+
+            .hero-text-content .shop-btn {
+                padding: 1rem 2.5rem;
+            }
+
+            .category-grid,
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .sidebar-panel {
+                width: 100%;
+            }
+
+            .primary-nav-inner,
+            .duplicate-nav-inner {
+                gap: 1.2rem;
+                overflow-x: auto;
+                justify-content: center;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+
+            .primary-nav-inner::-webkit-scrollbar,
+            .duplicate-nav-inner::-webkit-scrollbar {
+                display: none;
+            }
+
+            .primary-nav-inner a,
+            .duplicate-nav-inner a {
+                font-size: 0.7rem;
+                white-space: nowrap;
+            }
+
+            .main-header .logo {
+                font-size: 1.5rem;
+            }
+
+            .header-right {
+                gap: -0.4rem;
+            }
+        }
+    
+        /* ===== PROMO BANNERS ===== */
+        .promo-banners {
+            background: var(--light);
+            padding: 2rem 0;
+        }
+
+        .promo-banners-alt {
+            background: var(--white);
+        }
+
+        .banner-single {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .banner-single:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .banner-single-alt {
+            height: 240px;
+        }
+
+        .banner-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.6s ease;
+        }
+
+        .banner-single:hover .banner-img {
+            transform: scale(1.08);
+        }
+
+        .banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(85,69,33,0.85) 0%, rgba(85,69,33,0.5) 50%, rgba(203,166,90,0.3) 100%);
+            z-index: 1;
+        }
+
+        .banner-overlay-alt {
+            background: linear-gradient(135deg, rgba(26,26,46,0.85) 0%, rgba(26,26,46,0.5) 50%, rgba(203,166,90,0.3) 100%);
+        }
+
+        .banner-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2.5rem;
+            z-index: 2;
+            color: var(--white);
+        }
+
+        .banner-tag {
+            display: inline-block;
+            background: var(--secondary);
+            color: var(--white);
+            padding: 0.35rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 1rem;
+        }
+
+        .banner-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .banner-content p {
+            font-size: 1.05rem;
+            opacity: 0.9;
+            margin-bottom: 1.2rem;
+        }
+
+        .banner-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--secondary);
+            transition: var(--transition);
+        }
+
+        .banner-single:hover .banner-cta {
+            gap: 0.8rem;
+            color: var(--white);
+        }
+
+        /* ===== RESPONSIVE BANNERS ===== */
+        @media (max-width: 1024px) {
+            .banner-single {
+                height: 260px;
+            }
+            .banner-single-alt {
+                height: 220px;
+            }
+            .banner-content h3 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .banner-single {
+                height: 220px;
+            }
+            .banner-single-alt {
+                height: 200px;
+            }
+            .banner-content {
+                padding: 1.8rem;
+            }
+            .banner-content h3 {
+                font-size: 1.6rem;
+            }
+            .banner-content p {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .banner-single {
+                height: 180px;
+            }
+            .banner-single-alt {
+                height: 170px;
+            }
+            .banner-content {
+                padding: 1.5rem;
+            }
+            .banner-content h3 {
+                font-size: 1.3rem;
+            }
+            .banner-content p {
+                font-size: 0.85rem;
+                margin-bottom: 0.8rem;
+            }
+            .banner-cta {
+                font-size: 0.8rem;
+            }
+        }
+</style>
+
+<base target="_blank">
+<base target="_blank">
+</head>
+<body>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <!-- Sidebar Panel (Categories) -->
+    <aside class="sidebar-panel" id="sidebarPanel">
+        <div class="sidebar-panel-header">
+            <h3>Categories</h3>
+            <button class="sidebar-close" onclick="toggleSidebar()">&times;</button>
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <div class="cat-bg" style="background-image: url('https://down-id.img.susercontent.com/file/sg-11134201-820nf-mn9v2qt7p6h23a.webp');"></div>
+                <div class="cat-overlay"></div>
+                <a href="products.html?filter=new"><span>New Arrival</span></a>
+            </li>
+            <li>
+                <div class="cat-bg" style="background-image: url('https://down-id.img.susercontent.com/file/sg-11134201-824gv-me0yfrozmpzae4.webp');"></div>
+                <div class="cat-overlay"></div>
+                <a href="products.html?filter=bestseller"><span>Best Seller</span></a>
+            </li>
+            <li>
+                <div class="cat-bg" style="background-image: url('https://down-tx-id.img.susercontent.com/id-11134210-7rbk4-m6npp1bog9rg6c');"></div>
+                <div class="cat-overlay"></div>
+                <a href="products.html"><span>All Products</span></a>
+            </li>
+            <li class="has-submenu" id="kitchenItem">
+                <div class="cat-bg" style="background-image: url('https://down-id.img.susercontent.com/file/sg-11134201-820n5-mn9v2pvit5om4b.webp');"></div>
+                <div class="cat-overlay"></div>
+                <a href="#" onclick="return false;" class="menu-toggle">
+                    <span class="menu-text">Kitchen</span>
+                    <span class="arrow">&#9662;</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="products.html?filter=prasmanan">Prasmanan</a></li>
+                    <li><a href="products.html?filter=bumbu">Tempat Bumbu</a></li>
+                    <li><a href="products.html?filter=toples">Toples</a></li>
+                    <li><a href="products.html?filter=nampan">Nampan</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu" id="homeDecorItem">
+                <div class="cat-bg" style="background-image: url('https://down-id.img.susercontent.com/file/id-11134207-7rasg-m5z7qgib73zc9d.webp');"></div>
+                <div class="cat-overlay"></div>
+                <a href="#" onclick="return false;" class="menu-toggle">
+                    <span class="menu-text">Home Decor</span>
+                    <span class="arrow">&#9662;</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="products.html?filter=walldecor">Wall Decor</a></li>
+                    <li><a href="products.html?filter=pajangan">Pajangan</a></li>
+                    <li><a href="products.html?filter=vas">Vas Bunga</a></li>
+                    <li><a href="products.html?filter=taplak">Taplak Meja</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="cat-bg" style="background-image: url('https://down-id.img.susercontent.com/file/sg-11134201-7rdvm-mdjp4ct77ggp63.webp');"></div>
+                <div class="cat-overlay"></div>
+                <a href="products.html?filter=bathroom"><span>Bathroom</span></a>
+            </li>
+            <li>
+                <div class="cat-bg" style="background-image: url('https://down-id.img.susercontent.com/file/sg-11134201-7rdy8-mcj15f3yq0frd3.webp');"></div>
+                <div class="cat-overlay"></div>
+                <a href="products.html?filter=storage"><span>Storage</span></a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Header Bar (Sticky: Categories + Logo + Search + Cart) -->
+    <header class="main-header" id="mainHeader">
+        <div class="main-header-inner">
+            <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleSidebar()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <a href="index.html" class="logo">
+                <img src="img/Logo1.png" alt="Eglux Logo" style="height: 48px; width: auto;">
+            </a>
+            <div class="header-right">
+                <button class="icon-btn" aria-label="Shopee" onclick="window.location.href='https://shopee.co.id/eglux'">
+                    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="currentColor" d="M25.08,10.89c0-.22-.17-.39-.39-.39h-4.22c-.1-2.75-2.07-4.95-4.48-4.95s-4.37,2.19-4.48,4.95h-4.22c-.21,0-.38.18-.38.39,0,.01,0,.02,0,.03h0l.6,13.27s0,.07,0,.11c0,0,0,.02,0,.03v.03s0,0,0,0c.09.92.76,1.67,1.67,1.7h0s13.46,0,13.46,0h0c.93-.03,1.68-.78,1.76-1.71h0s0-.01,0-.01c0,0,0-.02,0-.03,0-.02,0-.05,0-.07l.66-13.32h0s0-.01,0-.02ZM16,6.75c1.75,0,3.19,1.67,3.25,3.75h-6.5c.07-2.08,1.5-3.75,3.25-3.75ZM19.33,20.9c-.12.98-.72,1.77-1.64,2.17-.52.22-1.21.34-1.75.3-.85-.03-1.66-.24-2.39-.62-.26-.14-.66-.41-.96-.66-.08-.06-.09-.1-.04-.18.03-.04.08-.11.19-.28.16-.24.18-.27.2-.29.05-.08.14-.09.22-.02t.02.01s.01.01.05.04c.03.03.05.04.06.05.8.62,1.73.98,2.66,1.02,1.3-.02,2.24-.6,2.41-1.5.19-.99-.59-1.85-2.11-2.32-.48-.15-1.68-.63-1.9-.76-1.04-.61-1.53-1.41-1.46-2.4.11-1.37,1.38-2.39,2.99-2.4.72,0,1.44.15,2.13.44.24.1.68.34.83.45.09.06.1.14.05.22-.03.05-.07.12-.17.27h0c-.13.2-.13.21-.16.26-.05.08-.11.08-.2.03-.74-.5-1.56-.74-2.45-.76-1.12.02-1.96.69-2.01,1.6-.01.82.6,1.42,1.93,1.87,2.7.87,3.73,1.88,3.53,3.48Z"/>
+                    </svg>
+                </button>
+                <button class="icon-btn" aria-label="TikTok" onclick="window.location.href='https://www.tiktok.com/@egluxdecor'">
+                    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="currentColor" d="M13.77,14.38v-.78c-.27-.04-.54-.07-.82-.07-2.64,0-4.98,1.71-5.78,4.23-.79,2.52.14,5.27,2.31,6.78-2.28-2.44-2.15-6.26.29-8.53,1.09-1.01,2.51-1.59,3.99-1.62h0Z"/>
+                        <path fill="currentColor" d="M13.92,23.18c1.48,0,2.69-1.17,2.76-2.64V7.36h2.41c-.05-.28-.07-.55-.07-.83h-3.29v13.16c-.05,1.48-1.27,2.66-2.76,2.66-.44,0-.88-.11-1.27-.32.52.72,1.35,1.14,2.23,1.15h0ZM23.58,11.83v-.73c-.89,0-1.75-.26-2.49-.75.65.75,1.52,1.27,2.49,1.48Z"/>
+                        <path fill="currentColor" d="M21.09,10.35c-.73-.83-1.13-1.89-1.13-2.99h-.88c.23,1.23.95,2.31,2.01,2.99h0ZM12.96,16.83c-1.53,0-2.76,1.25-2.75,2.78,0,1.02.57,1.96,1.48,2.43-.89-1.23-.62-2.96.62-3.85.47-.34,1.04-.52,1.62-.52.28,0,.55.05.82.13v-3.35c-.27-.04-.54-.06-.82-.06h-.15v2.55c-.27-.07-.54-.1-.82-.1h0Z"/>
+                        <path fill="currentColor" d="M23.58,11.83v2.55c-1.64,0-3.24-.52-4.57-1.48v6.69c0,3.34-2.72,6.04-6.06,6.04-1.24,0-2.45-.38-3.46-1.1,2.27,2.44,6.1,2.58,8.54.31,1.23-1.14,1.93-2.75,1.93-4.42v-6.67c1.33.95,2.93,1.47,4.57,1.46v-3.28c-.32,0-.64-.04-.96-.1h0Z"/>
+                        <path fill="currentColor" d="M19.02,19.59v-6.69c1.33.96,2.93,1.47,4.57,1.46v-2.55c-.97-.2-1.84-.72-2.5-1.46-1.05-.68-1.78-1.76-2.01-2.99h-2.41v13.18c-.06,1.53-1.35,2.71-2.87,2.65-.85-.03-1.63-.45-2.13-1.14-1.35-.71-1.87-2.38-1.16-3.73.48-.9,1.41-1.47,2.43-1.48.28,0,.55.05.82.13v-2.59c-3.33.06-5.99,2.84-5.93,6.18.03,1.51.62,2.95,1.65,4.05,1.02.69,2.24,1.05,3.47,1.03,3.34,0,6.05-2.7,6.06-6.04Z"/>
+                    </svg>
+                </button>
+                <button class="icon-btn" aria-label="Instagram" onclick="window.location.href='https://www.instagram.com/eglux_id'">
+                    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="currentColor" d="M19.85,6.36h-7.7c-3.19,0-5.79,2.6-5.79,5.79v7.7c0,3.19,2.6,5.79,5.79,5.79h7.7c3.19,0,5.79-2.6,5.79-5.79v-7.7c0-3.19-2.6-5.79-5.79-5.79ZM23.83,19.85c0,2.2-1.78,3.98-3.98,3.98h-7.7c-2.2,0-3.98-1.78-3.98-3.98v-7.7c0-2.2,1.78-3.98,3.98-3.98h7.7c2.2,0,3.98,1.78,3.98,3.98v7.7Z"/>
+                        <path fill="currentColor" d="M22.24,10.93c0,.62-.51,1.13-1.13,1.13s-1.13-.51-1.13-1.13.51-1.13,1.13-1.13,1.13.51,1.13,1.13Z"/>
+                        <path fill="currentColor" d="M16.08,11.25c-2.62,0-4.75,2.14-4.75,4.76s2.13,4.75,4.75,4.75,4.75-2.13,4.75-4.75-2.13-4.76-4.75-4.76ZM16.08,19.04c-1.68,0-3.04-1.36-3.04-3.04s1.36-3.05,3.04-3.05,3.04,1.37,3.04,3.05-1.36,3.04-3.04,3.04Z"/>
+                    </svg>
+                    <!-- <span class="cart-count"></span> -->
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Primary Nav (Below Logo) -->
+    <nav class="primary-nav" id="primaryNav">
+        <div class="primary-nav-inner">
+            <a href="index.html" class="active">Beranda</a>
+            <a href="products.html">Produk</a>
+            <a href="blog.html">Blog</a>
+            <a href="about.html">Tentang Kami</a>
+            <a href="contact.html">Kontak</a>
+            <a href="affiliate.html">Affiliate</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section (Fullscreen) -->
+    <section class="hero-section">
+        <div class="hero-bg-image" style="background-image: url('img/heroBg.png');"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-text-content">
+            <a class="logo">
+                <img src="img/Logo2.png" alt="Eglux Logo" style="height: 75px; width: auto;">
+            </a>
+            <p class="hero-subtitle">Kitchen & Home Decor</p>
+            <a href="products.html" class="shop-btn">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Countries Footer -->
+    <div class="countries-footer">
+        <p>Gunakan Eglux, Biar Tetangga Iri</p>
+    </div>
+    <!-- Promo Banner Section -->
+    <section class="promo-banners">
+        <div class="container">
+            <div class="banner-single" onclick="window.location.href='products.html?filter=flashsale'">
+                <div class="banner-img" style="background-image: url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=80');"></div>
+                <div class="banner-overlay"></div>
+                <div class="banner-content">
+                    <span class="banner-tag">🔥 Flash Sale</span>
+                    <h3>Diskon Hingga 50%</h3>
+                    <p>Perlengkapan Dapur Premium — Hanya Hari Ini!</p>
+                    <span class="banner-cta">Beli Sekarang →</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promo Banner 2 -->
+    <section class="promo-banners promo-banners-alt">
+        <div class="container">
+            <div class="banner-single banner-single-alt" onclick="window.location.href='products.html?filter=new'">
+                <div class="banner-img" style="background-image: url('https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=1200&q=80');"></div>
+                <div class="banner-overlay banner-overlay-alt"></div>
+                <div class="banner-content">
+                    <span class="banner-tag">✨ New Arrival</span>
+                    <h3>Koleksi Terbaru 2026</h3>
+                    <p>Temukan produk home decor & kitchen terbaru dari Eglux</p>
+                    <span class="banner-cta">Lihat Koleksi →</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Duplicate Nav (Above Categories Section) -->
+    <nav class="duplicate-nav" id="duplicateNav">
+        <div class="duplicate-nav-inner">
+            <a href="index.html" class="active">Beranda</a>
+            <a href="products.html">Produk</a>
+            <a href="blog.html">Blog</a>
+            <a href="about.html">Tentang Kami</a>
+            <a href="contact.html">Kontak</a>
+            <a href="affiliate.html">Affiliate</a>
+        </div>
+    </nav>
+
+    <!-- Categories Section (PERTAHANKAN) -->
+    <section class="categories">
+        <div class="container">
+            <div class="section-header">
+                <h2>Kategori Produk</h2>
+                <p>Temukan solusi penyimpanan dan organisasi untuk setiap ruangan</p>
+            </div>
+            <div class="category-grid">
+                <div class="category-card" onclick="window.location.href='products.html?data-filter=storage'">
+                        <img src="https://down-id.img.susercontent.com/file/sg-11134201-7rdy8-mcj15f3yq0frd3.webp" alt="Storage">
+                        <div class="category-overlay">
+                            <h3>Perlengkapan Penyimpanan</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="category-card" onclick="window.location.href='products.html?data-filter=kitchen'">
+                        <img src="https://down-id.img.susercontent.com/file/sg-11134201-820n5-mn9v2pvit5om4b.webp" alt="Kitchen">
+                        <div class="category-overlay">
+                            <h3>Perlengkapan Dapur</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="category-card" onclick="window.location.href='products.html?data-filter=bathroom'">
+                        <img src="https://down-id.img.susercontent.com/file/sg-11134201-7rdvm-mdjp4ct77ggp63.webp" alt="Bathroom">
+                        <div class="category-overlay">
+                            <h3>Perlengkapan Kamar Mandi</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="category-card" onclick="window.location.href='products.html?data-filter=homedecor'">
+                        <img src="https://down-id.img.susercontent.com/file/sg-11134201-7rdx6-mdjse24iesx0a6.webp" alt="Cleaning">
+                        <div class="category-overlay">
+                            <h3>Hiasan Rumah</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Sellers (PERTAHANKAN) -->
+    <section class="best-sellers">
+        <div class="container">
+            <div class="section-header">
+                <h2>Produk Terlaris</h2>
+                <p>Pilihan favorit pelanggan kami</p>
+            </div>
+            <div class="product-grid">
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/EGLUX-Tempat-prasmanan-Motif-Bintik-Emas-wadah-prasmanan-aesthetics-i.1082449101.43165997982?extraParams=%7B%22display_model_id%22%3A296318290044%2C%22model_selection_logic%22%3A3%7D&sp_atk=3587b726-16ab-40f8-a3dd-14d6d87e2454&xptdk=3587b726-16ab-40f8-a3dd-14d6d87e2454'">
+                    <div class="product-image">
+                        <img src="https://down-id.img.susercontent.com/file/sg-11134201-824gv-me0yfrozmpzae4.webp" alt="Product">
+                        <span class="product-badge">Best Seller</span>
+                    </div>
+                    <div class="product-info">
+                        <h4>EGLUX Tempat Prasmanan aesthetics wadah saji nampan set</h4>
+                        <p class="model">Model: Bulat Putih S+Kaki</p>
+                        <p class="price">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="18" height="18" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
+                                <path d="M24 48C10.7 48 0 58.7 0 72C0 85.3 10.7 96 24 96L69.3 96C73.2 96 76.5 98.8 77.2 102.6L129.3 388.9C135.5 423.1 165.3 448 200.1 448L456 448C469.3 448 480 437.3 480 424C480 410.7 469.3 400 456 400L200.1 400C188.5 400 178.6 391.7 176.5 380.3L171.4 352L475 352C505.8 352 532.2 330.1 537.9 299.8L568.9 133.9C572.6 114.2 557.5 96 537.4 96L124.7 96L124.3 94C119.5 67.4 96.3 48 69.2 48L24 48zM208 576C234.5 576 256 554.5 256 528C256 501.5 234.5 480 208 480C181.5 480 160 501.5 160 528C160 554.5 181.5 576 208 576zM432 576C458.5 576 480 554.5 480 528C480 501.5 458.5 480 432 480C405.5 480 384 501.5 384 528C384 554.5 405.5 576 432 576z"/>
+                            </svg>
+                            Buy Now
+                        </p>
+                    </div>
+                </div>
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/EGLUX-Tempat-Prasmanan-Tempat-buah-Wadah-Saji-Tempat-Roti-aesthetic-Nampan-dengan-tutup-i.1082449101.24385020393?extraParams=%7B%22display_model_id%22%3A236985269304%2C%22model_selection_logic%22%3A2%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
+                    <div class="product-image">
+                        <img src="https://down-id.img.susercontent.com/file/sg-11134201-7rdx6-lz62cs0ixm2vbb.webp" alt="Product">
+                        <span class="product-badge">Best Seller</span>
+                    </div>
+                    <div class="product-info">
+                        <h4>EGLUX Tempat Prasmanan Tempat buah Wadah Saji Tempat Roti aesthetic Nampan dengan tutup</h4>
+                        <p class="model">Model: Perpan kecil transparan</p>
+                        <p class="price">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="18" height="18" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
+                                <path d="M24 48C10.7 48 0 58.7 0 72C0 85.3 10.7 96 24 96L69.3 96C73.2 96 76.5 98.8 77.2 102.6L129.3 388.9C135.5 423.1 165.3 448 200.1 448L456 448C469.3 448 480 437.3 480 424C480 410.7 469.3 400 456 400L200.1 400C188.5 400 178.6 391.7 176.5 380.3L171.4 352L475 352C505.8 352 532.2 330.1 537.9 299.8L568.9 133.9C572.6 114.2 557.5 96 537.4 96L124.7 96L124.3 94C119.5 67.4 96.3 48 69.2 48L24 48zM208 576C234.5 576 256 554.5 256 528C256 501.5 234.5 480 208 480C181.5 480 160 501.5 160 528C160 554.5 181.5 576 208 576zM432 576C458.5 576 480 554.5 480 528C480 501.5 458.5 480 432 480C405.5 480 384 501.5 384 528C384 554.5 405.5 576 432 576z"/>
+                            </svg>
+                            Buy Now
+                        </p>
+                    </div>
+                </div>
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/EGLUX-Tempat-Prasmanan-aesthetics-wadah-saji-nampan-set-i.1082449101.55409152909?extraParams=%7B%22display_model_id%22%3A415811500407%2C%22model_selection_logic%22%3A3%7D&sp_atk=3fe03016-903e-4f0e-88cc-9dcba5da3c53&xptdk=3fe03016-903e-4f0e-88cc-9dcba5da3c53'">
+                    <div class="product-image">
+                        <img src="https://down-id.img.susercontent.com/file/sg-11134201-820nf-mn9v2qt7p6h23a.webp" alt="Product">
+                        <span class="product-badge">Baru</span>
+                    </div>
+                    <div class="product-info">
+                        <h4>EGLUX Tempat Prasmanan aesthetics wadah saji nampan set</h4>
+                        <p class="model">Model: Bulat Putih S+Kaki</p>
+                        <p class="price">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="18" height="18" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
+                                <path d="M24 48C10.7 48 0 58.7 0 72C0 85.3 10.7 96 24 96L69.3 96C73.2 96 76.5 98.8 77.2 102.6L129.3 388.9C135.5 423.1 165.3 448 200.1 448L456 448C469.3 448 480 437.3 480 424C480 410.7 469.3 400 456 400L200.1 400C188.5 400 178.6 391.7 176.5 380.3L171.4 352L475 352C505.8 352 532.2 330.1 537.9 299.8L568.9 133.9C572.6 114.2 557.5 96 537.4 96L124.7 96L124.3 94C119.5 67.4 96.3 48 69.2 48L24 48zM208 576C234.5 576 256 554.5 256 528C256 501.5 234.5 480 208 480C181.5 480 160 501.5 160 528C160 554.5 181.5 576 208 576zM432 576C458.5 576 480 554.5 480 528C480 501.5 458.5 480 432 480C405.5 480 384 501.5 384 528C384 554.5 405.5 576 432 576z"/>
+                            </svg>
+                            Buy Now
+                        </p>
+                    </div>
+                </div>
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/EGLUX-Tempat-prasmanan-Wadah-Saji-tempat-buah-dengan-tutup-aesthetic-i.1082449101.28572331206?extraParams=%7B%22display_model_id%22%3A252597895918%2C%22model_selection_logic%22%3A2%7D&sp_atk=1294da1e-e6b6-4275-9a90-fcd7472d0877&xptdk=1294da1e-e6b6-4275-9a90-fcd7472d0877'">
+                    <div class="product-image">
+                        <img src="https://down-id.img.susercontent.com/file/id-11134207-7rasg-m5z7qgib73zc9d.webp" alt="Product">
+                        <span class="product-badge">Best Seller</span>
+                    </div>
+                    <div class="product-info">
+                        <h4>EGLUX Tempat prasmanan Wadah Saji tempat buah dengan tutup aesthetic</h4>
+                        <p class="model">Model: Perpan L Bening 3pcs</p>
+                        <p class="price">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="18" height="18" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
+                                <path d="M24 48C10.7 48 0 58.7 0 72C0 85.3 10.7 96 24 96L69.3 96C73.2 96 76.5 98.8 77.2 102.6L129.3 388.9C135.5 423.1 165.3 448 200.1 448L456 448C469.3 448 480 437.3 480 424C480 410.7 469.3 400 456 400L200.1 400C188.5 400 178.6 391.7 176.5 380.3L171.4 352L475 352C505.8 352 532.2 330.1 537.9 299.8L568.9 133.9C572.6 114.2 557.5 96 537.4 96L124.7 96L124.3 94C119.5 67.4 96.3 48 69.2 48L24 48zM208 576C234.5 576 256 554.5 256 528C256 501.5 234.5 480 208 480C181.5 480 160 501.5 160 528C160 554.5 181.5 576 208 576zM432 576C458.5 576 480 554.5 480 528C480 501.5 458.5 480 432 480C405.5 480 384 501.5 384 528C384 554.5 405.5 576 432 576z"/>
+                            </svg>
+                            Buy Now
+                        </p>
+                    </div>
+                </div>
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/EGLUX-Tempat-prasmanan-Motif-Bintik-Emas-wadah-prasmanan-aesthetics-i.1082449101.43165997982?extraParams=%7B%22display_model_id%22%3A296318290044%2C%22model_selection_logic%22%3A3%7D&sp_atk=3587b726-16ab-40f8-a3dd-14d6d87e2454&xptdk=3587b726-16ab-40f8-a3dd-14d6d87e2454'">
+                    <div class="product-image">
+                        <img src="https://down-id.img.susercontent.com/file/sg-11134201-824gv-me0yfrozmpzae4.webp" alt="Product">
+                        <span class="product-badge">Best Seller</span>
+                    </div>
+                    <div class="product-info">
+                        <h4>EGLUX Tempat Prasmanan aesthetics wadah saji nampan set</h4>
+                        <p class="model">Model: Bulat Putih S+Kaki</p>
+                        <p class="price">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="18" height="18" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
+                                <path d="M24 48C10.7 48 0 58.7 0 72C0 85.3 10.7 96 24 96L69.3 96C73.2 96 76.5 98.8 77.2 102.6L129.3 388.9C135.5 423.1 165.3 448 200.1 448L456 448C469.3 448 480 437.3 480 424C480 410.7 469.3 400 456 400L200.1 400C188.5 400 178.6 391.7 176.5 380.3L171.4 352L475 352C505.8 352 532.2 330.1 537.9 299.8L568.9 133.9C572.6 114.2 557.5 96 537.4 96L124.7 96L124.3 94C119.5 67.4 96.3 48 69.2 48L24 48zM208 576C234.5 576 256 554.5 256 528C256 501.5 234.5 480 208 480C181.5 480 160 501.5 160 528C160 554.5 181.5 576 208 576zM432 576C458.5 576 480 554.5 480 528C480 501.5 458.5 480 432 480C405.5 480 384 501.5 384 528C384 554.5 405.5 576 432 576z"/>
+                            </svg>
+                            Buy Now
+                        </p>
+                    </div>
+                </div>
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/EGLUX-Tempat-Prasmanan-Tempat-buah-Wadah-Saji-Tempat-Roti-aesthetic-Nampan-dengan-tutup-i.1082449101.24385020393?extraParams=%7B%22display_model_id%22%3A236985269304%2C%22model_selection_logic%22%3A2%7D&sp_atk=ca2caf52-fc93-428c-93c9-e475c5735013&xptdk=ca2caf52-fc93-428c-93c9-e475c5735013'">
+                    <div class="product-image">
+                        <img src="https://down-id.img.susercontent.com/file/sg-11134201-7rdx6-lz62cs0ixm2vbb.webp" alt="Product">
+                        <span class="product-badge">Best Seller</span>
+                    </div>
+                    <div class="product-info">
+                        <h4>EGLUX Tempat Prasmanan Tempat buah Wadah Saji Tempat Roti aesthetic Nampan dengan tutup</h4>
+                        <p class="model">Model: Perpan kecil transparan</p>
+                        <p class="price">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="18" height="18" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
+                                <path d="M24 48C10.7 48 0 58.7 0 72C0 85.3 10.7 96 24 96L69.3 96C73.2 96 76.5 98.8 77.2 102.6L129.3 388.9C135.5 423.1 165.3 448 200.1 448L456 448C469.3 448 480 437.3 480 424C480 410.7 469.3 400 456 400L200.1 400C188.5 400 178.6 391.7 176.5 380.3L171.4 352L475 352C505.8 352 532.2 330.1 537.9 299.8L568.9 133.9C572.6 114.2 557.5 96 537.4 96L124.7 96L124.3 94C119.5 67.4 96.3 48 69.2 48L24 48zM208 576C234.5 576 256 554.5 256 528C256 501.5 234.5 480 208 480C181.5 480 160 501.5 160 528C160 554.5 181.5 576 208 576zM432 576C458.5 576 480 554.5 480 528C480 501.5 458.5 480 432 480C405.5 480 384 501.5 384 528C384 554.5 405.5 576 432 576z"/>
+                            </svg>
+                            Buy Now
+                        </p>
+                    </div>
+                </div>
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/EGLUX-Tempat-Prasmanan-aesthetics-wadah-saji-nampan-set-i.1082449101.55409152909?extraParams=%7B%22display_model_id%22%3A415811500407%2C%22model_selection_logic%22%3A3%7D&sp_atk=3fe03016-903e-4f0e-88cc-9dcba5da3c53&xptdk=3fe03016-903e-4f0e-88cc-9dcba5da3c53'">
+                    <div class="product-image">
+                        <img src="https://down-id.img.susercontent.com/file/sg-11134201-820nf-mn9v2qt7p6h23a.webp" alt="Product">
+                        <span class="product-badge">Baru</span>
+                    </div>
+                    <div class="product-info">
+                        <h4>EGLUX Tempat Prasmanan aesthetics wadah saji nampan set</h4>
+                        <p class="model">Model: Bulat Putih S+Kaki</p>
+                        <p class="price">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="18" height="18" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
+                                <path d="M24 48C10.7 48 0 58.7 0 72C0 85.3 10.7 96 24 96L69.3 96C73.2 96 76.5 98.8 77.2 102.6L129.3 388.9C135.5 423.1 165.3 448 200.1 448L456 448C469.3 448 480 437.3 480 424C480 410.7 469.3 400 456 400L200.1 400C188.5 400 178.6 391.7 176.5 380.3L171.4 352L475 352C505.8 352 532.2 330.1 537.9 299.8L568.9 133.9C572.6 114.2 557.5 96 537.4 96L124.7 96L124.3 94C119.5 67.4 96.3 48 69.2 48L24 48zM208 576C234.5 576 256 554.5 256 528C256 501.5 234.5 480 208 480C181.5 480 160 501.5 160 528C160 554.5 181.5 576 208 576zM432 576C458.5 576 480 554.5 480 528C480 501.5 458.5 480 432 480C405.5 480 384 501.5 384 528C384 554.5 405.5 576 432 576z"/>
+                            </svg>
+                            Buy Now
+                        </p>
+                    </div>
+                </div>
+                <div class="product-card" data-category="kitchen" onclick="window.location.href='https://shopee.co.id/EGLUX-Tempat-prasmanan-Wadah-Saji-tempat-buah-dengan-tutup-aesthetic-i.1082449101.28572331206?extraParams=%7B%22display_model_id%22%3A252597895918%2C%22model_selection_logic%22%3A2%7D&sp_atk=1294da1e-e6b6-4275-9a90-fcd7472d0877&xptdk=1294da1e-e6b6-4275-9a90-fcd7472d0877'">
+                    <div class="product-image">
+                        <img src="https://down-id.img.susercontent.com/file/id-11134207-7rasg-m5z7qgib73zc9d.webp" alt="Product">
+                        <span class="product-badge">Best Seller</span>
+                    </div>
+                    <div class="product-info">
+                        <h4>EGLUX Tempat prasmanan Wadah Saji tempat buah dengan tutup aesthetic</h4>
+                        <p class="model">Model: Perpan L Bening 3pcs</p>
+                        <p class="price">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="18" height="18" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
+                                <path d="M24 48C10.7 48 0 58.7 0 72C0 85.3 10.7 96 24 96L69.3 96C73.2 96 76.5 98.8 77.2 102.6L129.3 388.9C135.5 423.1 165.3 448 200.1 448L456 448C469.3 448 480 437.3 480 424C480 410.7 469.3 400 456 400L200.1 400C188.5 400 178.6 391.7 176.5 380.3L171.4 352L475 352C505.8 352 532.2 330.1 537.9 299.8L568.9 133.9C572.6 114.2 557.5 96 537.4 96L124.7 96L124.3 94C119.5 67.4 96.3 48 69.2 48L24 48zM208 576C234.5 576 256 554.5 256 528C256 501.5 234.5 480 208 480C181.5 480 160 501.5 160 528C160 554.5 181.5 576 208 576zM432 576C458.5 576 480 554.5 480 528C480 501.5 458.5 480 432 480C405.5 480 384 501.5 384 528C384 554.5 405.5 576 432 576z"/>
+                            </svg>
+                            Buy Now
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Story (PERTAHANKAN) -->
+    <!-- <section class="brand-story">
+        <div class="container">
+            <div class="story-grid">
+                <div class="story-image">
+                    <img src="https://down-tx-id.img.susercontent.com/id-11134210-7rbke-m6npp1bog9op94" alt="Eglux Office">
+                </div>
+                <div class="story-content">
+                    <h2>Brand Eglux</h2>
+                    <p>Eglux didirikan pada tahun 2015, melayani pasar perlengkapan rumah tangga menengah ke atas. Kami berkomitmen untuk merancang produk yang indah namun fungsional yang membawa kehidupan yang lebih baik bagi pelanggan kami.</p>
+                    <p>Eglux saat ini mempekerjakan lebih dari 500 staf, termasuk lebih dari 100 di bidang riset dan pengembangan serta desain. Kami mengoperasikan pabrik modern seluas lebih dari 40.000 meter persegi.</p>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <h3>500+</h3>
+                            <p>Produk</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>400+</h3>
+                            <p>Paten Nasional</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>50K+</h3>
+                            <p>Pelanggan Puas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Features (PERTAHANKAN) -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Mengapa Memilih Eglux?</h2>
+                <p>Kualitas dan inovasi di setiap produk</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔬</div>
+                    <h3>Pusat R&D</h3>
+                    <p>Tim desainer profesional yang berdedikasi untuk menciptakan produk inovatif dengan fungsionalitas terbaik.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏭</div>
+                    <h3>Pusat Manufaktur</h3>
+                    <p>Fasilitas produksi seluas 40.000 m² dengan standar kualitas ketat dan teknik produksi modern.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Penghargaan</h3>
+                    <p>Diakui dengan berbagai penghargaan desain internasional termasuk Red Dot Design Award dan iF Design Award.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (PERTAHANKAN) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <img src="img/Logo2.png" alt="Eglux Logo" style="height: 60px; width: auto;">
+                    </a>
+                    <p>Membangun produk rumah tangga yang praktis dan dapat diandalkan. Keindahan bertemu fungsionalitas dalam setiap produk Eglux.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Navigasi</h4>
+                    <ul>
+                        <li><a href="index.html">Beranda</a></li>
+                        <li><a href="products.html">Produk</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="about.html">Tentang Kami</a></li>
+                        <li><a href="contact.html">Kontak</a></li>
+                        <li><a href="affiliate.html">Affiliate</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Kategori</h4>
+                    <ul>
+                        <li><a href="products.html?data-filter=kitchen">New Arrival</a></li>
+                        <li><a href="products.html?data-filter=kitchen">Best Seller</a></li>
+                        <li><a href="products.html?data-filter=storage">Semua Produk</a></li>
+                        <li><a href="products.html?data-filter=kitchen">Kitchen</a></li>
+                        <li><a href="products.html?data-filter=storage">Homedecor</a></li>
+                        <li><a href="products.html?data-filter=homedecor">Bathroom</a></li>
+                        <li><a href="products.html?data-filter=produkbaru">Storage</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Bantuan</h4>
+                    <ul>
+                        <li><a href="contact.html">Pengiriman</a></li>
+                        <li><a href="contact.html">Pengembalian</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Eglux - Still Under Construction</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sidebar Toggle
+        function toggleSidebar() {
+            const btn = document.getElementById('hamburgerBtn');
+            const overlay = document.getElementById('sidebarOverlay');
+            const panel = document.getElementById('sidebarPanel');
+
+            btn.classList.toggle('active');
+            overlay.classList.toggle('open');
+            panel.classList.toggle('open');
+
+            if (panel.classList.contains('open')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+                document.querySelectorAll('.has-submenu').forEach(item => {
+                    item.classList.remove('open');
+                });
+            }
+        }
+
+        // Submenu Toggle - attach event listeners properly
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggles = document.querySelectorAll('.menu-toggle');
+            menuToggles.forEach(function(toggle) {
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const parentLi = this.closest('.has-submenu');
+
+                    // Close other submenus
+                    document.querySelectorAll('.has-submenu').forEach(function(item) {
+                        if (item !== parentLi) {
+                            item.classList.remove('open');
+                        }
+                    });
+
+                    // Toggle current submenu
+                    parentLi.classList.toggle('open');
+                });
+            });
+        });
+
+        // ===== SMOOTH SCROLL TRANSITION (JITTER-FREE) =====
+        const primaryNav = document.getElementById('primaryNav');
+        const duplicateNav = document.getElementById('duplicateNav');
+        const mainHeader = document.getElementById('mainHeader');
+
+        let duplicateNavOffset = 0;
+        let isStuck = false;
+        let ticking = false;
+
+        function updateOffsets() {
+            duplicateNavOffset = duplicateNav.getBoundingClientRect().top + window.scrollY;
+        }
+
+        window.addEventListener('load', updateOffsets);
+        window.addEventListener('resize', updateOffsets);
+
+        function onScroll() {
+            const scrollY = window.scrollY;
+            const headerHeight = mainHeader.offsetHeight;
+            const primaryNavHeight = primaryNav.offsetHeight;
+            const triggerPoint = duplicateNavOffset - headerHeight;
+
+            // Primary nav: smooth slide-up hide when scrolled past
+            const primaryNavRect = primaryNav.getBoundingClientRect();
+            if (primaryNavRect.bottom <= 0) {
+                if (!primaryNav.classList.contains('hidden')) {
+                    primaryNav.classList.add('hidden');
+                }
+            } else {
+                if (primaryNav.classList.contains('hidden')) {
+                    primaryNav.classList.remove('hidden');
+                }
+            }
+
+            // Duplicate nav: only stick when it actually reaches the logo bar
+            if (scrollY >= triggerPoint) {
+                if (!isStuck) {
+                    isStuck = true;
+                    duplicateNav.classList.add('stuck');
+                }
+            } else {
+                if (isStuck) {
+                    isStuck = false;
+                    duplicateNav.classList.remove('stuck');
+                }
+            }
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                requestAnimationFrame(onScroll);
+                ticking = true;
+            }
+        });
+
+        // Same-tab navigation for internal links
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href && !href.startsWith('http') && href !== '#' && !href.startsWith('mailto:') && !href.startsWith('javascript:')) {
+                    e.preventDefault();
+                    window.location.href = href;
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
