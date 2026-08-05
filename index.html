@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="EGLUX — Sedang dalam pengembangan. Kunjungi website testing kami untuk preview produk." />
-  <title>EGLUX — Sedang dalam Pengembangan</title>
+  <title>EGLUX — Under Development</title>
   <link rel="icon" href="https://mbuwpjxpxvnsxjusrnlk.supabase.co/storage/v1/object/public/logo/Logo-Loading.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,7 +17,7 @@
     :root {
       --eglux-primary: #1a1a1a;
       --eglux-secondary: #9a7d4a;
-      --eglux-accent: #f7f3ed;
+      --eglux-accent: #ffffff;
       --eglux-text: #3a3944;
       --eglux-text-muted: #8a8a8a;
       --eglux-border: #e8e4df;
@@ -421,20 +421,20 @@
 
     <!-- Subtext -->
     <p class="subtext">
-      Website EGLUX sedang dalam tahap pengembangan untuk memberikan pengalaman belanja terbaik.
-      Sementara itu, kunjungi <strong>website testing</strong> kami untuk preview produk,
-      fitur, dan tampilan terbaru.
+      Eglux.co.id sedang dalam tahap pengembangan untuk memberikan pengalaman belanja terbaik.
+      Sementara itu, kunjungi <strong>Testing Website</strong> kami untuk preview produk,
+      fitur, dan tampilan terbaru. Harap untuk tidak melakukan transaksi apapun di dalam website testing!
     </p>
 
     <!-- Redirect card -->
     <div class="redirect-card">
-      <p class="redirect-label">Website Testing</p>
+      <p class="redirect-label">Eglux Website [Test]</p>
       <div class="redirect-url">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
           <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
         </svg>
-        eglux.vercel.app
+        https://eglux.vercel.app
       </div>
 
       <!-- Countdown -->
@@ -445,17 +445,17 @@
             <circle class="progress" id="progress-ring" cx="22" cy="22" r="19"
               stroke-dasharray="119.38" stroke-dashoffset="0" />
           </svg>
-          <div class="countdown-number" id="countdown-number">10</div>
+          <div class="countdown-number" id="countdown-number">30</div>
         </div>
         <div class="countdown-text">
-          Mengalihkan otomatis dalam <strong id="countdown-text-strong">10 detik</strong>
+          Mengalihkan otomatis dalam <strong id="countdown-text-strong">30 detik</strong>
         </div>
       </div>
 
       <!-- Buttons -->
       <div class="button-group">
         <a href="https://eglux.vercel.app" class="btn btn-primary" id="redirect-btn">
-          Kunjungi Website Testing
+          Preview Testing Website
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="5" y1="12" x2="19" y2="12" />
             <polyline points="12 5 19 12 12 19" />
@@ -473,19 +473,19 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="20 6 9 17 4 12" />
         </svg>
-        Katalog Produk Lengkap
+        Product Catalog
       </div>
       <div class="feature-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="20 6 9 17 4 12" />
         </svg>
-        Checkout Midtrans
+        Checkout Order
       </div>
       <div class="feature-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="20 6 9 17 4 12" />
         </svg>
-        Lacak Pesanan Real-time
+        Tracking Order
       </div>
       <div class="feature-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -498,18 +498,17 @@
 
   <!-- Footer -->
   <footer class="footer">
-    &copy; <span id="year"></span> EGLUX. All rights reserved.
-    &middot;
-    <a href="mailto:admin@eglux.co.id">admin@eglux.co.id</a>
+    &copy; <span id="year"></span> EGLUX — All rights reserved |
+    <a href="mailto:contact@eglux.co.id">contact@eglux.co.id</a>
   </footer>
 
   <script>
     // ============================================================================
-    // Auto-redirect countdown (10 seconds) → https://eglux.vercel.app
+    // Auto-redirect countdown (30 seconds) → https://eglux.vercel.app
     // ============================================================================
     (function () {
       const REDIRECT_URL = 'https://eglux.vercel.app';
-      const COUNTDOWN_SECONDS = 15;
+      const COUNTDOWN_SECONDS = 30;
       const CIRCUMFERENCE = 2 * Math.PI * 19; // ≈ 119.38
 
       let remaining = COUNTDOWN_SECONDS;
